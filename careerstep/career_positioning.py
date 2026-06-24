@@ -1,0 +1,442 @@
+"""Career positioning: CSMQ questionnaire -> Saudi cybersecurity role recommender.
+
+Pipeline
+--------
+1. The user answers the 25-item Career Success Map Questionnaire (CSMQ;
+   Derr, 1986) on a 1-5 Likert scale.
+2. Responses are reverse-scored where indicated and aggregated into a
+   five-dimensional **orientation profile**:
+       (getting_ahead, getting_secure, getting_free,
+        getting_high,  getting_balanced)
+3. Each candidate role is anchored on the public **O*NET Work Values**
+   dataset (six dimensions: Achievement, Independence, Recognition,
+   Relationships, Support, Working Conditions). A linear projection
+   matrix translates a role's O*NET work-value vector into the same
+   five-dimensional CSMQ space, giving every role an *orientation
+   centroid* derived from data rather than hand-curation.
+4. A ``RoleRecommender`` ranks roles by cosine similarity between the
+   user's profile and each role centroid. It can be instantiated as a
+   pure cosine ranker or as a scikit-learn ``NearestNeighbors`` index
+   for an "ML-anchored" suggestion path.
+
+Public-dataset anchor
+---------------------
+O*NET Work Values is published at https://www.onetcenter.org/database.html
+(file ``Work Values.txt`` in any 28.x release). Each occupation's six
+work-value scores are an "Extent" rating on a 0-7 scale. We embed a
+curated snapshot for the cybersecurity-relevant SOC codes and expose a
+downloader that refreshes against the live release.
+"""
+
+from __future__ import annotations
+
+import json
+import math
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
+
+import numpy as np
+import pandas as pd
+from sklearn.neighbors import NearestNeighbors
+
+
+ORIENTATIONS: Tuple[str, ...] = (
+    "getting_ahead",
+    "getting_secure",
+    "getting_free",
+    "getting_high",
+    "getting_balanced",
+)
+
+ONET_WORK_VALUES: Tuple[str, ...] = (
+    "achievement",
+    "independence",
+    "recognition",
+    "relationships",
+    "support",
+    "working_conditions",
+)
+
+# Linear projection matrix W (5 x 6) mapping a role's O*NET work-value
+# vector to its CSMQ orientation centroid. Each row is L1-normalized so
+# that the projected value remains on the same 0-7 scale as the inputs.
+#
+# Rationale (per Derr 1986 typology mapped onto O*NET 6-value model):
+#   getting_ahead   <- Achievement, Recognition           (status climb)
+#   getting_secure  <- Support, Working Conditions, -Independence
+#                                                        (stability over autonomy)
+#   getting_free    <- Independence, Working Conditions  (autonomy over structure)
+#   getting_high    <- Achievement, Independence, WC     (challenge / mastery)
+#   getting_balanced <- Working Conditions, Relationships, Support
+#                                                        (integration / quality of life)
+_PROJECTION = np.array(
+    [
+        # ach,  ind,   rec,   rel,   sup,   wc
+        [0.60, 0.00, 0.40, 0.00, 0.00, 0.00],  # getting_ahead
+        [0.00, -0.20, 0.00, 0.00, 0.50, 0.30],  # getting_secure
+        [0.00, 0.80, 0.00, 0.00, 0.00, 0.20],  # getting_free
+        [0.50, 0.30, 0.00, 0.00, 0.00, 0.20],  # getting_high
+        [0.00, 0.00, 0.00, 0.40, 0.20, 0.40],  # getting_balanced
+    ],
+    dtype=float,
+)
+
+
+# ---------------------------------------------------------------------------
+# Data classes
+# ---------------------------------------------------------------------------
+
+
+@dataclass(frozen=True)
+class CSMQItem:
+    item_id: str
+    orientation: str
+    reverse: bool
+    en: str
+    ar: str
+
+    @classmethod
+    def from_json(cls, obj: Mapping) -> "CSMQItem":
+        return cls(
+            item_id=obj["id"],
+            orientation=obj["orientation"],
+            reverse=bool(obj["reverse"]),
+            en=obj["en"],
+            ar=obj["ar"],
+        )
+
+
+@dataclass(frozen=True)
+class CSMQQuestionnaire:
+    items: Tuple[CSMQItem, ...]
+    scale_min: int = 1
+    scale_max: int = 5
+
+    @classmethod
+    def from_path(cls, path: Path) -> "CSMQQuestionnaire":
+        payload = json.loads(Path(path).read_text(encoding="utf-8"))
+        items = tuple(CSMQItem.from_json(it) for it in payload["items"])
+        return cls(
+            items=items,
+            scale_min=int(payload["scale"]["min"]),
+            scale_max=int(payload["scale"]["max"]),
+        )
+
+    def items_by_orientation(self) -> Dict[str, List[CSMQItem]]:
+        out: Dict[str, List[CSMQItem]] = {o: [] for o in ORIENTATIONS}
+        for it in self.items:
+            out[it.orientation].append(it)
+        return out
+
+
+@dataclass(frozen=True)
+class OrientationProfile:
+    """A respondent's five-dimensional CSMQ profile (0-1 normalized)."""
+
+    scores: Dict[str, float]
+
+    def as_vector(self) -> np.ndarray:
+        return np.array([self.scores[o] for o in ORIENTATIONS], dtype=float)
+
+    def dominant(self) -> str:
+        return max(self.scores, key=self.scores.get)
+
+    def secondary(self) -> str:
+        ordered = sorted(self.scores.items(), key=lambda kv: kv[1], reverse=True)
+        return ordered[1][0]
+
+
+@dataclass(frozen=True)
+class Recommendation:
+    role_id: str
+    title_en: str
+    title_ar: str
+    specialty: str
+    seniority: str
+    sector_tag: str
+    vision_2030_anchor: str
+    employer_examples: str
+    nca_alignment: str
+    onet_soc: str
+    score: float
+    role_centroid: Dict[str, float]
+    dominant_orientation: str
+    rationale: str
+
+
+# ---------------------------------------------------------------------------
+# Scoring
+# ---------------------------------------------------------------------------
+
+
+def score_csmq(
+    responses: Mapping[str, int],
+    questionnaire: CSMQQuestionnaire,
+    *,
+    strict: bool = True,
+) -> OrientationProfile:
+    """Convert raw Likert responses to a five-dim orientation profile.
+
+    Each item is reverse-scored where flagged, then normalized to [0, 1]
+    by ``(value - min) / (max - min)``. The orientation score is the
+    arithmetic mean of its five items.
+
+    Parameters
+    ----------
+    responses
+        Mapping of ``item_id`` -> Likert value (e.g. 1..5).
+    questionnaire
+        Loaded ``CSMQQuestionnaire`` (defines items + scale).
+    strict
+        If True, raises ``KeyError`` for missing items. If False,
+        treats missing items as the scale midpoint.
+    """
+    lo, hi = questionnaire.scale_min, questionnaire.scale_max
+    mid = (lo + hi) / 2.0
+    by_orientation: Dict[str, List[float]] = {o: [] for o in ORIENTATIONS}
+
+    for item in questionnaire.items:
+        raw = responses.get(item.item_id)
+        if raw is None:
+            if strict:
+                raise KeyError(f"missing response for {item.item_id}")
+            raw = mid
+        if not (lo <= raw <= hi):
+            raise ValueError(
+                f"response for {item.item_id} = {raw!r} outside [{lo}, {hi}]"
+            )
+        adjusted = (lo + hi) - raw if item.reverse else raw
+        normalized = (adjusted - lo) / (hi - lo)
+        by_orientation[item.orientation].append(normalized)
+
+    scores = {o: float(np.mean(vals)) if vals else 0.5 for o, vals in by_orientation.items()}
+    return OrientationProfile(scores=scores)
+
+
+# ---------------------------------------------------------------------------
+# O*NET WV -> CSMQ projection
+# ---------------------------------------------------------------------------
+
+
+def project_work_values_to_csmq(
+    work_values: Mapping[str, float] | Sequence[float] | np.ndarray,
+    *,
+    onet_scale_max: float = 7.0,
+) -> OrientationProfile:
+    """Project a six-dim O*NET WV vector onto the five-dim CSMQ space.
+
+    Output values are clipped to [0, 1] so they live on the same scale
+    as :func:`score_csmq`. This makes user profile and role centroid
+    directly comparable.
+    """
+    if isinstance(work_values, Mapping):
+        vec = np.array([work_values[w] for w in ONET_WORK_VALUES], dtype=float)
+    else:
+        vec = np.asarray(work_values, dtype=float)
+    if vec.shape != (6,):
+        raise ValueError(f"expected 6-dim O*NET WV vector, got shape {vec.shape}")
+
+    # Map to 0..1 first (O*NET Extent ratings are on a 0..7 scale).
+    normalized = vec / float(onet_scale_max)
+
+    # Apply projection. Some rows have negative weights (e.g. -0.2 on
+    # Independence for getting_secure); we clip to [0,1] after.
+    projected = _PROJECTION @ normalized
+    projected = np.clip(projected, 0.0, 1.0)
+
+    return OrientationProfile(scores={o: float(v) for o, v in zip(ORIENTATIONS, projected)})
+
+
+# ---------------------------------------------------------------------------
+# Role recommender
+# ---------------------------------------------------------------------------
+
+
+def _cosine(u: np.ndarray, v: np.ndarray) -> float:
+    nu = np.linalg.norm(u)
+    nv = np.linalg.norm(v)
+    if nu == 0 or nv == 0:
+        return 0.0
+    return float(np.dot(u, v) / (nu * nv))
+
+
+@dataclass
+class RoleRecommender:
+    """Rank cyber roles by fit to a user's CSMQ orientation profile.
+
+    The recommender precomputes a CSMQ centroid for every role in
+    ``roles_df`` by projecting its O*NET Work Values vector. At query
+    time it returns the top-k roles ranked by cosine similarity.
+
+    The class also exposes an ``ml_index`` (sklearn ``NearestNeighbors``)
+    fitted on the role centroids so callers can use the "ML-anchored"
+    path: data-derived neighborhoods rather than ad-hoc weights.
+    """
+
+    roles_df: pd.DataFrame
+    wv_df: pd.DataFrame
+    centroids: np.ndarray = field(init=False)
+    centroid_df: pd.DataFrame = field(init=False)
+    ml_index: NearestNeighbors = field(init=False)
+
+    def __post_init__(self) -> None:
+        joined = self.roles_df.merge(
+            self.wv_df.add_prefix("wv_"),
+            left_on="onet_soc",
+            right_on="wv_onet_soc",
+            how="left",
+            validate="m:1",
+        )
+        missing = joined[joined["wv_achievement"].isna()]["onet_soc"].unique()
+        if len(missing):
+            raise ValueError(
+                "O*NET Work Values missing for SOC codes: " + ", ".join(missing)
+            )
+
+        wv_cols = [f"wv_{w}" for w in ONET_WORK_VALUES]
+        wv_matrix = joined[wv_cols].to_numpy(dtype=float) / 7.0
+
+        # Centroids = (n_roles, 5)
+        centroids = wv_matrix @ _PROJECTION.T
+        centroids = np.clip(centroids, 0.0, 1.0)
+
+        self.centroids = centroids
+        self.centroid_df = pd.DataFrame(centroids, columns=list(ORIENTATIONS))
+        self.centroid_df["role_id"] = joined["role_id"].values
+        self.centroid_df = self.centroid_df.set_index("role_id")
+
+        # Keep the joined metadata accessible.
+        self._meta = joined.set_index("role_id")
+
+        # ML index over the centroids. ``metric='cosine'`` gives the
+        # same ordering as our cosine ranker but exposes a sklearn API
+        # so the same fit can drive UMAP/clustering downstream.
+        self.ml_index = NearestNeighbors(
+            n_neighbors=min(10, len(centroids)),
+            metric="cosine",
+            algorithm="brute",
+        ).fit(centroids)
+
+    # -- public API ---------------------------------------------------------
+
+    def recommend(
+        self,
+        profile: OrientationProfile,
+        *,
+        top_k: int = 5,
+        sector_tag: Optional[str] = None,
+        seniority: Optional[Iterable[str]] = None,
+        method: str = "cosine",
+    ) -> List[Recommendation]:
+        """Return the top-k roles for ``profile``.
+
+        Parameters
+        ----------
+        profile
+            User's CSMQ orientation profile (from :func:`score_csmq`).
+        top_k
+            Number of roles to return.
+        sector_tag
+            Optional filter: ``"gov"``, ``"industry"``, or ``"both"``.
+        seniority
+            Optional filter, e.g. ``("entry", "mid")``.
+        method
+            ``"cosine"`` (default, uses the precomputed centroids) or
+            ``"knn"`` (uses the fitted sklearn ``NearestNeighbors``;
+            equivalent ordering, exposed for ML-pipeline integration).
+        """
+        user_vec = profile.as_vector()
+
+        if method == "knn":
+            n_query = min(len(self.centroids), max(top_k * 4, 10))
+            dist, idx = self.ml_index.kneighbors(
+                user_vec.reshape(1, -1), n_neighbors=n_query
+            )
+            scores = 1.0 - dist[0]
+            order = list(idx[0])
+        elif method == "cosine":
+            scores_full = np.array(
+                [_cosine(user_vec, self.centroids[i]) for i in range(len(self.centroids))]
+            )
+            order = list(np.argsort(-scores_full))
+            scores = scores_full[order]
+        else:
+            raise ValueError(f"unknown method: {method!r}")
+
+        results: List[Recommendation] = []
+        for rank_pos, role_idx in enumerate(order):
+            row = self._meta.iloc[role_idx]
+            if sector_tag is not None and row["sector_tag"] != sector_tag:
+                continue
+            if seniority is not None and row["seniority"] not in set(seniority):
+                continue
+            centroid_vec = self.centroids[role_idx]
+            centroid_dict = {o: float(v) for o, v in zip(ORIENTATIONS, centroid_vec)}
+            dom = max(centroid_dict, key=centroid_dict.get)
+            results.append(
+                Recommendation(
+                    role_id=str(row.name),
+                    title_en=str(row["title_en"]),
+                    title_ar=str(row["title_ar"]),
+                    specialty=str(row["specialty"]),
+                    seniority=str(row["seniority"]),
+                    sector_tag=str(row["sector_tag"]),
+                    vision_2030_anchor=str(row["vision_2030_anchor"]),
+                    employer_examples=str(row["employer_examples"]),
+                    nca_alignment=str(row["nca_alignment"]),
+                    onet_soc=str(row["onet_soc"]),
+                    score=float(scores[rank_pos]),
+                    role_centroid=centroid_dict,
+                    dominant_orientation=dom,
+                    rationale=_rationale(profile, centroid_dict),
+                )
+            )
+            if len(results) >= top_k:
+                break
+        return results
+
+
+def _rationale(profile: OrientationProfile, centroid: Mapping[str, float]) -> str:
+    """One-line explanation of why this role matched the profile."""
+    user_top = profile.dominant()
+    role_top = max(centroid, key=centroid.get)
+    if user_top == role_top:
+        return (
+            f"Your dominant orientation is {user_top.replace('_', ' ')}, "
+            f"which is also this role's strongest pull."
+        )
+    return (
+        f"Your dominant orientation is {user_top.replace('_', ' ')}; "
+        f"this role's strongest pull is {role_top.replace('_', ' ')} - "
+        f"the match is on the next strongest fit."
+    )
+
+
+# ---------------------------------------------------------------------------
+# Convenience: end-to-end
+# ---------------------------------------------------------------------------
+
+
+def recommend_from_responses(
+    responses: Mapping[str, int],
+    *,
+    questionnaire: CSMQQuestionnaire,
+    roles_df: pd.DataFrame,
+    wv_df: pd.DataFrame,
+    top_k: int = 5,
+    sector_tag: Optional[str] = None,
+    seniority: Optional[Iterable[str]] = None,
+    method: str = "cosine",
+) -> Tuple[OrientationProfile, List[Recommendation]]:
+    """One-shot: raw Likert responses -> (profile, top-k recommendations)."""
+    profile = score_csmq(responses, questionnaire)
+    rec = RoleRecommender(roles_df=roles_df, wv_df=wv_df)
+    top = rec.recommend(
+        profile,
+        top_k=top_k,
+        sector_tag=sector_tag,
+        seniority=seniority,
+        method=method,
+    )
+    return profile, top

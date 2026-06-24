@@ -1,0 +1,26 @@
+role_id,title_en,title_ar,onet_soc,specialty,seniority,sector_tag,vision_2030_anchor,employer_examples,nca_alignment
+R01,SOC Analyst (Tier 1),محلل عمليات أمنية - المستوى الأول,15-1212.00,defensive_soc,entry,industry,national_cybersecurity_strategy,"STC SOLUTIONS, Help AG (e&), CyberKnight, SITE",ECC-1 / OTCC
+R02,SOC Analyst (Tier 2 - Threat Hunting),محلل عمليات أمنية - صيد التهديدات,15-1212.00,defensive_soc,mid,industry,national_cybersecurity_strategy,"SITE, Mozn, Elm, Help AG",ECC-1
+R03,Incident Response & Digital Forensics (DFIR) Lead,قائد الاستجابة للحوادث والأدلة الرقمية,15-1212.00,dfir,senior,both,national_cybersecurity_strategy,"Saudi Aramco, NCA, SAMA-CERT, Saudi-CERT",ECC-1 / OTCC
+R04,Penetration Tester (Web/Network),اختبار اختراق - شبكات وتطبيقات ويب,15-1299.04,offensive_pentest,mid,industry,national_cybersecurity_strategy,"SITE, CyberHat, Help AG, Salam",ECC-1
+R05,Red Team Operator,عمليات الفريق الأحمر,15-1299.04,offensive_redteam,senior,both,national_cybersecurity_strategy,"Saudi Aramco Red Team, NCA, SITE",ECC-1
+R06,Application Security / DevSecOps Engineer,مهندس أمن التطبيقات وتطوير آمن,15-1299.05,appsec,mid,industry,digital_economy,"Mozn, Lean, stc pay, Tabby, HungerStation",ECC-1
+R07,Cloud Security Engineer (AWS/Azure/Oracle),مهندس أمن السحابة,15-1299.05,cloud_sec,mid,industry,digital_economy,"STC Cloud, Oracle KSA, NEOM Tech",ECC-1 / CCC
+R08,OT/ICS Security Engineer (Oil & Gas / Utilities),مهندس أمن أنظمة التحكم الصناعي,17-2199.00,ot_ics,senior,industry,energy_transition,"Saudi Aramco, SABIC, SWCC, SEC",OTCC
+R09,Critical Infrastructure Cyber Defender,مدافع الأمن السيبراني للبنية التحتية الحرجة,15-1299.00,critical_infra,senior,both,national_cybersecurity_strategy,"NCA, Saudi Aramco, SEC, MEWA",CSCC
+R10,Identity & Access Management (IAM) Engineer,مهندس إدارة الهويات والوصول,15-1299.08,iam_pam,mid,both,digital_government,"NIC, SDAIA, Absher, Tawakkalna",ECC-1
+R11,Cryptography & PKI Engineer,مهندس التشفير والبنية التحتية للمفاتيح العامة,15-1299.07,cryptography,senior,both,digital_government,"NCA, NIC, KACST, SAMA",ECC-1
+R12,Cyber Threat Intelligence (CTI) Analyst,محلل استخبارات التهديدات السيبرانية,15-1212.00,cti,mid,both,national_cybersecurity_strategy,"NCA, Saudi-CERT, Help AG, SITE",ECC-1
+R13,Malware Reverse Engineer,محلل وعكس البرمجيات الخبيثة,15-1299.04,reverse_engineering,senior,both,national_cybersecurity_strategy,"NCA, KACST, Saudi-CERT, SITE",ECC-1
+R14,GRC / Cyber Compliance Analyst (ECC / SAMA / ISO 27001),محلل الحوكمة والمخاطر والامتثال السيبراني,13-1199.02,grc_compliance,mid,both,regulatory_compliance,"SAMA-regulated banks, NCA, MoF, GASTAT",ECC-1 / SAMA-CSF / ISO27001
+R15,Cyber Risk Quantification Analyst,محلل تقدير المخاطر السيبرانية الكمي,13-2061.00,cyber_risk_quant,mid,industry,financial_sector_dev,"SAMA-regulated banks, Tadawul, PIF portfolio",SAMA-CSF
+R16,Cybersecurity Policy & Regulation Specialist,أخصائي سياسات وتنظيم الأمن السيبراني,19-3094.00,policy,senior,gov,national_cybersecurity_strategy,"NCA, MCIT, CITC, MoI",CSCC
+R17,Security Architect (Enterprise / Zero Trust),مهندس معماري أمني - الثقة الصفرية,15-1299.08,security_architect,senior,both,digital_economy,"Saudi Aramco, SABIC, STC, Mobily, NEOM",ECC-1
+R18,Chief Information Security Officer (CISO),الرئيس التنفيذي لأمن المعلومات,11-3021.00,ciso,executive,both,national_cybersecurity_strategy,"PIF portfolio, Aramco, SABIC, SAMA banks",ECC-1 mandate
+R19,Cybersecurity Awareness & Training Lead,قائد التوعية والتدريب السيبراني,13-1151.00,awareness_training,mid,both,human_capability_development,"NCA, SDAIA Academy, Tuwaiq Academy, Misk",CSCC
+R20,Cyber Range / Tabletop Exercise Designer,مصمم تمارين السيبر والمحاكاة,25-1199.00,cyber_range,mid,both,human_capability_development,"NCA, Tuwaiq Academy, SDAIA Academy",CSCC
+R21,Adversarial ML / AI Security Researcher,باحث أمن الذكاء الاصطناعي والهجمات التنافسية,15-2051.01,ai_security,senior,both,ai_strategy,"SDAIA, Mozn, KAUST, KACST",AIEC
+R22,Mobile App Security Analyst,محلل أمن تطبيقات الهاتف المحمول,15-1299.05,mobile_security,mid,industry,digital_economy,"stc pay, Tabby, HungerStation, Jahez, Careem KSA",ECC-1
+R23,Network Security Engineer (Firewall/IDS/IPS),مهندس أمن الشبكات,15-1244.00,network_security,mid,both,national_cybersecurity_strategy,"STC, Mobily, Zain, Salam, NIC",ECC-1
+R24,Insider Threat & UEBA Analyst,محلل التهديدات الداخلية وسلوك المستخدم,15-1212.00,insider_threat,mid,both,national_cybersecurity_strategy,"Saudi Aramco, SABIC, SAMA banks, NCA",ECC-1
+R25,Cyber Audit & Assurance Lead,قائد التدقيق والضمان السيبراني,13-2011.00,audit_assurance,senior,both,regulatory_compliance,"SAMA-regulated banks, GAZT, Big4 KSA branches",ECC-1 / SAMA-CSF

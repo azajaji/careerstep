@@ -1,0 +1,81 @@
+﻿\documentclass[12pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{amssymb}
+
+\setdefaultlanguage{arabic}
+\setotherlanguage{english}
+
+\newfontfamily\arabicfont[Script=Arabic]{Arabic Typesetting}
+\newfontfamily\englishfont{Tahoma}
+
+\setlist[enumerate]{leftmargin=*, itemsep=6pt}
+\setlist[itemize]{leftmargin=*, itemsep=3pt, label={$\square$}}
+
+\definecolor{boxgray}{gray}{0.95}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+  {\huge\bfseries استبيان تقييم منصة خطوة}\\[6pt]
+  {\small المدة المتوقعة: 2--3 دقائق}
+\end{center}
+
+\vspace{1em}
+
+{\Large\bfseries عنك}
+
+\begin{enumerate}
+  \item أي وصف ينطبق عليك أكثر؟
+    \begin{itemize}
+      \item طالب جامعي
+      \item خريج حديث (خلال آخر 18 شهراً)
+      \item باحث عن عمل
+      \item متغيّر مسار مهني
+    \end{itemize}
+  \item العمر: \rule{4cm}{0.4pt}
+\end{enumerate}
+
+\vspace{0.8em}
+{\Large\bfseries قيّم كل عبارة من 1 (أعارض بشدة) إلى 5 (أوافق بشدة)}
+
+\begin{enumerate}[start=3]
+  \item منصة خطوة سهلة الاستخدام. \hfill \fbox{1}\,\fbox{2}\,\fbox{3}\,\fbox{4}\,\fbox{5}
+  \item ميزات المنصة تؤدي ما أحتاجه. \hfill \fbox{1}\,\fbox{2}\,\fbox{3}\,\fbox{4}\,\fbox{5}
+  \item تقييم السيرة الذاتية يساعدني على تحسينها. \hfill \fbox{1}\,\fbox{2}\,\fbox{3}\,\fbox{4}\,\fbox{5}
+  \item خارطة المهارات تساعدني على تحديد ما أتعلمه لاحقاً. \hfill \fbox{1}\,\fbox{2}\,\fbox{3}\,\fbox{4}\,\fbox{5}
+  \item المقابلة التجريبية تساعدني على الاستعداد للمقابلات الحقيقية. \hfill \fbox{1}\,\fbox{2}\,\fbox{3}\,\fbox{4}\,\fbox{5}
+  \item أنصح صديقاً باستخدام منصة خطوة. \hfill \fbox{1}\,\fbox{2}\,\fbox{3}\,\fbox{4}\,\fbox{5}
+\end{enumerate}
+
+\vspace{0.8em}
+{\Large\bfseries اختر نعم أو لا}
+
+\begin{enumerate}[start=9]
+  \item حصلت على اقتراحات مفيدة لتحسين سيرتي الذاتية. \hfill $\square$\,نعم \quad $\square$\,لا
+  \item أنشأت خارطة مهارات لوظيفة تهمني. \hfill $\square$\,نعم \quad $\square$\,لا
+  \item أكملت مقابلة تجريبية وقرأت التقييم. \hfill $\square$\,نعم \quad $\square$\,لا
+\end{enumerate}
+
+\vspace{0.8em}
+{\Large\bfseries سؤال مفتوح}
+
+\begin{enumerate}[start=12]
+  \item ما الشيء الواحد الذي تتمنى تغييره في منصة خطوة؟
+\end{enumerate}
+
+\noindent\colorbox{boxgray}{\parbox{\dimexpr\linewidth-2\fboxsep}{
+  \vspace{3.5em}\hfill\vspace{3.5em}
+}}
+
+\vspace{1em}
+\begin{center}
+  {\small شكراً لمشاركتك --- إجاباتك تساعدنا على تحسين المنصة.}
+\end{center}
+
+\end{document}
