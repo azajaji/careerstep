@@ -1,0 +1,433 @@
+{
+  "n_items": 25,
+  "scale": [
+    1,
+    5
+  ],
+  "reverse_keyed_items": [
+    "Q05",
+    "Q10",
+    "Q15",
+    "Q20",
+    "Q25"
+  ],
+  "analytical_item_step": 0.05,
+  "n_cases": 14,
+  "n_pass": 14,
+  "all_pass": true,
+  "cases": [
+    {
+      "case": "dominant_getting_ahead",
+      "note": "",
+      "scores": {
+        "getting_ahead": 1.0,
+        "getting_secure": 0.0,
+        "getting_free": 0.0,
+        "getting_high": 0.0,
+        "getting_balanced": 0.0
+      },
+      "checks": [
+        {
+          "orientation": "getting_ahead",
+          "expected": 1.0,
+          "actual": 1.0,
+          "pass": true
+        },
+        {
+          "dominant_expected": "getting_ahead",
+          "dominant_actual": "getting_ahead",
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "dominant_getting_secure",
+      "note": "",
+      "scores": {
+        "getting_ahead": 0.0,
+        "getting_secure": 1.0,
+        "getting_free": 0.0,
+        "getting_high": 0.0,
+        "getting_balanced": 0.0
+      },
+      "checks": [
+        {
+          "orientation": "getting_secure",
+          "expected": 1.0,
+          "actual": 1.0,
+          "pass": true
+        },
+        {
+          "dominant_expected": "getting_secure",
+          "dominant_actual": "getting_secure",
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "dominant_getting_free",
+      "note": "",
+      "scores": {
+        "getting_ahead": 0.0,
+        "getting_secure": 0.0,
+        "getting_free": 1.0,
+        "getting_high": 0.0,
+        "getting_balanced": 0.0
+      },
+      "checks": [
+        {
+          "orientation": "getting_free",
+          "expected": 1.0,
+          "actual": 1.0,
+          "pass": true
+        },
+        {
+          "dominant_expected": "getting_free",
+          "dominant_actual": "getting_free",
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "dominant_getting_high",
+      "note": "",
+      "scores": {
+        "getting_ahead": 0.0,
+        "getting_secure": 0.0,
+        "getting_free": 0.0,
+        "getting_high": 1.0,
+        "getting_balanced": 0.0
+      },
+      "checks": [
+        {
+          "orientation": "getting_high",
+          "expected": 1.0,
+          "actual": 1.0,
+          "pass": true
+        },
+        {
+          "dominant_expected": "getting_high",
+          "dominant_actual": "getting_high",
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "dominant_getting_balanced",
+      "note": "",
+      "scores": {
+        "getting_ahead": 0.0,
+        "getting_secure": 0.0,
+        "getting_free": 0.0,
+        "getting_high": 0.0,
+        "getting_balanced": 1.0
+      },
+      "checks": [
+        {
+          "orientation": "getting_balanced",
+          "expected": 1.0,
+          "actual": 1.0,
+          "pass": true
+        },
+        {
+          "dominant_expected": "getting_balanced",
+          "dominant_actual": "getting_balanced",
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "two_equally_dominant",
+      "note": "",
+      "scores": {
+        "getting_ahead": 1.0,
+        "getting_secure": 0.0,
+        "getting_free": 1.0,
+        "getting_high": 0.0,
+        "getting_balanced": 0.0
+      },
+      "checks": [
+        {
+          "orientation": "getting_ahead",
+          "expected": 1.0,
+          "actual": 1.0,
+          "pass": true
+        },
+        {
+          "orientation": "getting_free",
+          "expected": 1.0,
+          "actual": 1.0,
+          "pass": true
+        },
+        {
+          "tie_expected": [
+            "getting_ahead",
+            "getting_free"
+          ],
+          "tie_actual": [
+            "getting_ahead",
+            "getting_free"
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "all_neutral",
+      "note": "",
+      "scores": {
+        "getting_ahead": 0.5,
+        "getting_secure": 0.5,
+        "getting_free": 0.5,
+        "getting_high": 0.5,
+        "getting_balanced": 0.5
+      },
+      "checks": [
+        {
+          "orientation": "getting_ahead",
+          "expected": 0.5,
+          "actual": 0.5,
+          "pass": true
+        },
+        {
+          "orientation": "getting_secure",
+          "expected": 0.5,
+          "actual": 0.5,
+          "pass": true
+        },
+        {
+          "orientation": "getting_free",
+          "expected": 0.5,
+          "actual": 0.5,
+          "pass": true
+        },
+        {
+          "orientation": "getting_high",
+          "expected": 0.5,
+          "actual": 0.5,
+          "pass": true
+        },
+        {
+          "orientation": "getting_balanced",
+          "expected": 0.5,
+          "actual": 0.5,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "all_minimum",
+      "note": "",
+      "scores": {
+        "getting_ahead": 0.2,
+        "getting_secure": 0.2,
+        "getting_free": 0.2,
+        "getting_high": 0.2,
+        "getting_balanced": 0.2
+      },
+      "checks": [
+        {
+          "orientation": "getting_ahead",
+          "expected": 0.2,
+          "actual": 0.2,
+          "pass": true
+        },
+        {
+          "orientation": "getting_secure",
+          "expected": 0.2,
+          "actual": 0.2,
+          "pass": true
+        },
+        {
+          "orientation": "getting_free",
+          "expected": 0.2,
+          "actual": 0.2,
+          "pass": true
+        },
+        {
+          "orientation": "getting_high",
+          "expected": 0.2,
+          "actual": 0.2,
+          "pass": true
+        },
+        {
+          "orientation": "getting_balanced",
+          "expected": 0.2,
+          "actual": 0.2,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "all_maximum",
+      "note": "",
+      "scores": {
+        "getting_ahead": 0.8,
+        "getting_secure": 0.8,
+        "getting_free": 0.8,
+        "getting_high": 0.8,
+        "getting_balanced": 0.8
+      },
+      "checks": [
+        {
+          "orientation": "getting_ahead",
+          "expected": 0.8,
+          "actual": 0.8,
+          "pass": true
+        },
+        {
+          "orientation": "getting_secure",
+          "expected": 0.8,
+          "actual": 0.8,
+          "pass": true
+        },
+        {
+          "orientation": "getting_free",
+          "expected": 0.8,
+          "actual": 0.8,
+          "pass": true
+        },
+        {
+          "orientation": "getting_high",
+          "expected": 0.8,
+          "actual": 0.8,
+          "pass": true
+        },
+        {
+          "orientation": "getting_balanced",
+          "expected": 0.8,
+          "actual": 0.8,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "contradictory_within_orientation",
+      "note": "",
+      "scores": {
+        "getting_ahead": 0.5,
+        "getting_secure": 0.8,
+        "getting_free": 0.5,
+        "getting_high": 0.5,
+        "getting_balanced": 0.5
+      },
+      "checks": [
+        {
+          "orientation": "getting_secure",
+          "expected": 0.8,
+          "actual": 0.8,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "perturb_forward_item",
+      "note": "Q01 (forward) 3->4",
+      "scores": {
+        "getting_ahead": 0.55,
+        "getting_secure": 0.5,
+        "getting_free": 0.5,
+        "getting_high": 0.5,
+        "getting_balanced": 0.5
+      },
+      "checks": [
+        {
+          "orientation": "getting_ahead",
+          "expected": 0.55,
+          "actual": 0.55,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "perturb_reverse_item",
+      "note": "Q05 (reverse) 3->4",
+      "scores": {
+        "getting_ahead": 0.45,
+        "getting_secure": 0.5,
+        "getting_free": 0.5,
+        "getting_high": 0.5,
+        "getting_balanced": 0.5
+      },
+      "checks": [
+        {
+          "orientation": "getting_ahead",
+          "expected": 0.45,
+          "actual": 0.45,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "mixed_high_low",
+      "note": "",
+      "scores": {
+        "getting_ahead": 1.0,
+        "getting_secure": 0.0,
+        "getting_free": 1.0,
+        "getting_high": 0.0,
+        "getting_balanced": 1.0
+      },
+      "checks": [
+        {
+          "orientation": "getting_ahead",
+          "expected": 1.0,
+          "actual": 1.0,
+          "pass": true
+        },
+        {
+          "orientation": "getting_secure",
+          "expected": 0.0,
+          "actual": 0.0,
+          "pass": true
+        },
+        {
+          "orientation": "getting_free",
+          "expected": 1.0,
+          "actual": 1.0,
+          "pass": true
+        },
+        {
+          "orientation": "getting_high",
+          "expected": 0.0,
+          "actual": 0.0,
+          "pass": true
+        },
+        {
+          "orientation": "getting_balanced",
+          "expected": 1.0,
+          "actual": 1.0,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "determinism_repeat_execution",
+      "note": "",
+      "scores": {},
+      "checks": [
+        {
+          "pass": true
+        }
+      ],
+      "pass": true
+    }
+  ],
+  "_meta": {
+    "name": "exp7_questionnaire_scoring",
+    "timestamp": "2026-07-30T12:24:40.452963Z"
+  }
+}

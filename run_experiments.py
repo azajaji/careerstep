@@ -6,9 +6,11 @@ import runpy
 import sys
 
 MODULES = [
+    "experiments.exp7_questionnaire_scoring",
     "experiments.exp8_career_positioning",
     "experiments.exp8b_projection_sensitivity",
     "experiments.exp8c_suitability_weight_sweep",
+    "experiments.exp8d_shortlist_stability",
     "experiments.exp2_resume_job_alignment",
     "experiments.exp4_roadmap_quality",
     "experiments.exp5_interview_generation",

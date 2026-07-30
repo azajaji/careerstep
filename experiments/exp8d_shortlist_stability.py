@@ -1,0 +1,159 @@
+"""Shortlist stability of the role ranking under profile perturbation.
+
+MRR measures exact rank recovery. The guidance interface shows a shortlist, so
+this reports how much of the clean shortlist survives perturbation: top-k
+Jaccard overlap, first-rank churn, retention counts, and rank correlation.
+
+Uses its own generator so it cannot disturb the RNG stream of exp8.
+"""
+
+from __future__ import annotations
+
+from typing import Dict, List
+
+import numpy as np
+from scipy import stats
+
+from careerstep.career_positioning import ORIENTATIONS, OrientationProfile, RoleRecommender
+from careerstep.seeding import load_seeds, set_global_seeds
+from data.loaders import load_onet_work_values, load_saudi_cyber_roles
+from eval.stats import summarize
+from experiments._io import print_header, save_report
+
+SIGMAS = [0.05, 0.10, 0.20, 0.30]
+TRIALS_PER_ROLE = 20
+
+
+def _ranked_ids(recommender: RoleRecommender, vec: np.ndarray, n: int) -> List[str]:
+    profile = OrientationProfile(
+        scores={o: float(vec[i]) for i, o in enumerate(ORIENTATIONS)}
+    )
+    return [r.role_id for r in recommender.recommend(profile, top_k=n)]
+
+
+def _jaccard(a: List[str], b: List[str]) -> float:
+    sa, sb = set(a), set(b)
+    return len(sa & sb) / len(sa | sb) if (sa or sb) else 0.0
+
+
+def _rank_vector(order: List[str], universe: List[str]) -> List[int]:
+    pos = {rid: i for i, rid in enumerate(order)}
+    return [pos[rid] for rid in universe]
+
+
+def run() -> dict:
+    set_global_seeds()
+    seeds = load_seeds()
+    rng = np.random.default_rng(seeds["numpy_seed"])
+
+    roles = load_saudi_cyber_roles()
+    wv = load_onet_work_values()
+    recommender = RoleRecommender(roles_df=roles, wv_df=wv)
+
+    role_ids = list(recommender.centroid_df.index)
+    n = len(role_ids)
+    universe = sorted(role_ids)
+
+    # Several catalogue roles share an O*NET-SOC code and therefore have an
+    # identical centroid. Order within such a tie is arbitrary, so shortlist
+    # stability is also reported over centroid groups.
+    group_of: Dict[str, int] = {}
+    seen: Dict[tuple, int] = {}
+    for i, rid in enumerate(role_ids):
+        key = tuple(np.round(recommender.centroids[i], 10))
+        group_of[rid] = seen.setdefault(key, len(seen))
+    n_groups = len(seen)
+
+    def groups(order: List[str]) -> List[int]:
+        out: List[int] = []
+        for rid in order:
+            g = group_of[rid]
+            if g not in out:
+                out.append(g)
+        return out
+
+    clean: Dict[str, List[str]] = {}
+    for rid in role_ids:
+        centroid = recommender.centroid_df.loc[rid].to_numpy(dtype=float)
+        clean[rid] = _ranked_ids(recommender, centroid, n)
+
+    curve = []
+    for sigma in SIGMAS:
+        j3, j5, churn = [], [], []
+        keep2of3, keep3of5 = [], []
+        in3, out3, in5, out5 = [], [], [], []
+        spear, kend = [], []
+        g_churn, g_j3 = [], []
+
+        for rid in role_ids:
+            centroid = recommender.centroid_df.loc[rid].to_numpy(dtype=float)
+            base = clean[rid]
+            b3, b5 = base[:3], base[:5]
+            for _ in range(TRIALS_PER_ROLE):
+                noisy = np.clip(centroid + rng.normal(0.0, sigma, size=centroid.shape), 0.0, 1.0)
+                got = _ranked_ids(recommender, noisy, n)
+                g3, g5 = got[:3], got[:5]
+
+                j3.append(_jaccard(b3, g3))
+                j5.append(_jaccard(b5, g5))
+                churn.append(0.0 if got[0] == base[0] else 1.0)
+                kept3 = len(set(b3) & set(g3))
+                kept5 = len(set(b5) & set(g5))
+                keep2of3.append(1.0 if kept3 >= 2 else 0.0)
+                keep3of5.append(1.0 if kept5 >= 3 else 0.0)
+                in3.append(float(len(set(g3) - set(b3))))
+                out3.append(float(len(set(b3) - set(g3))))
+                in5.append(float(len(set(g5) - set(b5))))
+                out5.append(float(len(set(b5) - set(g5))))
+
+                # tie-aware: compare centroid groups, since order inside a
+                # group of identical centroids is arbitrary
+                gb, gg = groups(base), groups(got)
+                g_churn.append(0.0 if gg[0] == gb[0] else 1.0)
+                g_j3.append(_jaccard([str(x) for x in gb[:3]],
+                                     [str(x) for x in gg[:3]]))
+
+                rb = _rank_vector(base, universe)
+                rg = _rank_vector(got, universe)
+                spear.append(float(stats.spearmanr(rb, rg).statistic))
+                kend.append(float(stats.kendalltau(rb, rg).statistic))
+
+        curve.append({
+            "sigma": sigma,
+            "trials": len(j3),
+            "jaccard_top3": summarize(j3),
+            "jaccard_top5": summarize(j5),
+            "first_rank_changed": summarize(churn),
+            "retain_2_of_top3": summarize(keep2of3),
+            "retain_3_of_top5": summarize(keep3of5),
+            "entering_top3": summarize(in3),
+            "leaving_top3": summarize(out3),
+            "entering_top5": summarize(in5),
+            "leaving_top5": summarize(out5),
+            "spearman": summarize(spear),
+            "kendall": summarize(kend),
+            "group_first_rank_changed": summarize(g_churn),
+            "group_jaccard_top3": summarize(g_j3),
+        })
+
+        c = curve[-1]
+        print(f"  sigma={sigma:<5} J@3={c['jaccard_top3']['mean']:.3f} "
+              f"J@5={c['jaccard_top5']['mean']:.3f} "
+              f"top1-churn={c['first_rank_changed']['mean']:.3f} "
+              f"(group {c['group_first_rank_changed']['mean']:.3f}) "
+              f"rho={c['spearman']['mean']:.3f}")
+
+    return {
+        "n_roles": n,
+        "n_distinct_centroid_groups": n_groups,
+        "trials_per_role": TRIALS_PER_ROLE,
+        "sigmas": SIGMAS,
+        "stability_curve": curve,
+    }
+
+
+if __name__ == "__main__":
+    print_header("Experiment 8d - Shortlist stability under profile perturbation")
+    payload = run()
+    path = save_report("exp8_shortlist_stability", payload)
+    print(f"\nSaved {path}")
