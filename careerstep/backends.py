@@ -13,11 +13,7 @@ def _to_array(x) -> np.ndarray:
     return np.asarray(x, dtype=np.float32)
 
 
-# ---------------------------------------------------------------------------
 # Lexical (TF-IDF + BM25)
-# ---------------------------------------------------------------------------
-
-
 @dataclass
 class LexicalBackend:
     """TF-IDF cosine similarity + BM25 retrieval."""
@@ -44,11 +40,7 @@ class LexicalBackend:
         return list(np.argsort(scores)[::-1][:top_k])
 
 
-# ---------------------------------------------------------------------------
 # Embedding (sentence-transformers)
-# ---------------------------------------------------------------------------
-
-
 @dataclass
 class EmbeddingBackend:
     """Local sentence-transformers backend (default: all-MiniLM-L6-v2)."""
@@ -91,11 +83,7 @@ class EmbeddingBackend:
         return list(np.argsort(sims)[::-1][:top_k])
 
 
-# ---------------------------------------------------------------------------
 # LLM (OpenAI-compatible)
-# ---------------------------------------------------------------------------
-
-
 @dataclass
 class LLMBackend:
     """OpenAI-compatible chat backend, used only when ``OPENAI_API_KEY`` is set.
@@ -161,19 +149,10 @@ class LLMBackend:
         return list(np.argsort(sims)[::-1][:top_k])
 
 
-# ---------------------------------------------------------------------------
 # Factory
-# ---------------------------------------------------------------------------
-
-
 def get_backend(name: Optional[str] = None):
-    """Return a backend instance.
-
-    Resolution order:
-      1. Explicit ``name`` argument (``lexical`` / ``embedding`` / ``llm``).
-      2. ``KHUTWA_BACKEND`` environment variable.
-      3. ``llm`` if ``OPENAI_API_KEY`` is set, else ``embedding``.
-    """
+    """Resolve a backend: explicit ``name``, else $KHUTWA_BACKEND, else
+    ``llm`` if $OPENAI_API_KEY is set, else ``embedding``."""
     name = (name or os.environ.get("KHUTWA_BACKEND") or "").strip().lower()
     if not name:
         name = "llm" if os.environ.get("OPENAI_API_KEY") else "embedding"

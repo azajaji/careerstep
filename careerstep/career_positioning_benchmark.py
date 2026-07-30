@@ -17,10 +17,7 @@ from careerstep.career_positioning import (
 )
 
 
-# ---------------------------------------------------------------------------
 # Specialty -> required-skill bank
-# ---------------------------------------------------------------------------
-
 # One-line vocabulary per specialty. The bank is small on purpose: the
 # experiment compares rankers, not lexicons. The skill strings are
 # normalised lowercase tokens so the lexical scorer can use substring /
@@ -83,11 +80,7 @@ W_SKILL = 0.25
 W_FEAS  = 0.15
 
 
-# ---------------------------------------------------------------------------
 # Data classes
-# ---------------------------------------------------------------------------
-
-
 @dataclass(frozen=True)
 class SyntheticProfile:
     profile_id: int
@@ -98,16 +91,7 @@ class SyntheticProfile:
     level: str                       # "student" or "graduate"
 
 
-@dataclass
-class RankerResult:
-    ranked_role_ids: List[str]
-
-
-# ---------------------------------------------------------------------------
 # Required-skills derivation
-# ---------------------------------------------------------------------------
-
-
 def required_skills_for_role(specialty: str) -> List[str]:
     """Return the required-skill list for a role's specialty.
 
@@ -129,11 +113,7 @@ def role_to_required_skills(roles_df: pd.DataFrame) -> Dict[str, List[str]]:
     }
 
 
-# ---------------------------------------------------------------------------
 # Profile simulation
-# ---------------------------------------------------------------------------
-
-
 def _nearest_neighbours(
     centroids: np.ndarray,
     role_ids: Sequence[str],
@@ -173,19 +153,12 @@ def simulate_profiles(
 ) -> List[SyntheticProfile]:
     """Generate synthetic student profiles for the ranking benchmark.
 
-    For each profile:
-      * Pick a latent role uniformly from the catalogue.
-      * Set the CSMQ vector to the role's orientation centroid plus
-        Gaussian noise (sigma = ``noise_sigma``), clipped to [0, 1].
-      * Sample a partial skill set: keep ``skill_coverage`` of the
-        role's required skills + ``distractor_skills_per_profile``
-        random skills drawn from other roles.
-      * Acceptable target roles = the latent role plus its
-        ``n_neighbours_acceptable`` nearest neighbours in the
-        orientation-centroid space.
-      * Student level = "student" with probability ``student_share``
-        else "graduate".
-    """
+    Each profile draws a latent role uniformly, sets its CSMQ vector to that
+    role's centroid plus Gaussian noise (``noise_sigma``, clipped to [0,1]),
+    and keeps ``skill_coverage`` of the role's required skills plus
+    ``distractor_skills_per_profile`` skills from other roles. Acceptable
+    targets are the latent role and its ``n_neighbours_acceptable`` nearest
+    centroids."""
     role_ids = list(recommender.centroid_df.index)
     centroids = recommender.centroids
     required = role_to_required_skills(roles_df)
@@ -227,11 +200,7 @@ def simulate_profiles(
     return profiles
 
 
-# ---------------------------------------------------------------------------
 # Skill-readiness scorers
-# ---------------------------------------------------------------------------
-
-
 def lexical_skill_readiness(
     user_skills: Sequence[str], required: Sequence[str]
 ) -> float:
@@ -263,11 +232,7 @@ def semantic_skill_readiness(
     return float(covered) / len(required)
 
 
-# ---------------------------------------------------------------------------
 # Rankers
-# ---------------------------------------------------------------------------
-
-
 def _role_centroid_vec(recommender: RoleRecommender, role_id: str) -> np.ndarray:
     return recommender.centroids[recommender.centroid_df.index.get_loc(role_id)]
 
@@ -335,11 +300,7 @@ def rank_khutwa(profile: SyntheticProfile, recommender: RoleRecommender,
     return [role_ids[int(i)] for i in order]
 
 
-# ---------------------------------------------------------------------------
 # Ranking metrics
-# ---------------------------------------------------------------------------
-
-
 def recall_at_k(ranked: Sequence[str], acceptable: Sequence[str], k: int) -> float:
     top = set(ranked[:k])
     acc = set(acceptable)

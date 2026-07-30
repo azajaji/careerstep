@@ -135,7 +135,6 @@ def run(*, k: int = 10) -> dict:
         "tests": sig,
         "per_role_log": per_role_log,
         "k": k,
-        "note": "BLEU and ROUGE-L are intentionally omitted; see paper for rationale.",
     }
     print("\n  -- per-system aggregate --")
     for name, m in aggregate.items():

@@ -143,15 +143,8 @@ def _simulated_ranking_benchmark(
 ) -> Dict[str, object]:
     """Run the simulated-ranking benchmark over all rankers.
 
-    Compares: random / level-only / skills-only / csmq-only /
-    csmq+khutwa (lexical skill ablation) / csmq+khutwa (full).
-
-    The full Khutwa ranker uses a sentence-transformers backend for
-    skill readiness; the lexical ablation uses substring matching on
-    the same skill list. Acceptable target roles per profile are the
-    latent role plus its two nearest neighbours in the orientation
-    centroid space.
-    """
+    Compares random, level-only, skills-only, csmq-only, and the composite
+    under both a semantic and a lexical skill scorer."""
     profiles = simulate_profiles(
         recommender, roles_df,
         n_profiles=n_profiles, rng=rng, np_rng=np_rng,

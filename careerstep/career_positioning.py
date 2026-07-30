@@ -1,31 +1,9 @@
-"""Career positioning: CSMQ questionnaire -> Saudi cybersecurity role recommender.
+"""Career positioning: CSMQ responses -> ranked role recommendations.
 
-Pipeline
---------
-1. The user answers the 25-item Career Success Map Questionnaire (CSMQ;
-   Derr, 1986) on a 1-5 Likert scale.
-2. Responses are reverse-scored where indicated and aggregated into a
-   five-dimensional **orientation profile**:
-       (getting_ahead, getting_secure, getting_free,
-        getting_high,  getting_balanced)
-3. Each candidate role is anchored on the public **O*NET Work Values**
-   dataset (six dimensions: Achievement, Independence, Recognition,
-   Relationships, Support, Working Conditions). A linear projection
-   matrix translates a role's O*NET work-value vector into the same
-   five-dimensional CSMQ space, giving every role an *orientation
-   centroid* derived from data rather than hand-curation.
-4. A ``RoleRecommender`` ranks roles by cosine similarity between the
-   user's profile and each role centroid. It can be instantiated as a
-   pure cosine ranker or as a scikit-learn ``NearestNeighbors`` index
-   for an "ML-anchored" suggestion path.
-
-Public-dataset anchor
----------------------
-O*NET Work Values is published at https://www.onetcenter.org/database.html
-(file ``Work Values.txt`` in any 28.x release). Each occupation's six
-work-value scores are an "Extent" rating on a 0-7 scale. We embed a
-curated snapshot for the cybersecurity-relevant SOC codes and expose a
-downloader that refreshes against the live release.
+A 25-item Likert questionnaire is scored into a five-dimensional orientation
+profile. Each role is anchored on O*NET Work Values (six dimensions) and
+projected into the same five-dimensional space, then ranked by cosine
+similarity to the respondent's profile.
 """
 
 from __future__ import annotations
@@ -75,11 +53,7 @@ _PROJECTION = np.array(
 )
 
 
-# ---------------------------------------------------------------------------
 # Data classes
-# ---------------------------------------------------------------------------
-
-
 @dataclass(frozen=True)
 class CSMQItem:
     item_id: str
@@ -157,11 +131,7 @@ class Recommendation:
     rationale: str
 
 
-# ---------------------------------------------------------------------------
 # Scoring
-# ---------------------------------------------------------------------------
-
-
 def score_csmq(
     responses: Mapping[str, int],
     questionnaire: CSMQQuestionnaire,
@@ -197,11 +167,7 @@ def score_csmq(
     return OrientationProfile(scores=scores)
 
 
-# ---------------------------------------------------------------------------
 # O*NET WV -> CSMQ projection
-# ---------------------------------------------------------------------------
-
-
 def project_work_values_to_csmq(
     work_values: Mapping[str, float] | Sequence[float] | np.ndarray,
     *,
@@ -231,11 +197,7 @@ def project_work_values_to_csmq(
     return OrientationProfile(scores={o: float(v) for o, v in zip(ORIENTATIONS, projected)})
 
 
-# ---------------------------------------------------------------------------
 # Role recommender
-# ---------------------------------------------------------------------------
-
-
 def _cosine(u: np.ndarray, v: np.ndarray) -> float:
     nu = np.linalg.norm(u)
     nv = np.linalg.norm(v)
@@ -246,16 +208,11 @@ def _cosine(u: np.ndarray, v: np.ndarray) -> float:
 
 @dataclass
 class RoleRecommender:
-    """Rank cyber roles by fit to a user's CSMQ orientation profile.
+    """Rank roles by cosine similarity to a CSMQ orientation profile.
 
-    The recommender precomputes a CSMQ centroid for every role in
-    ``roles_df`` by projecting its O*NET Work Values vector. At query
-    time it returns the top-k roles ranked by cosine similarity.
-
-    The class also exposes an ``ml_index`` (sklearn ``NearestNeighbors``)
-    fitted on the role centroids so callers can use the "ML-anchored"
-    path: data-derived neighborhoods rather than ad-hoc weights.
-    """
+    A CSMQ centroid is precomputed per role by projecting its O*NET Work
+    Values vector. ``ml_index`` exposes the same centroids as a fitted
+    ``NearestNeighbors`` index."""
 
     roles_df: pd.DataFrame
     wv_df: pd.DataFrame
@@ -385,30 +342,4 @@ def _rationale(profile: OrientationProfile, centroid: Mapping[str, float]) -> st
     )
 
 
-# ---------------------------------------------------------------------------
 # Convenience: end-to-end
-# ---------------------------------------------------------------------------
-
-
-def recommend_from_responses(
-    responses: Mapping[str, int],
-    *,
-    questionnaire: CSMQQuestionnaire,
-    roles_df: pd.DataFrame,
-    wv_df: pd.DataFrame,
-    top_k: int = 5,
-    sector_tag: Optional[str] = None,
-    seniority: Optional[Iterable[str]] = None,
-    method: str = "cosine",
-) -> Tuple[OrientationProfile, List[Recommendation]]:
-    """One-shot: raw Likert responses -> (profile, top-k recommendations)."""
-    profile = score_csmq(responses, questionnaire)
-    rec = RoleRecommender(roles_df=roles_df, wv_df=wv_df)
-    top = rec.recommend(
-        profile,
-        top_k=top_k,
-        sector_tag=sector_tag,
-        seniority=seniority,
-        method=method,
-    )
-    return profile, top

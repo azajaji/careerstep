@@ -52,13 +52,10 @@ def wilcoxon_signed_rank(a: Sequence[float], b: Sequence[float], alpha: float = 
 
 
 def clopper_pearson_ci(successes: int, n: int, confidence: float = 0.95) -> tuple[float, float]:
-    """Exact (Clopper-Pearson) binomial confidence interval for a proportion.
+    """Exact (Clopper-Pearson) binomial interval for a proportion.
 
-    This is the correct interval for a 0/1 (Bernoulli) metric and, unlike a
-    bootstrap, remains well-defined at the boundaries ``p=0`` and ``p=1`` where
-    the resample variance is zero (the case that produced ``[nan, nan]`` from
-    the BCa bootstrap on a saturated top-k hit rate).
-    """
+    Stays defined at ``p=0`` and ``p=1``, where a bootstrap has zero resample
+    variance."""
     if n <= 0:
         return float("nan"), float("nan")
     alpha = 1.0 - confidence
@@ -77,12 +74,8 @@ def bootstrap_ci(
 ) -> tuple[float, float, float]:
     """Returns ``(point_estimate, ci_low, ci_high)`` via BCa bootstrap.
 
-    Degenerate inputs are handled explicitly so the routine never emits
-    ``nan`` for a defined statistic: an empty array returns ``nan`` bounds,
-    and a zero-variance array (every resample identical, e.g. a saturated
-    proportion) falls back to the exact binomial interval when the data are
-    0/1 and to the point estimate otherwise.
-    """
+    Empty input gives ``nan`` bounds. Zero-variance input falls back to the
+    exact binomial interval for 0/1 data, else to the point estimate."""
     arr = np.asarray(values, dtype=float)
     if arr.size == 0:
         return float("nan"), float("nan"), float("nan")
@@ -103,65 +96,6 @@ def bootstrap_ci(
         random_state=np.random.default_rng(seed),
     )
     return point, float(res.confidence_interval.low), float(res.confidence_interval.high)
-
-
-def clustered_bootstrap_ci(
-    values: Sequence[float],
-    cluster_ids: Sequence,
-    *,
-    n_resamples: int = 2000,
-    confidence: float = 0.95,
-    seed: int = 20260523,
-) -> tuple[float, float, float]:
-    """Cluster bootstrap CI for the mean of ``values``.
-
-    ``cluster_ids[i]`` is the cluster label of observation ``values[i]``
-    (e.g. its CV id, JD id, or role). Each resample draws clusters *with
-    replacement* and pools every observation from the drawn clusters, then
-    recomputes the mean; the percentile interval over ``n_resamples`` draws
-    is returned. This accounts for within-cluster correlation (the same CVs
-    and JDs recur across many ``(c, j)`` pairs), which the pair-level
-    bootstrap ignores.
-
-    Returns ``(point_estimate, ci_low, ci_high)``.
-    """
-    arr = np.asarray(values, dtype=float)
-    ids = list(cluster_ids)
-    if arr.size == 0 or len(ids) != arr.size:
-        return float("nan"), float("nan"), float("nan")
-    point = float(arr.mean())
-    # Group observation indices by cluster (cluster ids may be tuples).
-    groups: dict = {}
-    for i, cid in enumerate(ids):
-        groups.setdefault(cid, []).append(i)
-    cluster_labels = list(groups.keys())
-    cluster_idx = [np.asarray(groups[c], dtype=int) for c in cluster_labels]
-    n_clusters = len(cluster_labels)
-    if n_clusters < 2:
-        return point, point, point
-    rng = np.random.default_rng(seed)
-    boots = np.empty(n_resamples, dtype=float)
-    for b in range(n_resamples):
-        chosen = rng.integers(0, n_clusters, size=n_clusters)
-        pooled = np.concatenate([cluster_idx[c] for c in chosen])
-        boots[b] = arr[pooled].mean()
-    alpha = 1.0 - confidence
-    return (point,
-            float(np.quantile(boots, alpha / 2.0)),
-            float(np.quantile(boots, 1.0 - alpha / 2.0)))
-
-
-def cronbach_alpha(matrix) -> float:
-    """Cronbach alpha for inter-item reliability (rows = participants, cols = items)."""
-    arr = np.asarray(matrix, dtype=float)
-    if arr.ndim != 2 or arr.shape[1] < 2:
-        return float("nan")
-    item_vars = arr.var(axis=0, ddof=1)
-    total_var = arr.sum(axis=1).var(ddof=1)
-    if total_var == 0:
-        return float("nan")
-    k = arr.shape[1]
-    return float(k / (k - 1) * (1 - item_vars.sum() / total_var))
 
 
 def summarize(values: Sequence[float]) -> dict:

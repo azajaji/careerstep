@@ -3,11 +3,11 @@
     "generic": {
       "semantic_similarity": {
         "n": 10,
-        "mean": 0.4513390868902206,
-        "sd": 0.001307989293834365,
+        "mean": 0.45133908092975616,
+        "sd": 0.0013079914846603848,
         "min": 0.450906366109848,
         "max": 0.45505839586257935,
-        "ci95_low": 0.45090638995170595,
+        "ci95_low": 0.45090638399124144,
         "ci95_high": 0.45298238694667814
       },
       "diversity": {
@@ -16,8 +16,8 @@
         "sd": 0.0,
         "min": 0.7030166983604431,
         "max": 0.7030166983604431,
-        "ci95_low": NaN,
-        "ci95_high": NaN
+        "ci95_low": 0.7030166983604431,
+        "ci95_high": 0.7030166983604431
       },
       "coverage": {
         "n": 10,
@@ -32,21 +32,21 @@
     "retrieval": {
       "semantic_similarity": {
         "n": 10,
-        "mean": 0.625639671087265,
-        "sd": 0.1741025432802784,
-        "min": 0.4376763701438904,
+        "mean": 0.6256396442651748,
+        "sd": 0.17410254310985804,
+        "min": 0.437676340341568,
         "max": 0.8756445646286011,
-        "ci95_low": 0.5288963656753214,
-        "ci95_high": 0.7352131411140771
+        "ci95_low": 0.5288963579632344,
+        "ci95_high": 0.7352130989772069
       },
       "diversity": {
         "n": 10,
-        "mean": 0.7056998252868653,
-        "sd": 0.16165409633829605,
-        "min": 0.41110146045684814,
+        "mean": 0.7056998312473297,
+        "sd": 0.16165409007834047,
+        "min": 0.4111015200614929,
         "max": 0.8823128342628479,
-        "ci95_low": 0.5986042272536488,
-        "ci95_high": 0.7896572351062607
+        "ci95_low": 0.5986042308223354,
+        "ci95_high": 0.7896572344400208
       },
       "coverage": {
         "n": 10,
@@ -61,21 +61,21 @@
     "khutwa": {
       "semantic_similarity": {
         "n": 10,
-        "mean": 0.36187803745269775,
-        "sd": 0.03464328353905996,
-        "min": 0.3260085880756378,
-        "max": 0.4158531725406647,
-        "ci95_low": 0.3443309565169902,
-        "ci95_high": 0.3856570496111547
+        "mean": 0.3618780493736267,
+        "sd": 0.03464327799456721,
+        "min": 0.32600855827331543,
+        "max": 0.4158531129360199,
+        "ci95_low": 0.34433098463095924,
+        "ci95_high": 0.38565704864411743
       },
       "diversity": {
         "n": 10,
-        "mean": 0.7113758265972138,
-        "sd": 0.03621755403594185,
+        "mean": 0.7113758146762847,
+        "sd": 0.036217558149965,
         "min": 0.635191798210144,
-        "max": 0.7545422315597534,
-        "ci95_low": 0.6869542814065647,
-        "ci95_high": 0.7296381644973178
+        "max": 0.7545422911643982,
+        "ci95_low": 0.6869542717105412,
+        "ci95_high": 0.7296381638772012
       },
       "coverage": {
         "n": 10,
@@ -83,8 +83,8 @@
         "sd": 0.0,
         "min": 1.0,
         "max": 1.0,
-        "ci95_low": NaN,
-        "ci95_high": NaN
+        "ci95_low": 0.6915028921812392,
+        "ci95_high": 1.0
       }
     }
   },
@@ -149,7 +149,7 @@
       ],
       "khutwa": {
         "semantic_similarity": 0.3377212882041931,
-        "diversity": 0.7018035650253296,
+        "diversity": 0.7018035054206848,
         "coverage": 1.0
       },
       "khutwa_questions": [
@@ -210,8 +210,8 @@
         "Describe a failure and what you learned."
       ],
       "khutwa": {
-        "semantic_similarity": 0.3502277731895447,
-        "diversity": 0.7486904263496399,
+        "semantic_similarity": 0.35022783279418945,
+        "diversity": 0.7486903667449951,
         "coverage": 1.0
       },
       "khutwa_questions": [
@@ -256,7 +256,7 @@
       ],
       "retrieval": {
         "semantic_similarity": 0.7386429905891418,
-        "diversity": 0.7113319039344788,
+        "diversity": 0.711331844329834,
         "coverage": 0.3333333333333333
       },
       "retrieval_questions": [
@@ -272,7 +272,7 @@
         "Describe a time you led a project under tight deadlines."
       ],
       "khutwa": {
-        "semantic_similarity": 0.3590080738067627,
+        "semantic_similarity": 0.35900813341140747,
         "diversity": 0.7094058394432068,
         "coverage": 1.0
       },
@@ -317,7 +317,7 @@
         "Do you have any questions for us?"
       ],
       "retrieval": {
-        "semantic_similarity": 0.5065793991088867,
+        "semantic_similarity": 0.5065793395042419,
         "diversity": 0.8376806378364563,
         "coverage": 0.16666666666666666
       },
@@ -334,7 +334,7 @@
         "Explain the difference between processes and threads."
       ],
       "khutwa": {
-        "semantic_similarity": 0.412296861410141,
+        "semantic_similarity": 0.41229692101478577,
         "diversity": 0.6941748857498169,
         "coverage": 1.0
       },
@@ -396,7 +396,7 @@
         "Explain the principle of least privilege with an example."
       ],
       "khutwa": {
-        "semantic_similarity": 0.3350742757320404,
+        "semantic_similarity": 0.335074245929718,
         "diversity": 0.7234905958175659,
         "coverage": 1.0
       },
@@ -424,7 +424,7 @@
         "docker"
       ],
       "generic": {
-        "semantic_similarity": 0.4509064257144928,
+        "semantic_similarity": 0.450906366109848,
         "diversity": 0.7030166983604431,
         "coverage": 0.16666666666666666
       },
@@ -441,8 +441,8 @@
         "Do you have any questions for us?"
       ],
       "retrieval": {
-        "semantic_similarity": 0.4708237648010254,
-        "diversity": 0.8531312346458435,
+        "semantic_similarity": 0.4708237051963806,
+        "diversity": 0.8531312942504883,
         "coverage": 0.16666666666666666
       },
       "retrieval_questions": [
@@ -458,7 +458,7 @@
         "Describe a failure and what you learned."
       ],
       "khutwa": {
-        "semantic_similarity": 0.3515934348106384,
+        "semantic_similarity": 0.35159340500831604,
         "diversity": 0.7524569034576416,
         "coverage": 1.0
       },
@@ -501,7 +501,7 @@
         "Do you have any questions for us?"
       ],
       "retrieval": {
-        "semantic_similarity": 0.4376763701438904,
+        "semantic_similarity": 0.437676340341568,
         "diversity": 0.8387696743011475,
         "coverage": 0.0
       },
@@ -518,7 +518,7 @@
         "How do you measure project ROI?"
       ],
       "khutwa": {
-        "semantic_similarity": 0.3260085880756378,
+        "semantic_similarity": 0.32600855827331543,
         "diversity": 0.6897002458572388,
         "coverage": 1.0
       },
@@ -561,7 +561,7 @@
         "Do you have any questions for us?"
       ],
       "retrieval": {
-        "semantic_similarity": 0.811808705329895,
+        "semantic_similarity": 0.8118085861206055,
         "diversity": 0.5633831024169922,
         "coverage": 0.0
       },
@@ -578,7 +578,7 @@
         "Tell me about a conflict you resolved on a team."
       ],
       "khutwa": {
-        "semantic_similarity": 0.4158531725406647,
+        "semantic_similarity": 0.4158531129360199,
         "diversity": 0.635191798210144,
         "coverage": 1.0
       },
@@ -640,7 +640,7 @@
       ],
       "khutwa": {
         "semantic_similarity": 0.40072259306907654,
-        "diversity": 0.7545422315597534,
+        "diversity": 0.7545422911643982,
         "coverage": 1.0
       },
       "khutwa_questions": [
@@ -683,7 +683,7 @@
       ],
       "retrieval": {
         "semantic_similarity": 0.8525382280349731,
-        "diversity": 0.41110146045684814,
+        "diversity": 0.4111015200614929,
         "coverage": 0.0
       },
       "retrieval_questions": [
@@ -699,8 +699,8 @@
         "How do you prioritize competing tasks?"
       ],
       "khutwa": {
-        "semantic_similarity": 0.3302743136882782,
-        "diversity": 0.7043017745018005,
+        "semantic_similarity": 0.33027440309524536,
+        "diversity": 0.7043017148971558,
         "coverage": 1.0
       },
       "khutwa_questions": [
@@ -718,9 +718,8 @@
     }
   ],
   "k": 10,
-  "note": "BLEU and ROUGE-L are intentionally omitted; see paper for rationale.",
   "_meta": {
     "name": "exp5_interview_generation",
-    "timestamp": "2026-05-12T17:42:58.501038Z"
+    "timestamp": "2026-07-30T05:30:31.637191Z"
   }
 }

@@ -24,11 +24,7 @@ import pandas as pd
 from data import CACHE_DIR, DATA_DIR
 
 
-# ---------------------------------------------------------------------------
 # Cache helpers
-# ---------------------------------------------------------------------------
-
-
 def _cache_path(name: str) -> Path:
     return CACHE_DIR / f"{name}.parquet"
 
@@ -51,11 +47,7 @@ def _is_fresh(name: str) -> bool:
     return _cache_path(name).exists()
 
 
-# ---------------------------------------------------------------------------
 # Synthetic fallback (small but realistic)
-# ---------------------------------------------------------------------------
-
-
 _CATEGORIES = [
     "Data Scientist", "Software Engineer", "DevOps Engineer", "ML Engineer",
     "Frontend Developer", "Backend Developer", "Cybersecurity Analyst",
@@ -114,11 +106,7 @@ def _synth_jd(role: str, rng: random.Random) -> str:
     ).strip()
 
 
-# ---------------------------------------------------------------------------
 # Resume corpus (Kaggle / Innovatiana)
-# ---------------------------------------------------------------------------
-
-
 def download_resumes(force: bool = False) -> Path:
     name = "resumes"
     if _is_fresh(name) and not force:
@@ -163,11 +151,7 @@ def download_resumes(force: bool = False) -> Path:
     return _save(pd.DataFrame(rows), name)
 
 
-# ---------------------------------------------------------------------------
 # Resume <-> JD pairs (for retrieval/alignment)
-# ---------------------------------------------------------------------------
-
-
 def download_resume_jd_pairs(force: bool = False) -> Path:
     name = "resume_jd_pairs"
     if _is_fresh(name) and not force:
@@ -206,11 +190,7 @@ def download_resume_jd_pairs(force: bool = False) -> Path:
     return _save(pd.DataFrame(pairs), name)
 
 
-# ---------------------------------------------------------------------------
 # O*NET / ESCO occupations
-# ---------------------------------------------------------------------------
-
-
 def download_occupations(force: bool = False) -> Path:
     name = "occupations"
     if _is_fresh(name) and not force:
@@ -225,11 +205,7 @@ def download_occupations(force: bool = False) -> Path:
     return _save(df, name)
 
 
-# ---------------------------------------------------------------------------
 # HR interview question corpora
-# ---------------------------------------------------------------------------
-
-
 def download_interview_questions(force: bool = False) -> Path:
     name = "interview_questions"
     if _is_fresh(name) and not force:
@@ -310,11 +286,7 @@ def download_interview_questions(force: bool = False) -> Path:
     return _save(pd.DataFrame(rows), name)
 
 
-# ---------------------------------------------------------------------------
 # Learning resource bank (for roadmap quality)
-# ---------------------------------------------------------------------------
-
-
 def download_learning_resources(force: bool = False) -> Path:
     name = "learning_resources"
     if _is_fresh(name) and not force:
@@ -340,11 +312,7 @@ def download_learning_resources(force: bool = False) -> Path:
     return _save(pd.DataFrame(rows), name)
 
 
-# ---------------------------------------------------------------------------
 # Annotated feedback references (for Experiment 6)
-# ---------------------------------------------------------------------------
-
-
 def download_feedback_references(force: bool = False) -> Path:
     name = "feedback_refs"
     if _is_fresh(name) and not force:
@@ -368,11 +336,7 @@ def download_feedback_references(force: bool = False) -> Path:
     return _save(pd.DataFrame(rows), name)
 
 
-# ---------------------------------------------------------------------------
 # Driver
-# ---------------------------------------------------------------------------
-
-
 def download_resumes_ar(force: bool = False) -> Path:
     """Arabic resume seed corpus."""
     name = "resumes_ar"
@@ -393,11 +357,7 @@ def download_resume_jd_pairs_ar(force: bool = False) -> Path:
     return _save(pd.DataFrame(resume_jd_pairs_ar()), name)
 
 
-# ---------------------------------------------------------------------------
 # Career positioning: O*NET Work Values + Saudi cyber roles
-# ---------------------------------------------------------------------------
-
-
 ONET_WV_URL = (
     # O*NET 28.x text release; the file we want is ``Work Values.txt`` inside
     # the database archive. Refresh against
@@ -407,15 +367,11 @@ ONET_WV_URL = (
 
 
 def download_onet_work_values(force: bool = False) -> Path:
-    """O*NET Work Values for the cyber-relevant SOC codes.
+    """O*NET Work Values for the catalogue's SOC codes.
 
-    Prefers the checked-in curated snapshot
-    (``data/raw/onet_work_values_cyber.csv``). If a live release is
-    fetched (e.g. with ``ONET_REFRESH=1``), the full ``Work Values.txt``
-    file is reshaped into the same six-column schema and replaces the
-    snapshot in cache, restricted to the SOC codes used by the Saudi
-    cyber role table.
-    """
+    Uses the curated snapshot ``data/onet_work_values.csv``. With
+    ``ONET_REFRESH=1`` it instead fetches the live release and reshapes it
+    into the same schema, restricted to the SOC codes in use."""
     name = "onet_work_values"
     if _is_fresh(name) and not force:
         return _cache_path(name)

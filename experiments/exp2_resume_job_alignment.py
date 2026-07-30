@@ -21,11 +21,7 @@ from careerstep.reranker import CrossEncoderReranker
 from careerstep.seeding import set_global_seeds
 
 
-# ---------------------------------------------------------------------------
 # Lexical-overlap stratification
-# ---------------------------------------------------------------------------
-
-
 def _tokenset(text: str) -> set:
     return {t for t in text.lower().split() if len(t) > 2}
 
@@ -46,11 +42,7 @@ def _stratify(values: List[float]) -> List[str]:
     return ["low" if v <= q1 else ("high" if v >= q2 else "mid") for v in arr]
 
 
-# ---------------------------------------------------------------------------
 # Evaluation helpers
-# ---------------------------------------------------------------------------
-
-
 def _rank_dense_then_rerank(
     aligner: CVJobAligner,
     rer: CrossEncoderReranker,
@@ -94,11 +86,7 @@ def _evaluate_rankings(
     return summary
 
 
-# ---------------------------------------------------------------------------
 # English track
-# ---------------------------------------------------------------------------
-
-
 def _run_english_track(rer: CrossEncoderReranker) -> dict:
     resumes = load_resumes().sort_values("resume_id").reset_index(drop=True)
     jds = load_jds().sort_values("jd_id").reset_index(drop=True)
@@ -197,11 +185,7 @@ def _run_english_track(rer: CrossEncoderReranker) -> dict:
     }
 
 
-# ---------------------------------------------------------------------------
 # Arabic track
-# ---------------------------------------------------------------------------
-
-
 def _run_arabic_track(rer: CrossEncoderReranker) -> dict:
     """Treat each Arabic CV as a query against the bag of all Arabic JDs.
 

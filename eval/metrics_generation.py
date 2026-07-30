@@ -9,39 +9,6 @@ import numpy as np
 from careerstep.backends import EmbeddingBackend
 
 
-def bleu(hypothesis: str, references: Sequence[str]) -> float:
-    if not hypothesis or not references:
-        return 0.0
-    import sacrebleu
-
-    res = sacrebleu.sentence_bleu(hypothesis, list(references))
-    return float(res.score / 100.0)
-
-
-def rouge_l(hypothesis: str, reference: str) -> float:
-    if not hypothesis or not reference:
-        return 0.0
-    from rouge_score import rouge_scorer
-
-    scorer = rouge_scorer.RougeScorer(["rougeL"], use_stemmer=True)
-    return float(scorer.score(reference, hypothesis)["rougeL"].fmeasure)
-
-
-def bertscore_f1(hypotheses: Sequence[str], references: Sequence[str]) -> float:
-    if not hypotheses or not references:
-        return 0.0
-    from bert_score import score
-
-    _, _, f1 = score(
-        list(hypotheses),
-        list(references),
-        lang="en",
-        rescale_with_baseline=False,
-        verbose=False,
-    )
-    return float(f1.mean().item())
-
-
 def semantic_similarity(
     hypotheses: Sequence[str],
     references: Sequence[str],

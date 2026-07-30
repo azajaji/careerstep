@@ -6,7 +6,12 @@ import re
 from typing import Sequence
 
 from careerstep.backends import EmbeddingBackend
-from careerstep.feedback import ACTION_VERB_RE
+
+ACTION_VERB_RE = re.compile(
+    r"\b(add|include|quantify|remove|rewrite|expand|reduce|highlight|clarify|"
+    r"emphasize|move|reorder|practice|study|learn|complete|enrol|prepare)\b",
+    re.IGNORECASE,
+)
 
 
 def feedback_coverage(
@@ -40,9 +45,8 @@ def actionability(predicted_bullets: Sequence[str]) -> float:
 
 _ENTITY_RE = re.compile(r"\b[A-Z][a-zA-Z+#.]{2,}\b")
 
-# Heuristic stop-list of capitalised words that are not real entities
-# (common English, generic CV vocabulary, structural section names).
-# Bullets that mention only these are NOT flagged as hallucinated.
+# Capitalised words that are not real entities (common English, generic CV
+# vocabulary, section names). Bullets mentioning only these are not flagged.
 _ENTITY_STOPLIST = {
     "CV", "AI", "ATS", "Add", "Include", "Move", "Remove", "Practice",
     "Rewrite", "Expand", "Reduce", "Highlight", "Clarify", "Emphasize",
@@ -57,13 +61,9 @@ _ENTITY_STOPLIST = {
 def hallucination_rate(predicted_bullets: Sequence[str], source_text: str) -> float:
     """Heuristic ungrounded-entity rate (higher = more hallucinations).
 
-    A bullet is flagged when it mentions a capitalised token that is
-    (a) not in the heuristic stop-list of common English / structural
-    words and (b) does not appear in the source text. This is a coarse
-    proxy for grounding; it under-counts subtler hallucinations and
-    over-counts proper-noun-like words. The metric is reported alongside
-    its complement (groundedness = 1 - rate) for transparency.
-    """
+    Flags a bullet when it holds a capitalised token that is absent from both
+    the stop-list and the source text. A coarse proxy: it misses subtler
+    hallucinations and over-counts proper-noun-like words."""
     if not predicted_bullets:
         return 0.0
     src_low = source_text.lower()

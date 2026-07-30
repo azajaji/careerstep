@@ -53,10 +53,6 @@ def load_feedback_references() -> pd.DataFrame:
     return _load("feedback_refs", dl.download_feedback_references)
 
 
-def load_resumes_ar() -> pd.DataFrame:
-    return _load("resumes_ar", dl.download_resumes_ar)
-
-
 def load_resume_jd_pairs_ar() -> pd.DataFrame:
     return _load("resume_jd_pairs_ar", dl.download_resume_jd_pairs_ar)
 
@@ -83,11 +79,6 @@ def load_saudi_cyber_roles() -> pd.DataFrame:
 
 
 # -- convenience -----------------------------------------------------------
-
-
-def resumes_by_category() -> dict[str, List[str]]:
-    df = load_resumes()
-    return {cat: df.loc[df["category"] == cat, "text"].tolist() for cat in df["category"].unique()}
 
 
 def role_to_skills() -> dict[str, List[str]]:

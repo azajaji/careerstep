@@ -122,14 +122,11 @@ def _build_recommender(W: np.ndarray, roles_df, wv_df) -> RoleRecommender:
 
 
 def _advance_like_exp8_noise_curve(np_rng: np.random.Generator, n_roles: int) -> None:
-    """Reproduce exp8's RNG state at the profile-generation call.
+    """Advance the RNG exactly as exp8 does before simulate_profiles.
 
-    exp8 threads a single numpy Generator through the noise-robustness curve
-    *before* simulate_profiles, so the profile draws depend on that prior
-    consumption. We replay the identical draw pattern (sigmas x roles x
-    trials, each a normal of size 5) so this harness reproduces the published
-    headline profiles exactly. The values are discarded; only the state
-    advances."""
+    exp8 consumes the same Generator in its noise curve first, so the profile
+    draws depend on that prior consumption. Values are discarded; only the
+    state advances."""
     for sigma in (0.00, 0.05, 0.10, 0.20, 0.30):
         for _ in range(n_roles):
             for _ in range(20):

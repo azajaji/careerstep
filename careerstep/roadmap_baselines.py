@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import random
+import zlib
 from collections import Counter
 from dataclasses import dataclass
 from typing import List, Sequence
@@ -26,7 +27,8 @@ class RandomRoadmap:
         resource_bank: Sequence[LearningItem],
         k: int = 8,
     ) -> List[LearningItem]:
-        rng = random.Random(self.seed + hash(role) % 10_000)
+        # crc32, not hash(): str hashing is randomised per process.
+        rng = random.Random(self.seed + zlib.crc32(role.encode("utf-8")) % 10_000)
         if not resource_bank:
             return []
         return rng.sample(list(resource_bank), k=min(k, len(resource_bank)))

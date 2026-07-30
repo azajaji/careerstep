@@ -111,15 +111,3 @@ def parse_cv(text: str, *, skill_vocab: Optional[Sequence[str]] = None) -> Parse
             break
     return cv
 
-
-def parse_pdf(path: str | Path) -> ParsedCV:
-    """Parse a CV stored as PDF using ``pypdf``."""
-    from pypdf import PdfReader
-
-    reader = PdfReader(str(path))
-    text = "\n".join((page.extract_text() or "") for page in reader.pages)
-    return parse_cv(text)
-
-
-def parse_many(texts: Iterable[str]) -> List[ParsedCV]:
-    return [parse_cv(t) for t in texts]

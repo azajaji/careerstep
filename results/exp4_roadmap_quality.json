@@ -3,39 +3,39 @@
     "random": {
       "coverage": {
         "n": 10,
-        "mean": 0.26666666666666666,
-        "sd": 0.2960647243216495,
+        "mean": 0.2,
+        "sd": 0.21942686286812776,
         "min": 0.0,
-        "max": 0.6666666666666666,
-        "ci95_low": 0.1,
-        "ci95_high": 0.45
+        "max": 0.5,
+        "ci95_low": 0.08333333333333333,
+        "ci95_high": 0.35
       },
       "overlap": {
         "n": 10,
-        "mean": 0.07666666666666666,
-        "sd": 0.09109153659044718,
+        "mean": 0.05472222222222223,
+        "sd": 0.058091060677094276,
         "min": 0.0,
-        "max": 0.2222222222222222,
-        "ci95_low": 0.03111111111111111,
-        "ci95_high": 0.13333333333333336
+        "max": 0.125,
+        "ci95_low": 0.021111111111111112,
+        "ci95_high": 0.08944444444444444
       },
       "semantic_similarity": {
         "n": 10,
-        "mean": 0.44969047605991364,
-        "sd": 0.09366072598628249,
-        "min": 0.2971181273460388,
-        "max": 0.6048823595046997,
-        "ci95_low": 0.3955380469560623,
-        "ci95_high": 0.5057487275329087
+        "mean": 0.4571127206087112,
+        "sd": 0.08122438901192092,
+        "min": 0.3156757056713104,
+        "max": 0.5468359589576721,
+        "ci95_low": 0.40292046989708813,
+        "ci95_high": 0.5004038554710143
       },
       "diversity": {
         "n": 10,
-        "mean": 0.7529827177524566,
-        "sd": 0.013411787756619695,
-        "min": 0.7350340485572815,
-        "max": 0.7754233479499817,
-        "ci95_low": 0.7452432568686959,
-        "ci95_high": 0.7608919317184724
+        "mean": 0.7066037058830261,
+        "sd": 0.04360103666054144,
+        "min": 0.6057546138763428,
+        "max": 0.7692155241966248,
+        "ci95_low": 0.6722737908363342,
+        "ci95_high": 0.7268210817716863
       },
       "novelty": {
         "n": 10,
@@ -43,8 +43,8 @@
         "sd": 0.0,
         "min": 0.0,
         "max": 0.0,
-        "ci95_low": NaN,
-        "ci95_high": NaN
+        "ci95_low": 0.0,
+        "ci95_high": 0.3084971078187608
       }
     },
     "popularity": {
@@ -68,21 +68,21 @@
       },
       "semantic_similarity": {
         "n": 10,
-        "mean": 0.4649709552526474,
-        "sd": 0.20871817175770152,
-        "min": 0.31190189719200134,
+        "mean": 0.4649709165096283,
+        "sd": 0.20871818178181217,
+        "min": 0.31190186738967896,
         "max": 1.0,
-        "ci95_low": 0.3796182608002,
-        "ci95_high": 0.6614262379091718
+        "ci95_low": 0.37961822500811493,
+        "ci95_high": 0.6614262265211256
       },
       "diversity": {
         "n": 10,
-        "mean": 0.27670371532440186,
+        "mean": 0.2767038345336914,
         "sd": 0.0,
-        "min": 0.27670371532440186,
-        "max": 0.27670371532440186,
-        "ci95_low": NaN,
-        "ci95_high": NaN
+        "min": 0.2767038345336914,
+        "max": 0.2767038345336914,
+        "ci95_low": 0.2767038345336914,
+        "ci95_high": 0.2767038345336914
       },
       "novelty": {
         "n": 10,
@@ -90,8 +90,8 @@
         "sd": 0.0,
         "min": 0.0,
         "max": 0.0,
-        "ci95_low": NaN,
-        "ci95_high": NaN
+        "ci95_low": 0.0,
+        "ci95_high": 0.3084971078187608
       }
     },
     "lexical": {
@@ -101,8 +101,8 @@
         "sd": 0.0,
         "min": 1.0,
         "max": 1.0,
-        "ci95_low": NaN,
-        "ci95_high": NaN
+        "ci95_low": 0.6915028921812392,
+        "ci95_high": 1.0
       },
       "overlap": {
         "n": 10,
@@ -115,21 +115,21 @@
       },
       "semantic_similarity": {
         "n": 10,
-        "mean": 0.6380770653486252,
-        "sd": 0.15526009855585152,
+        "mean": 0.6380770474672317,
+        "sd": 0.15526010869387838,
         "min": 0.43652021884918213,
         "max": 0.8851277232170105,
-        "ci95_low": 0.5567722519693453,
-        "ci95_high": 0.7421184428732421
+        "ci95_low": 0.5568041195384461,
+        "ci95_high": 0.7421698476381975
       },
       "diversity": {
         "n": 10,
-        "mean": 0.5525448739528656,
-        "sd": 0.04270516088021852,
-        "min": 0.46915918588638306,
+        "mean": 0.5525448322296143,
+        "sd": 0.04270517604412503,
+        "min": 0.4691591262817383,
         "max": 0.6086211204528809,
-        "ci95_low": 0.5254411607892494,
-        "ci95_high": 0.5756103812127679
+        "ci95_low": 0.5254411091250811,
+        "ci95_high": 0.5756103438436718
       },
       "novelty": {
         "n": 10,
@@ -137,8 +137,8 @@
         "sd": 0.0,
         "min": 0.0,
         "max": 0.0,
-        "ci95_low": NaN,
-        "ci95_high": NaN
+        "ci95_low": 0.0,
+        "ci95_high": 0.3084971078187608
       }
     },
     "khutwa": {
@@ -148,8 +148,8 @@
         "sd": 0.0,
         "min": 1.0,
         "max": 1.0,
-        "ci95_low": NaN,
-        "ci95_high": NaN
+        "ci95_low": 0.6915028921812392,
+        "ci95_high": 1.0
       },
       "overlap": {
         "n": 10,
@@ -162,21 +162,21 @@
       },
       "semantic_similarity": {
         "n": 10,
-        "mean": 0.9688126087188721,
-        "sd": 0.07183987217453863,
-        "min": 0.7826524376869202,
+        "mean": 0.9688125967979431,
+        "sd": 0.07183984638762338,
+        "min": 0.7826524972915649,
         "max": 1.0000001192092896,
-        "ci95_low": 0.8941556692123414,
-        "ci95_high": 1.0000000238418578
+        "ci95_low": 0.8941556913342565,
+        "ci95_high": 1.0
       },
       "diversity": {
         "n": 10,
-        "mean": 0.5173755407333374,
-        "sd": 0.04870961847657273,
+        "mean": 0.5173755347728729,
+        "sd": 0.048709615186359495,
         "min": 0.4068095088005066,
         "max": 0.5648095607757568,
-        "ci95_low": 0.4790522738002149,
-        "ci95_high": 0.5396381811936003
+        "ci95_low": 0.4790522634398509,
+        "ci95_high": 0.5396381645727653
       },
       "novelty": {
         "n": 10,
@@ -184,8 +184,8 @@
         "sd": 0.0,
         "min": 0.0,
         "max": 0.0,
-        "ci95_low": NaN,
-        "ci95_high": NaN
+        "ci95_low": 0.0,
+        "ci95_high": 0.3084971078187608
       }
     }
   },
@@ -218,31 +218,31 @@
         "statistics"
       ],
       "random": {
-        "coverage": 0.0,
-        "overlap": 0.0,
-        "semantic_similarity": 0.4035870432853699,
-        "diversity": 0.7479373216629028,
+        "coverage": 0.3333333333333333,
+        "overlap": 0.125,
+        "semantic_similarity": 0.5449008941650391,
+        "diversity": 0.6963137984275818,
         "novelty": 0.0
       },
       "popularity": {
         "coverage": 0.0,
         "overlap": 0.0,
-        "semantic_similarity": 0.5749342441558838,
-        "diversity": 0.27670371532440186,
+        "semantic_similarity": 0.574934184551239,
+        "diversity": 0.2767038345336914,
         "novelty": 0.0
       },
       "lexical": {
         "coverage": 1.0,
         "overlap": 0.75,
-        "semantic_similarity": 0.8851276636123657,
-        "diversity": 0.46915918588638306,
+        "semantic_similarity": 0.8851277232170105,
+        "diversity": 0.4691591262817383,
         "novelty": 0.0
       },
       "khutwa": {
         "coverage": 1.0,
         "overlap": 1.0,
         "semantic_similarity": 1.0,
-        "diversity": 0.5295069217681885,
+        "diversity": 0.5295068621635437,
         "novelty": 0.0
       }
     },
@@ -254,30 +254,30 @@
         "sql"
       ],
       "random": {
-        "coverage": 0.6666666666666666,
-        "overlap": 0.2222222222222222,
-        "semantic_similarity": 0.6048823595046997,
-        "diversity": 0.7573848962783813,
+        "coverage": 0.3333333333333333,
+        "overlap": 0.1,
+        "semantic_similarity": 0.5468359589576721,
+        "diversity": 0.7203787565231323,
         "novelty": 0.0
       },
       "popularity": {
         "coverage": 0.0,
         "overlap": 0.0,
-        "semantic_similarity": 0.4869479537010193,
-        "diversity": 0.27670371532440186,
+        "semantic_similarity": 0.4869478642940521,
+        "diversity": 0.2767038345336914,
         "novelty": 0.0
       },
       "lexical": {
         "coverage": 1.0,
         "overlap": 0.6,
         "semantic_similarity": 0.7047803401947021,
-        "diversity": 0.5740233659744263,
+        "diversity": 0.5740233063697815,
         "novelty": 0.0
       },
       "khutwa": {
         "coverage": 1.0,
         "overlap": 1.0,
-        "semantic_similarity": 1.0000001192092896,
+        "semantic_similarity": 1.0,
         "diversity": 0.5405774116516113,
         "novelty": 0.0
       }
@@ -290,17 +290,17 @@
         "linux"
       ],
       "random": {
-        "coverage": 0.6666666666666666,
-        "overlap": 0.2222222222222222,
-        "semantic_similarity": 0.5710902810096741,
-        "diversity": 0.7651972770690918,
+        "coverage": 0.3333333333333333,
+        "overlap": 0.1,
+        "semantic_similarity": 0.5307557582855225,
+        "diversity": 0.671734094619751,
         "novelty": 0.0
       },
       "popularity": {
         "coverage": 0.0,
         "overlap": 0.0,
         "semantic_similarity": 0.4526386260986328,
-        "diversity": 0.27670371532440186,
+        "diversity": 0.2767038345336914,
         "novelty": 0.0
       },
       "lexical": {
@@ -314,7 +314,7 @@
         "coverage": 1.0,
         "overlap": 1.0,
         "semantic_similarity": 1.0,
-        "diversity": 0.5047081708908081,
+        "diversity": 0.5047081112861633,
         "novelty": 0.0
       }
     },
@@ -328,29 +328,29 @@
       "random": {
         "coverage": 0.0,
         "overlap": 0.0,
-        "semantic_similarity": 0.4527601897716522,
-        "diversity": 0.7754233479499817,
+        "semantic_similarity": 0.453449547290802,
+        "diversity": 0.7165597677230835,
         "novelty": 0.0
       },
       "popularity": {
         "coverage": 0.3333333333333333,
         "overlap": 0.3333333333333333,
         "semantic_similarity": 1.0,
-        "diversity": 0.27670371532440186,
+        "diversity": 0.2767038345336914,
         "novelty": 0.0
       },
       "lexical": {
         "coverage": 1.0,
         "overlap": 0.75,
-        "semantic_similarity": 0.8851277232170105,
-        "diversity": 0.5188261866569519,
+        "semantic_similarity": 0.8851276636123657,
+        "diversity": 0.5188261270523071,
         "novelty": 0.0
       },
       "khutwa": {
         "coverage": 1.0,
         "overlap": 1.0,
         "semantic_similarity": 1.0,
-        "diversity": 0.5644698143005371,
+        "diversity": 0.5644698739051819,
         "novelty": 0.0
       }
     },
@@ -362,23 +362,23 @@
         "css"
       ],
       "random": {
-        "coverage": 0.3333333333333333,
-        "overlap": 0.1,
-        "semantic_similarity": 0.4393663704395294,
-        "diversity": 0.7350340485572815,
+        "coverage": 0.0,
+        "overlap": 0.0,
+        "semantic_similarity": 0.3156757056713104,
+        "diversity": 0.7143324613571167,
         "novelty": 0.0
       },
       "popularity": {
         "coverage": 0.0,
         "overlap": 0.0,
-        "semantic_similarity": 0.3179486393928528,
-        "diversity": 0.27670371532440186,
+        "semantic_similarity": 0.317948579788208,
+        "diversity": 0.2767038345336914,
         "novelty": 0.0
       },
       "lexical": {
         "coverage": 1.0,
         "overlap": 0.6,
-        "semantic_similarity": 0.5393823981285095,
+        "semantic_similarity": 0.5393823385238647,
         "diversity": 0.6086211204528809,
         "novelty": 0.0
       },
@@ -400,29 +400,29 @@
       "random": {
         "coverage": 0.0,
         "overlap": 0.0,
-        "semantic_similarity": 0.42315173149108887,
-        "diversity": 0.7478976845741272,
+        "semantic_similarity": 0.49853014945983887,
+        "diversity": 0.6057546138763428,
         "novelty": 0.0
       },
       "popularity": {
         "coverage": 0.0,
         "overlap": 0.0,
-        "semantic_similarity": 0.48525434732437134,
-        "diversity": 0.27670371532440186,
+        "semantic_similarity": 0.48525431752204895,
+        "diversity": 0.2767038345336914,
         "novelty": 0.0
       },
       "lexical": {
         "coverage": 1.0,
         "overlap": 0.6,
         "semantic_similarity": 0.7047803401947021,
-        "diversity": 0.5964899659156799,
+        "diversity": 0.5964899063110352,
         "novelty": 0.0
       },
       "khutwa": {
         "coverage": 1.0,
         "overlap": 1.0,
         "semantic_similarity": 1.0,
-        "diversity": 0.5598890781402588,
+        "diversity": 0.5598889589309692,
         "novelty": 0.0
       }
     },
@@ -435,22 +435,22 @@
       "random": {
         "coverage": 0.0,
         "overlap": 0.0,
-        "semantic_similarity": 0.2971181273460388,
-        "diversity": 0.7634500861167908,
+        "semantic_similarity": 0.4030776619911194,
+        "diversity": 0.7078600525856018,
         "novelty": 0.0
       },
       "popularity": {
         "coverage": 0.0,
         "overlap": 0.0,
         "semantic_similarity": 0.3225519061088562,
-        "diversity": 0.27670371532440186,
+        "diversity": 0.2767038345336914,
         "novelty": 0.0
       },
       "lexical": {
         "coverage": 1.0,
         "overlap": 0.5,
         "semantic_similarity": 0.49354323744773865,
-        "diversity": 0.5435661673545837,
+        "diversity": 0.543566107749939,
         "novelty": 0.0
       },
       "khutwa": {
@@ -470,15 +470,15 @@
       "random": {
         "coverage": 0.0,
         "overlap": 0.0,
-        "semantic_similarity": 0.3418562710285187,
-        "diversity": 0.7421948313713074,
+        "semantic_similarity": 0.3437599539756775,
+        "diversity": 0.7375321388244629,
         "novelty": 0.0
       },
       "popularity": {
         "coverage": 0.0,
         "overlap": 0.0,
-        "semantic_similarity": 0.31190189719200134,
-        "diversity": 0.27670371532440186,
+        "semantic_similarity": 0.31190186738967896,
+        "diversity": 0.2767038345336914,
         "novelty": 0.0
       },
       "lexical": {
@@ -491,7 +491,7 @@
       "khutwa": {
         "coverage": 1.0,
         "overlap": 0.4,
-        "semantic_similarity": 0.7826524376869202,
+        "semantic_similarity": 0.7826524972915649,
         "diversity": 0.5648095607757568,
         "novelty": 0.0
       }
@@ -505,29 +505,29 @@
       "random": {
         "coverage": 0.5,
         "overlap": 0.1111111111111111,
-        "semantic_similarity": 0.49265021085739136,
-        "diversity": 0.7597062587738037,
+        "semantic_similarity": 0.4828200340270996,
+        "diversity": 0.7692155241966248,
         "novelty": 0.0
       },
       "popularity": {
         "coverage": 0.0,
         "overlap": 0.0,
-        "semantic_similarity": 0.36178329586982727,
-        "diversity": 0.27670371532440186,
+        "semantic_similarity": 0.3617832660675049,
+        "diversity": 0.2767038345336914,
         "novelty": 0.0
       },
       "lexical": {
         "coverage": 1.0,
         "overlap": 0.5,
         "semantic_similarity": 0.5396915674209595,
-        "diversity": 0.5358965396881104,
+        "diversity": 0.5358964800834656,
         "novelty": 0.0
       },
       "khutwa": {
         "coverage": 1.0,
         "overlap": 1.0,
-        "semantic_similarity": 1.0,
-        "diversity": 0.5239741802215576,
+        "semantic_similarity": 0.9999999403953552,
+        "diversity": 0.5239742994308472,
         "novelty": 0.0
       }
     },
@@ -540,22 +540,22 @@
       "random": {
         "coverage": 0.5,
         "overlap": 0.1111111111111111,
-        "semantic_similarity": 0.47044217586517334,
-        "diversity": 0.7356014251708984,
+        "semantic_similarity": 0.451321542263031,
+        "diversity": 0.7263558506965637,
         "novelty": 0.0
       },
       "popularity": {
         "coverage": 0.0,
         "overlap": 0.0,
-        "semantic_similarity": 0.3357486426830292,
-        "diversity": 0.27670371532440186,
+        "semantic_similarity": 0.335748553276062,
+        "diversity": 0.2767038345336914,
         "novelty": 0.0
       },
       "lexical": {
         "coverage": 1.0,
         "overlap": 0.5,
-        "semantic_similarity": 0.5685890913009644,
-        "diversity": 0.5320718884468079,
+        "semantic_similarity": 0.5685889720916748,
+        "diversity": 0.5320718288421631,
         "novelty": 0.0
       },
       "khutwa": {
@@ -569,6 +569,6 @@
   ],
   "_meta": {
     "name": "exp4_roadmap_quality",
-    "timestamp": "2026-05-12T17:42:34.618001Z"
+    "timestamp": "2026-07-30T05:30:26.733931Z"
   }
 }

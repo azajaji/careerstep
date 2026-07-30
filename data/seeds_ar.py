@@ -391,6 +391,3 @@ _PARAPHRASE_AR: List[Dict[str, Any]] = [
     {"taxonomy": "CISSP",                  "cv_phrase": "أنوي التقدم لشهادة CISSP في غضون عام",           "label": 0, "skill_type": "cert"},
 ]
 
-
-def paraphrase_pairs_ar() -> List[Dict[str, Any]]:
-    return list(_PARAPHRASE_AR)
