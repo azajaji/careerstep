@@ -59,17 +59,9 @@ ONET_WORK_VALUES: Tuple[str, ...] = (
 )
 
 # Linear projection matrix W (5 x 6) mapping a role's O*NET work-value
-# vector to its CSMQ orientation centroid. Each row is L1-normalized so
-# that the projected value remains on the same 0-7 scale as the inputs.
-#
-# Rationale (per Derr 1986 typology mapped onto O*NET 6-value model):
-#   getting_ahead   <- Achievement, Recognition           (status climb)
-#   getting_secure  <- Support, Working Conditions, -Independence
-#                                                        (stability over autonomy)
-#   getting_free    <- Independence, Working Conditions  (autonomy over structure)
-#   getting_high    <- Achievement, Independence, WC     (challenge / mastery)
-#   getting_balanced <- Working Conditions, Relationships, Support
-#                                                        (integration / quality of life)
+# vector to its CSMQ orientation centroid. Each row is L1-normalized, so the
+# projection stays on the input scale. Row weights follow the Derr typology;
+# the derivation is given in the paper.
 _PROJECTION = np.array(
     [
         # ach,  ind,   rec,   rel,   sup,   wc
@@ -178,19 +170,10 @@ def score_csmq(
 ) -> OrientationProfile:
     """Convert raw Likert responses to a five-dim orientation profile.
 
-    Each item is reverse-scored where flagged, then normalized to [0, 1]
-    by ``(value - min) / (max - min)``. The orientation score is the
-    arithmetic mean of its five items.
-
-    Parameters
-    ----------
-    responses
-        Mapping of ``item_id`` -> Likert value (e.g. 1..5).
-    questionnaire
-        Loaded ``CSMQQuestionnaire`` (defines items + scale).
-    strict
-        If True, raises ``KeyError`` for missing items. If False,
-        treats missing items as the scale midpoint.
+    Each item is reverse-scored where flagged, then normalized to [0, 1] by
+    ``(value - min) / (max - min)``. An orientation score is the arithmetic
+    mean of its five items. Missing items raise under ``strict``, otherwise
+    take the scale midpoint.
     """
     lo, hi = questionnaire.scale_min, questionnaire.scale_max
     mid = (lo + hi) / 2.0
@@ -331,20 +314,9 @@ class RoleRecommender:
     ) -> List[Recommendation]:
         """Return the top-k roles for ``profile``.
 
-        Parameters
-        ----------
-        profile
-            User's CSMQ orientation profile (from :func:`score_csmq`).
-        top_k
-            Number of roles to return.
-        sector_tag
-            Optional filter: ``"gov"``, ``"industry"``, or ``"both"``.
-        seniority
-            Optional filter, e.g. ``("entry", "mid")``.
-        method
-            ``"cosine"`` (default, uses the precomputed centroids) or
-            ``"knn"`` (uses the fitted sklearn ``NearestNeighbors``;
-            equivalent ordering, exposed for ML-pipeline integration).
+        ``method="cosine"`` scores against the precomputed centroids;
+        ``"knn"`` uses the fitted ``NearestNeighbors`` index and gives the
+        same ordering.
         """
         user_vec = profile.as_vector()
 

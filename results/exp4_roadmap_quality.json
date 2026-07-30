@@ -1,0 +1,574 @@
+{
+  "systems": {
+    "random": {
+      "coverage": {
+        "n": 10,
+        "mean": 0.26666666666666666,
+        "sd": 0.2960647243216495,
+        "min": 0.0,
+        "max": 0.6666666666666666,
+        "ci95_low": 0.1,
+        "ci95_high": 0.45
+      },
+      "overlap": {
+        "n": 10,
+        "mean": 0.07666666666666666,
+        "sd": 0.09109153659044718,
+        "min": 0.0,
+        "max": 0.2222222222222222,
+        "ci95_low": 0.03111111111111111,
+        "ci95_high": 0.13333333333333336
+      },
+      "semantic_similarity": {
+        "n": 10,
+        "mean": 0.44969047605991364,
+        "sd": 0.09366072598628249,
+        "min": 0.2971181273460388,
+        "max": 0.6048823595046997,
+        "ci95_low": 0.3955380469560623,
+        "ci95_high": 0.5057487275329087
+      },
+      "diversity": {
+        "n": 10,
+        "mean": 0.7529827177524566,
+        "sd": 0.013411787756619695,
+        "min": 0.7350340485572815,
+        "max": 0.7754233479499817,
+        "ci95_low": 0.7452432568686959,
+        "ci95_high": 0.7608919317184724
+      },
+      "novelty": {
+        "n": 10,
+        "mean": 0.0,
+        "sd": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "ci95_low": NaN,
+        "ci95_high": NaN
+      }
+    },
+    "popularity": {
+      "coverage": {
+        "n": 10,
+        "mean": 0.03333333333333333,
+        "sd": 0.10540925533894596,
+        "min": 0.0,
+        "max": 0.3333333333333333,
+        "ci95_low": 0.0,
+        "ci95_high": 0.158652840939673
+      },
+      "overlap": {
+        "n": 10,
+        "mean": 0.03333333333333333,
+        "sd": 0.10540925533894596,
+        "min": 0.0,
+        "max": 0.3333333333333333,
+        "ci95_low": 0.0,
+        "ci95_high": 0.158652840939673
+      },
+      "semantic_similarity": {
+        "n": 10,
+        "mean": 0.4649709552526474,
+        "sd": 0.20871817175770152,
+        "min": 0.31190189719200134,
+        "max": 1.0,
+        "ci95_low": 0.3796182608002,
+        "ci95_high": 0.6614262379091718
+      },
+      "diversity": {
+        "n": 10,
+        "mean": 0.27670371532440186,
+        "sd": 0.0,
+        "min": 0.27670371532440186,
+        "max": 0.27670371532440186,
+        "ci95_low": NaN,
+        "ci95_high": NaN
+      },
+      "novelty": {
+        "n": 10,
+        "mean": 0.0,
+        "sd": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "ci95_low": NaN,
+        "ci95_high": NaN
+      }
+    },
+    "lexical": {
+      "coverage": {
+        "n": 10,
+        "mean": 1.0,
+        "sd": 0.0,
+        "min": 1.0,
+        "max": 1.0,
+        "ci95_low": NaN,
+        "ci95_high": NaN
+      },
+      "overlap": {
+        "n": 10,
+        "mean": 0.5900000000000001,
+        "sd": 0.09660917830792959,
+        "min": 0.5,
+        "max": 0.75,
+        "ci95_low": 0.542440705016425,
+        "ci95_high": 0.6599999999999999
+      },
+      "semantic_similarity": {
+        "n": 10,
+        "mean": 0.6380770653486252,
+        "sd": 0.15526009855585152,
+        "min": 0.43652021884918213,
+        "max": 0.8851277232170105,
+        "ci95_low": 0.5567722519693453,
+        "ci95_high": 0.7421184428732421
+      },
+      "diversity": {
+        "n": 10,
+        "mean": 0.5525448739528656,
+        "sd": 0.04270516088021852,
+        "min": 0.46915918588638306,
+        "max": 0.6086211204528809,
+        "ci95_low": 0.5254411607892494,
+        "ci95_high": 0.5756103812127679
+      },
+      "novelty": {
+        "n": 10,
+        "mean": 0.0,
+        "sd": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "ci95_low": NaN,
+        "ci95_high": NaN
+      }
+    },
+    "khutwa": {
+      "coverage": {
+        "n": 10,
+        "mean": 1.0,
+        "sd": 0.0,
+        "min": 1.0,
+        "max": 1.0,
+        "ci95_low": NaN,
+        "ci95_high": NaN
+      },
+      "overlap": {
+        "n": 10,
+        "mean": 0.89,
+        "sd": 0.23309511649396117,
+        "min": 0.4,
+        "max": 1.0,
+        "ci95_low": 0.6965833880038034,
+        "ci95_high": 1.0
+      },
+      "semantic_similarity": {
+        "n": 10,
+        "mean": 0.9688126087188721,
+        "sd": 0.07183987217453863,
+        "min": 0.7826524376869202,
+        "max": 1.0000001192092896,
+        "ci95_low": 0.8941556692123414,
+        "ci95_high": 1.0000000238418578
+      },
+      "diversity": {
+        "n": 10,
+        "mean": 0.5173755407333374,
+        "sd": 0.04870961847657273,
+        "min": 0.4068095088005066,
+        "max": 0.5648095607757568,
+        "ci95_low": 0.4790522738002149,
+        "ci95_high": 0.5396381811936003
+      },
+      "novelty": {
+        "n": 10,
+        "mean": 0.0,
+        "sd": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "ci95_low": NaN,
+        "ci95_high": NaN
+      }
+    }
+  },
+  "tests": {
+    "khutwa_vs_random_coverage": {
+      "method": "wilcoxon_signed_rank",
+      "statistic": 0.0,
+      "p_value": 0.001953125,
+      "significant": true
+    },
+    "khutwa_vs_popularity_coverage": {
+      "method": "wilcoxon_signed_rank",
+      "statistic": 0.0,
+      "p_value": 0.001953125,
+      "significant": true
+    },
+    "khutwa_vs_lexical_coverage": {
+      "method": "wilcoxon",
+      "statistic": 0.0,
+      "p_value": 1.0,
+      "significant": false
+    }
+  },
+  "per_role_log": [
+    {
+      "role": "Data Scientist",
+      "missing_skills": [
+        "pandas",
+        "sql",
+        "statistics"
+      ],
+      "random": {
+        "coverage": 0.0,
+        "overlap": 0.0,
+        "semantic_similarity": 0.4035870432853699,
+        "diversity": 0.7479373216629028,
+        "novelty": 0.0
+      },
+      "popularity": {
+        "coverage": 0.0,
+        "overlap": 0.0,
+        "semantic_similarity": 0.5749342441558838,
+        "diversity": 0.27670371532440186,
+        "novelty": 0.0
+      },
+      "lexical": {
+        "coverage": 1.0,
+        "overlap": 0.75,
+        "semantic_similarity": 0.8851276636123657,
+        "diversity": 0.46915918588638306,
+        "novelty": 0.0
+      },
+      "khutwa": {
+        "coverage": 1.0,
+        "overlap": 1.0,
+        "semantic_similarity": 1.0,
+        "diversity": 0.5295069217681885,
+        "novelty": 0.0
+      }
+    },
+    {
+      "role": "Software Engineer",
+      "missing_skills": [
+        "java",
+        "git",
+        "sql"
+      ],
+      "random": {
+        "coverage": 0.6666666666666666,
+        "overlap": 0.2222222222222222,
+        "semantic_similarity": 0.6048823595046997,
+        "diversity": 0.7573848962783813,
+        "novelty": 0.0
+      },
+      "popularity": {
+        "coverage": 0.0,
+        "overlap": 0.0,
+        "semantic_similarity": 0.4869479537010193,
+        "diversity": 0.27670371532440186,
+        "novelty": 0.0
+      },
+      "lexical": {
+        "coverage": 1.0,
+        "overlap": 0.6,
+        "semantic_similarity": 0.7047803401947021,
+        "diversity": 0.5740233659744263,
+        "novelty": 0.0
+      },
+      "khutwa": {
+        "coverage": 1.0,
+        "overlap": 1.0,
+        "semantic_similarity": 1.0000001192092896,
+        "diversity": 0.5405774116516113,
+        "novelty": 0.0
+      }
+    },
+    {
+      "role": "DevOps Engineer",
+      "missing_skills": [
+        "docker",
+        "terraform",
+        "linux"
+      ],
+      "random": {
+        "coverage": 0.6666666666666666,
+        "overlap": 0.2222222222222222,
+        "semantic_similarity": 0.5710902810096741,
+        "diversity": 0.7651972770690918,
+        "novelty": 0.0
+      },
+      "popularity": {
+        "coverage": 0.0,
+        "overlap": 0.0,
+        "semantic_similarity": 0.4526386260986328,
+        "diversity": 0.27670371532440186,
+        "novelty": 0.0
+      },
+      "lexical": {
+        "coverage": 1.0,
+        "overlap": 0.6,
+        "semantic_similarity": 0.6232280731201172,
+        "diversity": 0.5972702503204346,
+        "novelty": 0.0
+      },
+      "khutwa": {
+        "coverage": 1.0,
+        "overlap": 1.0,
+        "semantic_similarity": 1.0,
+        "diversity": 0.5047081708908081,
+        "novelty": 0.0
+      }
+    },
+    {
+      "role": "ML Engineer",
+      "missing_skills": [
+        "mlops",
+        "pytorch",
+        "python"
+      ],
+      "random": {
+        "coverage": 0.0,
+        "overlap": 0.0,
+        "semantic_similarity": 0.4527601897716522,
+        "diversity": 0.7754233479499817,
+        "novelty": 0.0
+      },
+      "popularity": {
+        "coverage": 0.3333333333333333,
+        "overlap": 0.3333333333333333,
+        "semantic_similarity": 1.0,
+        "diversity": 0.27670371532440186,
+        "novelty": 0.0
+      },
+      "lexical": {
+        "coverage": 1.0,
+        "overlap": 0.75,
+        "semantic_similarity": 0.8851277232170105,
+        "diversity": 0.5188261866569519,
+        "novelty": 0.0
+      },
+      "khutwa": {
+        "coverage": 1.0,
+        "overlap": 1.0,
+        "semantic_similarity": 1.0,
+        "diversity": 0.5644698143005371,
+        "novelty": 0.0
+      }
+    },
+    {
+      "role": "Frontend Developer",
+      "missing_skills": [
+        "typescript",
+        "javascript",
+        "css"
+      ],
+      "random": {
+        "coverage": 0.3333333333333333,
+        "overlap": 0.1,
+        "semantic_similarity": 0.4393663704395294,
+        "diversity": 0.7350340485572815,
+        "novelty": 0.0
+      },
+      "popularity": {
+        "coverage": 0.0,
+        "overlap": 0.0,
+        "semantic_similarity": 0.3179486393928528,
+        "diversity": 0.27670371532440186,
+        "novelty": 0.0
+      },
+      "lexical": {
+        "coverage": 1.0,
+        "overlap": 0.6,
+        "semantic_similarity": 0.5393823981285095,
+        "diversity": 0.6086211204528809,
+        "novelty": 0.0
+      },
+      "khutwa": {
+        "coverage": 1.0,
+        "overlap": 1.0,
+        "semantic_similarity": 1.0000001192092896,
+        "diversity": 0.5038326978683472,
+        "novelty": 0.0
+      }
+    },
+    {
+      "role": "Backend Developer",
+      "missing_skills": [
+        "microservices",
+        "sql",
+        "rest"
+      ],
+      "random": {
+        "coverage": 0.0,
+        "overlap": 0.0,
+        "semantic_similarity": 0.42315173149108887,
+        "diversity": 0.7478976845741272,
+        "novelty": 0.0
+      },
+      "popularity": {
+        "coverage": 0.0,
+        "overlap": 0.0,
+        "semantic_similarity": 0.48525434732437134,
+        "diversity": 0.27670371532440186,
+        "novelty": 0.0
+      },
+      "lexical": {
+        "coverage": 1.0,
+        "overlap": 0.6,
+        "semantic_similarity": 0.7047803401947021,
+        "diversity": 0.5964899659156799,
+        "novelty": 0.0
+      },
+      "khutwa": {
+        "coverage": 1.0,
+        "overlap": 1.0,
+        "semantic_similarity": 1.0,
+        "diversity": 0.5598890781402588,
+        "novelty": 0.0
+      }
+    },
+    {
+      "role": "Cybersecurity Analyst",
+      "missing_skills": [
+        "network security",
+        "iso 27001"
+      ],
+      "random": {
+        "coverage": 0.0,
+        "overlap": 0.0,
+        "semantic_similarity": 0.2971181273460388,
+        "diversity": 0.7634500861167908,
+        "novelty": 0.0
+      },
+      "popularity": {
+        "coverage": 0.0,
+        "overlap": 0.0,
+        "semantic_similarity": 0.3225519061088562,
+        "diversity": 0.27670371532440186,
+        "novelty": 0.0
+      },
+      "lexical": {
+        "coverage": 1.0,
+        "overlap": 0.5,
+        "semantic_similarity": 0.49354323744773865,
+        "diversity": 0.5435661673545837,
+        "novelty": 0.0
+      },
+      "khutwa": {
+        "coverage": 1.0,
+        "overlap": 0.5,
+        "semantic_similarity": 0.9054734110832214,
+        "diversity": 0.4068095088005066,
+        "novelty": 0.0
+      }
+    },
+    {
+      "role": "Product Manager",
+      "missing_skills": [
+        "agile",
+        "roadmaps"
+      ],
+      "random": {
+        "coverage": 0.0,
+        "overlap": 0.0,
+        "semantic_similarity": 0.3418562710285187,
+        "diversity": 0.7421948313713074,
+        "novelty": 0.0
+      },
+      "popularity": {
+        "coverage": 0.0,
+        "overlap": 0.0,
+        "semantic_similarity": 0.31190189719200134,
+        "diversity": 0.27670371532440186,
+        "novelty": 0.0
+      },
+      "lexical": {
+        "coverage": 1.0,
+        "overlap": 0.5,
+        "semantic_similarity": 0.43652021884918213,
+        "diversity": 0.5495240688323975,
+        "novelty": 0.0
+      },
+      "khutwa": {
+        "coverage": 1.0,
+        "overlap": 0.4,
+        "semantic_similarity": 0.7826524376869202,
+        "diversity": 0.5648095607757568,
+        "novelty": 0.0
+      }
+    },
+    {
+      "role": "UX Designer",
+      "missing_skills": [
+        "accessibility",
+        "user research"
+      ],
+      "random": {
+        "coverage": 0.5,
+        "overlap": 0.1111111111111111,
+        "semantic_similarity": 0.49265021085739136,
+        "diversity": 0.7597062587738037,
+        "novelty": 0.0
+      },
+      "popularity": {
+        "coverage": 0.0,
+        "overlap": 0.0,
+        "semantic_similarity": 0.36178329586982727,
+        "diversity": 0.27670371532440186,
+        "novelty": 0.0
+      },
+      "lexical": {
+        "coverage": 1.0,
+        "overlap": 0.5,
+        "semantic_similarity": 0.5396915674209595,
+        "diversity": 0.5358965396881104,
+        "novelty": 0.0
+      },
+      "khutwa": {
+        "coverage": 1.0,
+        "overlap": 1.0,
+        "semantic_similarity": 1.0,
+        "diversity": 0.5239741802215576,
+        "novelty": 0.0
+      }
+    },
+    {
+      "role": "Business Analyst",
+      "missing_skills": [
+        "tableau",
+        "stakeholder management"
+      ],
+      "random": {
+        "coverage": 0.5,
+        "overlap": 0.1111111111111111,
+        "semantic_similarity": 0.47044217586517334,
+        "diversity": 0.7356014251708984,
+        "novelty": 0.0
+      },
+      "popularity": {
+        "coverage": 0.0,
+        "overlap": 0.0,
+        "semantic_similarity": 0.3357486426830292,
+        "diversity": 0.27670371532440186,
+        "novelty": 0.0
+      },
+      "lexical": {
+        "coverage": 1.0,
+        "overlap": 0.5,
+        "semantic_similarity": 0.5685890913009644,
+        "diversity": 0.5320718884468079,
+        "novelty": 0.0
+      },
+      "khutwa": {
+        "coverage": 1.0,
+        "overlap": 1.0,
+        "semantic_similarity": 1.0,
+        "diversity": 0.475178062915802,
+        "novelty": 0.0
+      }
+    }
+  ],
+  "_meta": {
+    "name": "exp4_roadmap_quality",
+    "timestamp": "2026-05-12T17:42:34.618001Z"
+  }
+}

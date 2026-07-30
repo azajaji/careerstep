@@ -1,0 +1,56 @@
+{
+  "ner_grounding_rate": 0.5864077669902913,
+  "ner_hallucination_rate": 0.4135922330097087,
+  "ner_ungrounded_by_type": {
+    "TECH": 280,
+    "PROPER": 105
+  },
+  "ner_n_bullets": 515,
+  "ner_context_aware_grounding_rate": 0.883495145631068,
+  "ner_context_aware_hallucination_rate": 0.11650485436893199,
+  "ner_context_aware_per_context": {
+    "RECOMMENDATION": {
+      "bullets": 455,
+      "grounded": 455,
+      "ungrounded_entities": 0
+    },
+    "CLAIM": {
+      "bullets": 60,
+      "grounded": 0,
+      "ungrounded_entities": 120
+    }
+  },
+  "ner_context_aware_ungrounded_by_type_and_context": {
+    "CLAIM": {
+      "TECH": 60,
+      "PROPER": 60
+    }
+  },
+  "ner_context_aware_n_bullets": 515,
+  "coverage": 0.225,
+  "actionability": 0.438260582010582,
+  "coverage_summary": {
+    "n": 60,
+    "mean": 0.225,
+    "sd": 0.15056391176315703,
+    "min": 0.0,
+    "max": 0.5,
+    "ci95_low": 0.1875,
+    "ci95_high": 0.2625
+  },
+  "actionability_summary": {
+    "n": 60,
+    "mean": 0.43826058201058193,
+    "sd": 0.13653902619393302,
+    "min": 0.3333333333333333,
+    "max": 0.7142857142857143,
+    "ci95_low": 0.4065498456685135,
+    "ci95_high": 0.4751526003117102
+  },
+  "heuristic_hallucination_rate": 0.5578373015873016,
+  "heuristic_groundedness": 0.4421626984126984,
+  "_meta": {
+    "name": "exp6_feedback_evaluation",
+    "timestamp": "2026-05-23T12:33:33.840408Z"
+  }
+}

@@ -1,0 +1,726 @@
+{
+  "systems": {
+    "generic": {
+      "semantic_similarity": {
+        "n": 10,
+        "mean": 0.4513390868902206,
+        "sd": 0.001307989293834365,
+        "min": 0.450906366109848,
+        "max": 0.45505839586257935,
+        "ci95_low": 0.45090638995170595,
+        "ci95_high": 0.45298238694667814
+      },
+      "diversity": {
+        "n": 10,
+        "mean": 0.7030166983604431,
+        "sd": 0.0,
+        "min": 0.7030166983604431,
+        "max": 0.7030166983604431,
+        "ci95_low": NaN,
+        "ci95_high": NaN
+      },
+      "coverage": {
+        "n": 10,
+        "mean": 0.03333333333333333,
+        "sd": 0.07027283689263066,
+        "min": 0.0,
+        "max": 0.16666666666666666,
+        "ci95_low": 0.0,
+        "ci95_high": 0.08333333333333333
+      }
+    },
+    "retrieval": {
+      "semantic_similarity": {
+        "n": 10,
+        "mean": 0.625639671087265,
+        "sd": 0.1741025432802784,
+        "min": 0.4376763701438904,
+        "max": 0.8756445646286011,
+        "ci95_low": 0.5288963656753214,
+        "ci95_high": 0.7352131411140771
+      },
+      "diversity": {
+        "n": 10,
+        "mean": 0.7056998252868653,
+        "sd": 0.16165409633829605,
+        "min": 0.41110146045684814,
+        "max": 0.8823128342628479,
+        "ci95_low": 0.5986042272536488,
+        "ci95_high": 0.7896572351062607
+      },
+      "coverage": {
+        "n": 10,
+        "mean": 0.13666666666666666,
+        "sd": 0.13282309779794316,
+        "min": 0.0,
+        "max": 0.3333333333333333,
+        "ci95_low": 0.06666666666666667,
+        "ci95_high": 0.21999999999999997
+      }
+    },
+    "khutwa": {
+      "semantic_similarity": {
+        "n": 10,
+        "mean": 0.36187803745269775,
+        "sd": 0.03464328353905996,
+        "min": 0.3260085880756378,
+        "max": 0.4158531725406647,
+        "ci95_low": 0.3443309565169902,
+        "ci95_high": 0.3856570496111547
+      },
+      "diversity": {
+        "n": 10,
+        "mean": 0.7113758265972138,
+        "sd": 0.03621755403594185,
+        "min": 0.635191798210144,
+        "max": 0.7545422315597534,
+        "ci95_low": 0.6869542814065647,
+        "ci95_high": 0.7296381644973178
+      },
+      "coverage": {
+        "n": 10,
+        "mean": 1.0,
+        "sd": 0.0,
+        "min": 1.0,
+        "max": 1.0,
+        "ci95_low": NaN,
+        "ci95_high": NaN
+      }
+    }
+  },
+  "tests": {
+    "khutwa_vs_generic_semantic": {
+      "method": "wilcoxon_signed_rank",
+      "statistic": 0.0,
+      "p_value": 0.001953125,
+      "significant": true
+    },
+    "khutwa_vs_retrieval_semantic": {
+      "method": "wilcoxon_signed_rank",
+      "statistic": 0.0,
+      "p_value": 0.001953125,
+      "significant": true
+    }
+  },
+  "per_role_log": [
+    {
+      "role": "Data Scientist",
+      "skills": [
+        "python",
+        "pandas",
+        "scikit-learn",
+        "sql",
+        "statistics",
+        "machine learning"
+      ],
+      "generic": {
+        "semantic_similarity": 0.450906366109848,
+        "diversity": 0.7030166983604431,
+        "coverage": 0.0
+      },
+      "generic_questions": [
+        "Tell me about yourself.",
+        "What are your strengths?",
+        "What are your weaknesses?",
+        "Why are you interested in this role?",
+        "Where do you see yourself in five years?",
+        "Why should we hire you?",
+        "Tell me about a time you faced a challenge at work.",
+        "What is your biggest professional achievement?",
+        "Why are you leaving your current job?",
+        "Do you have any questions for us?"
+      ],
+      "retrieval": {
+        "semantic_similarity": 0.5017461776733398,
+        "diversity": 0.7567883729934692,
+        "coverage": 0.0
+      },
+      "retrieval_questions": [
+        "How do you measure feature success?",
+        "Walk through how you would build a churn prediction model.",
+        "Walk through an incident-response runbook you have used.",
+        "How do you avoid N+1 queries in an ORM?",
+        "How do you write a PRD?",
+        "Walk through an MLOps pipeline you built.",
+        "Walk through a usability study you ran.",
+        "Walk through a SOC alert triage workflow.",
+        "Describe a failure and what you learned.",
+        "Describe a failure and what you learned."
+      ],
+      "khutwa": {
+        "semantic_similarity": 0.3377212882041931,
+        "diversity": 0.7018035650253296,
+        "coverage": 1.0
+      },
+      "khutwa_questions": [
+        "Walk me through a Data Scientist project you led from start to finish.",
+        "Tell me about a time you handled a difficult stakeholder while doing Data Scientist work.",
+        "How do you keep your Data Scientist skills up to date?",
+        "Describe a Data Scientist problem you solved that you are most proud of.",
+        "Explain how you would approach python in a production setting.",
+        "What are the trade-offs of using pandas versus a simpler alternative?",
+        "Walk through how you debug a failing scikit-learn pipeline.",
+        "How would you teach a junior engineer sql?",
+        "Describe a real situation where statistics did not work as expected, and what you did.",
+        "Explain how you would approach machine learning in a production setting."
+      ]
+    },
+    {
+      "role": "Software Engineer",
+      "skills": [
+        "python",
+        "java",
+        "git",
+        "rest",
+        "sql",
+        "testing"
+      ],
+      "generic": {
+        "semantic_similarity": 0.450906366109848,
+        "diversity": 0.7030166983604431,
+        "coverage": 0.16666666666666666
+      },
+      "generic_questions": [
+        "Tell me about yourself.",
+        "What are your strengths?",
+        "What are your weaknesses?",
+        "Why are you interested in this role?",
+        "Where do you see yourself in five years?",
+        "Why should we hire you?",
+        "Tell me about a time you faced a challenge at work.",
+        "What is your biggest professional achievement?",
+        "Why are you leaving your current job?",
+        "Do you have any questions for us?"
+      ],
+      "retrieval": {
+        "semantic_similarity": 0.5776534676551819,
+        "diversity": 0.6896519660949707,
+        "coverage": 0.16666666666666666
+      },
+      "retrieval_questions": [
+        "Compare REST and gRPC.",
+        "How do you measure feature success?",
+        "Walk through an MLOps pipeline you built.",
+        "Walk through a usability study you ran.",
+        "How do you translate requirements into stories?",
+        "How do you avoid N+1 queries in an ORM?",
+        "Describe a failure and what you learned.",
+        "Describe a failure and what you learned.",
+        "Describe a failure and what you learned.",
+        "Describe a failure and what you learned."
+      ],
+      "khutwa": {
+        "semantic_similarity": 0.3502277731895447,
+        "diversity": 0.7486904263496399,
+        "coverage": 1.0
+      },
+      "khutwa_questions": [
+        "Walk me through a Software Engineer project you led from start to finish.",
+        "Tell me about a time you handled a difficult stakeholder while doing Software Engineer work.",
+        "How do you keep your Software Engineer skills up to date?",
+        "Describe a Software Engineer problem you solved that you are most proud of.",
+        "Explain how you would approach python in a production setting.",
+        "What are the trade-offs of using java versus a simpler alternative?",
+        "Walk through how you debug a failing git pipeline.",
+        "How would you teach a junior engineer rest?",
+        "Describe a real situation where sql did not work as expected, and what you did.",
+        "Explain how you would approach testing in a production setting."
+      ]
+    },
+    {
+      "role": "DevOps Engineer",
+      "skills": [
+        "aws",
+        "docker",
+        "kubernetes",
+        "linux",
+        "ci/cd",
+        "terraform"
+      ],
+      "generic": {
+        "semantic_similarity": 0.4509064257144928,
+        "diversity": 0.7030166983604431,
+        "coverage": 0.0
+      },
+      "generic_questions": [
+        "Tell me about yourself.",
+        "What are your strengths?",
+        "What are your weaknesses?",
+        "Why are you interested in this role?",
+        "Where do you see yourself in five years?",
+        "Why should we hire you?",
+        "Tell me about a time you faced a challenge at work.",
+        "What is your biggest professional achievement?",
+        "Why are you leaving your current job?",
+        "Do you have any questions for us?"
+      ],
+      "retrieval": {
+        "semantic_similarity": 0.7386429905891418,
+        "diversity": 0.7113319039344788,
+        "coverage": 0.3333333333333333
+      },
+      "retrieval_questions": [
+        "How do you secure a Kubernetes cluster?",
+        "Describe how you set up CI/CD for a microservice.",
+        "Walk through an MLOps pipeline you built.",
+        "Compare REST and gRPC.",
+        "How do you measure project ROI?",
+        "Walk through a SOC alert triage workflow.",
+        "Describe a time you led a project under tight deadlines.",
+        "Describe a time you led a project under tight deadlines.",
+        "Describe a time you led a project under tight deadlines.",
+        "Describe a time you led a project under tight deadlines."
+      ],
+      "khutwa": {
+        "semantic_similarity": 0.3590080738067627,
+        "diversity": 0.7094058394432068,
+        "coverage": 1.0
+      },
+      "khutwa_questions": [
+        "Walk me through a DevOps Engineer project you led from start to finish.",
+        "Tell me about a time you handled a difficult stakeholder while doing DevOps Engineer work.",
+        "How do you keep your DevOps Engineer skills up to date?",
+        "Describe a DevOps Engineer problem you solved that you are most proud of.",
+        "Explain how you would approach aws in a production setting.",
+        "What are the trade-offs of using docker versus a simpler alternative?",
+        "Walk through how you debug a failing kubernetes pipeline.",
+        "How would you teach a junior engineer linux?",
+        "Describe a real situation where ci/cd did not work as expected, and what you did.",
+        "Explain how you would approach terraform in a production setting."
+      ]
+    },
+    {
+      "role": "ML Engineer",
+      "skills": [
+        "python",
+        "pytorch",
+        "tensorflow",
+        "mlops",
+        "docker",
+        "machine learning"
+      ],
+      "generic": {
+        "semantic_similarity": 0.450906366109848,
+        "diversity": 0.7030166983604431,
+        "coverage": 0.0
+      },
+      "generic_questions": [
+        "Tell me about yourself.",
+        "What are your strengths?",
+        "What are your weaknesses?",
+        "Why are you interested in this role?",
+        "Where do you see yourself in five years?",
+        "Why should we hire you?",
+        "Tell me about a time you faced a challenge at work.",
+        "What is your biggest professional achievement?",
+        "Why are you leaving your current job?",
+        "Do you have any questions for us?"
+      ],
+      "retrieval": {
+        "semantic_similarity": 0.5065793991088867,
+        "diversity": 0.8376806378364563,
+        "coverage": 0.16666666666666666
+      },
+      "retrieval_questions": [
+        "Walk through an MLOps pipeline you built.",
+        "When would you choose XGBoost over a neural network?",
+        "How do you secure a Kubernetes cluster?",
+        "How do you measure feature success?",
+        "Walk through a process you have improved.",
+        "Walk through how you would build a churn prediction model.",
+        "How do you decide between batch and online inference?",
+        "How do you monitor model drift?",
+        "Walk through a SOC alert triage workflow.",
+        "Explain the difference between processes and threads."
+      ],
+      "khutwa": {
+        "semantic_similarity": 0.412296861410141,
+        "diversity": 0.6941748857498169,
+        "coverage": 1.0
+      },
+      "khutwa_questions": [
+        "Walk me through a ML Engineer project you led from start to finish.",
+        "Tell me about a time you handled a difficult stakeholder while doing ML Engineer work.",
+        "How do you keep your ML Engineer skills up to date?",
+        "Describe a ML Engineer problem you solved that you are most proud of.",
+        "Explain how you would approach python in a production setting.",
+        "What are the trade-offs of using pytorch versus a simpler alternative?",
+        "Walk through how you debug a failing tensorflow pipeline.",
+        "How would you teach a junior engineer mlops?",
+        "Describe a real situation where docker did not work as expected, and what you did.",
+        "Explain how you would approach machine learning in a production setting."
+      ]
+    },
+    {
+      "role": "Frontend Developer",
+      "skills": [
+        "javascript",
+        "typescript",
+        "react",
+        "css",
+        "html",
+        "accessibility"
+      ],
+      "generic": {
+        "semantic_similarity": 0.450906366109848,
+        "diversity": 0.7030166983604431,
+        "coverage": 0.0
+      },
+      "generic_questions": [
+        "Tell me about yourself.",
+        "What are your strengths?",
+        "What are your weaknesses?",
+        "Why are you interested in this role?",
+        "Where do you see yourself in five years?",
+        "Why should we hire you?",
+        "Tell me about a time you faced a challenge at work.",
+        "What is your biggest professional achievement?",
+        "Why are you leaving your current job?",
+        "Do you have any questions for us?"
+      ],
+      "retrieval": {
+        "semantic_similarity": 0.48328304290771484,
+        "diversity": 0.8823128342628479,
+        "coverage": 0.3333333333333333
+      },
+      "retrieval_questions": [
+        "How do you design for accessibility?",
+        "Explain React reconciliation.",
+        "How do you make a web app accessible?",
+        "Walk through a usability study you ran.",
+        "How do you secure a Kubernetes cluster?",
+        "How do you balance business and user needs?",
+        "Compare REST and gRPC.",
+        "How would you design a rate limiter?",
+        "How would you debug a layout shift?",
+        "Explain the principle of least privilege with an example."
+      ],
+      "khutwa": {
+        "semantic_similarity": 0.3350742757320404,
+        "diversity": 0.7234905958175659,
+        "coverage": 1.0
+      },
+      "khutwa_questions": [
+        "Walk me through a Frontend Developer project you led from start to finish.",
+        "Tell me about a time you handled a difficult stakeholder while doing Frontend Developer work.",
+        "How do you keep your Frontend Developer skills up to date?",
+        "Describe a Frontend Developer problem you solved that you are most proud of.",
+        "Explain how you would approach javascript in a production setting.",
+        "What are the trade-offs of using typescript versus a simpler alternative?",
+        "Walk through how you debug a failing react pipeline.",
+        "How would you teach a junior engineer css?",
+        "Describe a real situation where html did not work as expected, and what you did.",
+        "Explain how you would approach accessibility in a production setting."
+      ]
+    },
+    {
+      "role": "Backend Developer",
+      "skills": [
+        "python",
+        "node",
+        "sql",
+        "rest",
+        "microservices",
+        "docker"
+      ],
+      "generic": {
+        "semantic_similarity": 0.4509064257144928,
+        "diversity": 0.7030166983604431,
+        "coverage": 0.16666666666666666
+      },
+      "generic_questions": [
+        "Tell me about yourself.",
+        "What are your strengths?",
+        "What are your weaknesses?",
+        "Why are you interested in this role?",
+        "Where do you see yourself in five years?",
+        "Why should we hire you?",
+        "Tell me about a time you faced a challenge at work.",
+        "What is your biggest professional achievement?",
+        "Why are you leaving your current job?",
+        "Do you have any questions for us?"
+      ],
+      "retrieval": {
+        "semantic_similarity": 0.4708237648010254,
+        "diversity": 0.8531312346458435,
+        "coverage": 0.16666666666666666
+      },
+      "retrieval_questions": [
+        "Compare REST and gRPC.",
+        "Describe how you set up CI/CD for a microservice.",
+        "Walk through an MLOps pipeline you built.",
+        "How do you secure a Kubernetes cluster?",
+        "How do you make a web app accessible?",
+        "Walk through a SOC alert triage workflow.",
+        "How do you avoid N+1 queries in an ORM?",
+        "Walk through how you would build a churn prediction model.",
+        "Walk through a usability study you ran.",
+        "Describe a failure and what you learned."
+      ],
+      "khutwa": {
+        "semantic_similarity": 0.3515934348106384,
+        "diversity": 0.7524569034576416,
+        "coverage": 1.0
+      },
+      "khutwa_questions": [
+        "Walk me through a Backend Developer project you led from start to finish.",
+        "Tell me about a time you handled a difficult stakeholder while doing Backend Developer work.",
+        "How do you keep your Backend Developer skills up to date?",
+        "Describe a Backend Developer problem you solved that you are most proud of.",
+        "Explain how you would approach python in a production setting.",
+        "What are the trade-offs of using node versus a simpler alternative?",
+        "Walk through how you debug a failing sql pipeline.",
+        "How would you teach a junior engineer rest?",
+        "Describe a real situation where microservices did not work as expected, and what you did.",
+        "Explain how you would approach docker in a production setting."
+      ]
+    },
+    {
+      "role": "Cybersecurity Analyst",
+      "skills": [
+        "network security",
+        "penetration testing",
+        "siem",
+        "iso 27001"
+      ],
+      "generic": {
+        "semantic_similarity": 0.450906366109848,
+        "diversity": 0.7030166983604431,
+        "coverage": 0.0
+      },
+      "generic_questions": [
+        "Tell me about yourself.",
+        "What are your strengths?",
+        "What are your weaknesses?",
+        "Why are you interested in this role?",
+        "Where do you see yourself in five years?",
+        "Why should we hire you?",
+        "Tell me about a time you faced a challenge at work.",
+        "What is your biggest professional achievement?",
+        "Why are you leaving your current job?",
+        "Do you have any questions for us?"
+      ],
+      "retrieval": {
+        "semantic_similarity": 0.4376763701438904,
+        "diversity": 0.8387696743011475,
+        "coverage": 0.0
+      },
+      "retrieval_questions": [
+        "Walk through a SOC alert triage workflow.",
+        "Describe how you set up CI/CD for a microservice.",
+        "How do you secure a Kubernetes cluster?",
+        "Walk through an MLOps pipeline you built.",
+        "Compare REST and gRPC.",
+        "How do you investigate a suspected phishing email?",
+        "Walk through an incident-response runbook you have used.",
+        "How do you write a PRD?",
+        "How do you monitor model drift?",
+        "How do you measure project ROI?"
+      ],
+      "khutwa": {
+        "semantic_similarity": 0.3260085880756378,
+        "diversity": 0.6897002458572388,
+        "coverage": 1.0
+      },
+      "khutwa_questions": [
+        "Walk me through a Cybersecurity Analyst project you led from start to finish.",
+        "Tell me about a time you handled a difficult stakeholder while doing Cybersecurity Analyst work.",
+        "How do you keep your Cybersecurity Analyst skills up to date?",
+        "Describe a Cybersecurity Analyst problem you solved that you are most proud of.",
+        "Explain how you would approach network security in a production setting.",
+        "What are the trade-offs of using penetration testing versus a simpler alternative?",
+        "Walk through how you debug a failing siem pipeline.",
+        "How would you teach a junior engineer iso 27001?",
+        "Describe a real situation where network security did not work as expected, and what you did.",
+        "Explain how you would approach penetration testing in a production setting."
+      ]
+    },
+    {
+      "role": "Product Manager",
+      "skills": [
+        "roadmaps",
+        "stakeholder management",
+        "user research",
+        "agile"
+      ],
+      "generic": {
+        "semantic_similarity": 0.45505839586257935,
+        "diversity": 0.7030166983604431,
+        "coverage": 0.0
+      },
+      "generic_questions": [
+        "Tell me about yourself.",
+        "What are your strengths?",
+        "What are your weaknesses?",
+        "Why are you interested in this role?",
+        "Where do you see yourself in five years?",
+        "Why should we hire you?",
+        "Tell me about a time you faced a challenge at work.",
+        "What is your biggest professional achievement?",
+        "Why are you leaving your current job?",
+        "Do you have any questions for us?"
+      ],
+      "retrieval": {
+        "semantic_similarity": 0.811808705329895,
+        "diversity": 0.5633831024169922,
+        "coverage": 0.0
+      },
+      "retrieval_questions": [
+        "How do you balance business and user needs?",
+        "Walk through a product trade-off you have made.",
+        "How do you measure project ROI?",
+        "Walk through a usability study you ran.",
+        "Tell me about a conflict you resolved on a team.",
+        "Tell me about a conflict you resolved on a team.",
+        "Tell me about a conflict you resolved on a team.",
+        "Tell me about a conflict you resolved on a team.",
+        "Tell me about a conflict you resolved on a team.",
+        "Tell me about a conflict you resolved on a team."
+      ],
+      "khutwa": {
+        "semantic_similarity": 0.4158531725406647,
+        "diversity": 0.635191798210144,
+        "coverage": 1.0
+      },
+      "khutwa_questions": [
+        "Walk me through a Product Manager project you led from start to finish.",
+        "Tell me about a time you handled a difficult stakeholder while doing Product Manager work.",
+        "How do you keep your Product Manager skills up to date?",
+        "Describe a Product Manager problem you solved that you are most proud of.",
+        "Explain how you would approach roadmaps in a production setting.",
+        "What are the trade-offs of using stakeholder management versus a simpler alternative?",
+        "Walk through how you debug a failing user research pipeline.",
+        "How would you teach a junior engineer agile?",
+        "Describe a real situation where roadmaps did not work as expected, and what you did.",
+        "Explain how you would approach stakeholder management in a production setting."
+      ]
+    },
+    {
+      "role": "UX Designer",
+      "skills": [
+        "figma",
+        "user research",
+        "wireframing",
+        "prototyping",
+        "accessibility"
+      ],
+      "generic": {
+        "semantic_similarity": 0.450906366109848,
+        "diversity": 0.7030166983604431,
+        "coverage": 0.0
+      },
+      "generic_questions": [
+        "Tell me about yourself.",
+        "What are your strengths?",
+        "What are your weaknesses?",
+        "Why are you interested in this role?",
+        "Where do you see yourself in five years?",
+        "Why should we hire you?",
+        "Tell me about a time you faced a challenge at work.",
+        "What is your biggest professional achievement?",
+        "Why are you leaving your current job?",
+        "Do you have any questions for us?"
+      ],
+      "retrieval": {
+        "semantic_similarity": 0.8756445646286011,
+        "diversity": 0.5128470659255981,
+        "coverage": 0.2
+      },
+      "retrieval_questions": [
+        "How do you design for accessibility?",
+        "Walk through a usability study you ran.",
+        "How do you make a web app accessible?",
+        "How do you translate requirements into stories?",
+        "Describe a time you led a project under tight deadlines.",
+        "Describe a time you led a project under tight deadlines.",
+        "Describe a time you led a project under tight deadlines.",
+        "Describe a time you led a project under tight deadlines.",
+        "Describe a time you led a project under tight deadlines.",
+        "Describe a time you led a project under tight deadlines."
+      ],
+      "khutwa": {
+        "semantic_similarity": 0.40072259306907654,
+        "diversity": 0.7545422315597534,
+        "coverage": 1.0
+      },
+      "khutwa_questions": [
+        "Walk me through a UX Designer project you led from start to finish.",
+        "Tell me about a time you handled a difficult stakeholder while doing UX Designer work.",
+        "How do you keep your UX Designer skills up to date?",
+        "Describe a UX Designer problem you solved that you are most proud of.",
+        "Explain how you would approach figma in a production setting.",
+        "What are the trade-offs of using user research versus a simpler alternative?",
+        "Walk through how you debug a failing wireframing pipeline.",
+        "How would you teach a junior engineer prototyping?",
+        "Describe a real situation where accessibility did not work as expected, and what you did.",
+        "Explain how you would approach figma in a production setting."
+      ]
+    },
+    {
+      "role": "Business Analyst",
+      "skills": [
+        "sql",
+        "tableau",
+        "stakeholder management",
+        "process modeling"
+      ],
+      "generic": {
+        "semantic_similarity": 0.45108142495155334,
+        "diversity": 0.7030166983604431,
+        "coverage": 0.0
+      },
+      "generic_questions": [
+        "Tell me about yourself.",
+        "What are your strengths?",
+        "What are your weaknesses?",
+        "Why are you interested in this role?",
+        "Where do you see yourself in five years?",
+        "Why should we hire you?",
+        "Tell me about a time you faced a challenge at work.",
+        "What is your biggest professional achievement?",
+        "Why are you leaving your current job?",
+        "Do you have any questions for us?"
+      ],
+      "retrieval": {
+        "semantic_similarity": 0.8525382280349731,
+        "diversity": 0.41110146045684814,
+        "coverage": 0.0
+      },
+      "retrieval_questions": [
+        "How do you balance business and user needs?",
+        "How do you translate requirements into stories?",
+        "Walk through how you would build a churn prediction model.",
+        "How do you prioritize competing tasks?",
+        "How do you prioritize competing tasks?",
+        "How do you prioritize competing tasks?",
+        "How do you prioritize competing tasks?",
+        "How do you prioritize competing tasks?",
+        "How do you prioritize competing tasks?",
+        "How do you prioritize competing tasks?"
+      ],
+      "khutwa": {
+        "semantic_similarity": 0.3302743136882782,
+        "diversity": 0.7043017745018005,
+        "coverage": 1.0
+      },
+      "khutwa_questions": [
+        "Walk me through a Business Analyst project you led from start to finish.",
+        "Tell me about a time you handled a difficult stakeholder while doing Business Analyst work.",
+        "How do you keep your Business Analyst skills up to date?",
+        "Describe a Business Analyst problem you solved that you are most proud of.",
+        "Explain how you would approach sql in a production setting.",
+        "What are the trade-offs of using tableau versus a simpler alternative?",
+        "Walk through how you debug a failing stakeholder management pipeline.",
+        "How would you teach a junior engineer process modeling?",
+        "Describe a real situation where sql did not work as expected, and what you did.",
+        "Explain how you would approach tableau in a production setting."
+      ]
+    }
+  ],
+  "k": 10,
+  "note": "BLEU and ROUGE-L are intentionally omitted; see paper for rationale.",
+  "_meta": {
+    "name": "exp5_interview_generation",
+    "timestamp": "2026-05-12T17:42:58.501038Z"
+  }
+}
