@@ -1,8 +1,15 @@
-"""Shortlist stability of the role ranking under profile perturbation.
+"""Shortlist stability under perturbation, for both rankers.
 
-MRR measures exact rank recovery. The guidance interface shows a shortlist, so
-this reports how much of the clean shortlist survives perturbation: top-k
-Jaccard overlap, first-rank churn, retention counts, and rank correlation.
+MRR measures exact rank recovery; the interface shows a shortlist, so this
+reports what survives perturbation: top-k Jaccard overlap, first-rank churn,
+retention counts, and rank correlation.
+
+Two arms, because they behave very differently. The value-fit arm perturbs
+role centroids and re-ranks by the CSMQ cosine alone. The composite arm
+perturbs synthetic student profiles and re-ranks with the full
+RoleSuitability blend, which is the ranker the paper reports. Skill and
+feasibility evidence does not move with questionnaire noise, so the two
+arms must not be conflated.
 
 Uses its own generator so it cannot disturb the RNG stream of exp8.
 """
@@ -143,13 +150,74 @@ def run() -> dict:
               f"(group {c['group_first_rank_changed']['mean']:.3f}) "
               f"rho={c['spearman']['mean']:.3f}")
 
+    composite = _composite_arm(recommender, roles, rng)
+
     return {
         "n_roles": n,
         "n_distinct_centroid_groups": n_groups,
         "trials_per_role": TRIALS_PER_ROLE,
         "sigmas": SIGMAS,
         "stability_curve": curve,
+        "composite_curve": composite,
     }
+
+
+def _composite_arm(recommender, roles_df, rng) -> List[Dict]:
+    """Same perturbation applied to student profiles, ranked by the full blend."""
+    import random as _py_random
+    from dataclasses import replace
+
+    from careerstep.career_positioning_benchmark import (
+        rank_khutwa, role_to_required_skills, simulate_profiles,
+    )
+    from careerstep.seeding import load_seeds
+
+    seeds = load_seeds()
+    required = role_to_required_skills(roles_df)
+
+    def lexical(known, req):
+        k = {s.lower() for s in known}
+        r = [s.lower() for s in req]
+        return sum(1 for s in r if s in k) / max(1, len(r))
+
+    profiles = simulate_profiles(
+        recommender, roles_df, n_profiles=120,
+        rng=_py_random.Random(seeds["python_random_seed"]),
+        np_rng=np.random.default_rng(seeds["numpy_seed"]),
+        skill_coverage=0.35, noise_sigma=0.08, n_neighbours_acceptable=2,
+    )
+
+    out = []
+    for sigma in SIGMAS:
+        churn, j3, vf_churn, vf_j3 = [], [], [], []
+        for p in profiles:
+            vec = np.asarray(p.csmq_vector, dtype=float)
+            comp_clean = rank_khutwa(p, recommender, roles_df, required, lexical)
+            vf_clean = _ranked_ids(recommender, vec, len(recommender.centroid_df.index))
+            for _ in range(TRIALS_PER_ROLE):
+                noisy = np.clip(vec + rng.normal(0.0, sigma, size=vec.shape), 0.0, 1.0)
+                comp_got = rank_khutwa(replace(p, csmq_vector=noisy), recommender,
+                                       roles_df, required, lexical)
+                vf_got = _ranked_ids(recommender, noisy, len(recommender.centroid_df.index))
+                churn.append(0.0 if comp_got[0] == comp_clean[0] else 1.0)
+                j3.append(_jaccard(comp_clean[:3], comp_got[:3]))
+                vf_churn.append(0.0 if vf_got[0] == vf_clean[0] else 1.0)
+                vf_j3.append(_jaccard(vf_clean[:3], vf_got[:3]))
+        out.append({
+            "sigma": sigma,
+            "trials": len(churn),
+            "composite_first_rank_changed": summarize(churn),
+            "composite_jaccard_top3": summarize(j3),
+            "valuefit_first_rank_changed": summarize(vf_churn),
+            "valuefit_jaccard_top3": summarize(vf_j3),
+        })
+        c = out[-1]
+        print(f"  [student profiles] sigma={sigma:<5} "
+              f"composite churn={c['composite_first_rank_changed']['mean']:.3f} "
+              f"J@3={c['composite_jaccard_top3']['mean']:.3f}   |   "
+              f"value-fit churn={c['valuefit_first_rank_changed']['mean']:.3f} "
+              f"J@3={c['valuefit_jaccard_top3']['mean']:.3f}")
+    return out
 
 
 if __name__ == "__main__":
