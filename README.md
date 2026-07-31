@@ -1,12 +1,13 @@
 # CareerStep
 
-Reference implementation and evaluation code for *"A Bilingual
-Socio-Technical System for University Career Readiness with Values-Based Role
-Positioning: A Design-Science Study"*.
+Reference implementation and evaluation code for *"A Socio-Technical Design
+Pattern for Integrated University Career Readiness with Values-Based Role
+Positioning"*.
 
 This is the research implementation, not the client application. It involves
-no human participants: every benchmark runs on the public O*NET Work Values
-data, on synthetic profiles, or on corpora authored for the evaluation.
+no human participants: every benchmark runs on public data (O*NET Work
+Values, the MELO benchmark), on synthetic profiles, or on corpora authored
+for the evaluation.
 
 ## Reproduce
 
@@ -14,7 +15,11 @@ data, on synthetic profiles, or on corpora authored for the evaluation.
 pip install -r requirements.txt
 python -m data.download --all     # build the corpora into data/cache/
 python run_experiments.py          # write results/*.json
+python -m tests.test_melo          # optional: checks on the MELO scoring
 ```
+
+`exp12_melo_external` downloads the MELO benchmark on first run and caches it
+under `data/cache/`; the other experiments need no network access.
 
 Seeds are fixed in `reproducibility/seeds.txt` and applied by
 `careerstep.seeding.set_global_seeds()`. Each corpus-construction routine
@@ -37,25 +42,29 @@ Manuscript table numbers refer to the submitted version.
 
 | Table | Script | Raw output |
 |---|---|---|
-| 5 — item-level questionnaire scoring | `experiments/exp7_questionnaire_scoring.py` | `results/exp7_questionnaire_scoring.json` |
-| 6 — self-consistency and noise sweep | `experiments/exp8_career_positioning.py` | `results/exp8_career_positioning.json` |
-| 7 — ranking benchmark | `experiments/exp8_career_positioning.py` | `results/exp8_career_positioning.json` |
-| 8 — shortlist stability | `experiments/exp8d_shortlist_stability.py` | `results/exp8_shortlist_stability.json` |
-| 9 — weight sensitivity (a) | `experiments/exp8b_projection_sensitivity.py` | `results/exp8_projection_sensitivity.json` |
-| 9 — weight sensitivity (b) | `experiments/exp8c_suitability_weight_sweep.py` | `results/exp8_suitability_weight_sweep.json` |
-| 10 — CV/JD alignment | `experiments/exp2_resume_job_alignment.py` | `results/exp2_resume_job_alignment.json` |
-| 11 — roadmap generation | `experiments/exp4_roadmap_quality.py` | `results/exp4_roadmap_quality.json` |
-| 12 — interview-question generation | `experiments/exp5_interview_generation.py` | `results/exp5_interview_generation.json` |
-| 13 — feedback grounding | `experiments/exp6_feedback_evaluation.py` | `results/exp6_feedback_evaluation.json` |
+| 6 — item-level questionnaire scoring | `experiments/exp7_questionnaire_scoring.py` | `results/exp7_questionnaire_scoring.json` |
+| 7 — self-consistency and noise sweep | `experiments/exp8_career_positioning.py` | `results/exp8_career_positioning.json` |
+| 8 — ranking benchmark | `experiments/exp8_career_positioning.py` | `results/exp8_career_positioning.json` |
+| 9 — shortlist stability | `experiments/exp8d_shortlist_stability.py` | `results/exp8_shortlist_stability.json` |
+| 10 — weight sensitivity (a) | `experiments/exp8b_projection_sensitivity.py` | `results/exp8_projection_sensitivity.json` |
+| 10 — weight sensitivity (b) | `experiments/exp8c_suitability_weight_sweep.py` | `results/exp8_suitability_weight_sweep.json` |
+| 11 — CV/JD alignment | `experiments/exp2_resume_job_alignment.py` | `results/exp2_resume_job_alignment.json` |
+| 12 — roadmap generation | `experiments/exp4_roadmap_quality.py` | `results/exp4_roadmap_quality.json` |
+| 13 — interview-question generation | `experiments/exp5_interview_generation.py` | `results/exp5_interview_generation.json` |
+| 14 — feedback grounding | `experiments/exp6_feedback_evaluation.py` | `results/exp6_feedback_evaluation.json` |
+| 15 — external occupation linking (MELO) | `experiments/exp12_melo_external.py` | `results/exp12_melo_external.json` |
 
-Tables 1–4 and 14 are design tables with no computed values.
+Tables 1–5 and 16 are design or descriptive tables with no computed values.
+`results/exp12_melo_external.json` keeps the per-query ranked occupations and
+scores for all 633 queries, not only the aggregates in the table.
 
 ## Environment
 
 Python 3.11 with the pinned versions in `requirements.txt`. Encoders:
 `sentence-transformers/all-MiniLM-L6-v2` for embeddings and
 `cross-encoder/ms-marco-MiniLM-L-6-v2` for the CV/JD reranker. No LLM or
-network service is used by any experiment. Seeds are in
+paid service is used by any experiment; the only network access is the
+one-off MELO download in `exp12`. Seeds are in
 `reproducibility/seeds.txt`; every experiment calls
 `set_global_seeds()` first, and `data.download` seeds each corpus routine
 independently. Runtime for the full suite is a few minutes on CPU.
@@ -72,6 +81,15 @@ labour-market data.
 
 Set `KAGGLE_USERNAME`/`KAGGLE_KEY` to pull a real English resume corpus
 instead of the synthetic fallback. The reported numbers use the fallback.
+
+MELO (Retyk et al., 2024, MIT licence) is fetched from
+<https://github.com/Avature/melo-benchmark> rather than vendored here. It is
+the one evaluation set this study neither built nor annotated. `exp12` uses
+its `usa_q_en_c_en` configuration: 633 occupation-title queries against
+33,809 ESCO surface forms. Each query has exactly one correct ESCO
+occupation, so rankings are collapsed to one entry per occupation before
+scoring; `tests/test_melo.py` asserts that property against the downloaded
+annotations.
 
 ## Quick start
 

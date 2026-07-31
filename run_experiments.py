@@ -15,6 +15,7 @@ MODULES = [
     "experiments.exp4_roadmap_quality",
     "experiments.exp5_interview_generation",
     "experiments.exp6_feedback_evaluation",
+    "experiments.exp12_melo_external",  # downloads MELO on first run
 ]
 
 
