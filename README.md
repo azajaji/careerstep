@@ -65,14 +65,24 @@ scores for all 633 queries, not only the aggregates in the table.
 ## Environment
 
 Encoders: `sentence-transformers/all-MiniLM-L6-v2` for embeddings and
-`cross-encoder/ms-marco-MiniLM-L-6-v2` for the reranker. No LLM or paid
-service is used by any experiment; the only network access is the one-off
-MELO download in `exp12`. Seeds are in `reproducibility/seeds.txt`; every
-experiment calls `set_global_seeds()` first, and `data.download` seeds each
-corpus routine independently. Set `PYTHONHASHSEED=0` before the interpreter
-starts, since Python randomises string hashing per process.
+`cross-encoder/ms-marco-MiniLM-L-6-v2` for the reranker. The only network
+access is the one-off MELO download in `exp12`.
 
-The reported numbers were produced on this configuration:
+No experiment calls a language model. This matters because
+`careerstep.backends` selects a language-model path whenever
+`OPENAI_API_KEY` is set, and on that path the interview generator returns
+different questions and no longer satisfies its coverage constraint. The
+reported numbers are the offline path, so `set_global_seeds()` — which every
+experiment calls first — removes `OPENAI_API_KEY` from the process and says
+so on stdout. A key left in your environment therefore cannot change the
+results.
+
+Seeds are in `reproducibility/seeds.txt`; `data.download` seeds each corpus
+routine independently. Set `PYTHONHASHSEED=0` before the interpreter starts,
+since Python randomises string hashing per process.
+
+Every reported number, Table 6 through Table 14, was produced on one
+configuration; there is no separate environment for the MELO benchmark:
 
 | | |
 |---|---|

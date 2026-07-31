@@ -23,8 +23,26 @@ def load_seeds(path: Path = _SEEDS_FILE) -> Dict[str, int]:
     return seeds
 
 
+def force_offline_backends() -> bool:
+    """Remove OPENAI_API_KEY from this process so backends stay deterministic.
+
+    ``ModuleBackends`` picks the language-model path whenever OPENAI_API_KEY is
+    set, which changes the interview generator's output and its coverage score.
+    The reported benchmarks are the offline path, so a key left in the caller's
+    environment must not silently change them. Returns True if one was removed.
+    """
+    return os.environ.pop("OPENAI_API_KEY", None) is not None
+
+
 def set_global_seeds(override: int | None = None) -> Dict[str, int]:
-    """Set every relevant RNG. Returns the seed dict actually used."""
+    """Fix every RNG and force offline backends. Returns the seeds used.
+
+    Every experiment calls this first, so the reported numbers reproduce
+    regardless of what is set in the caller's environment.
+    """
+    if force_offline_backends():
+        print("  [seeding] OPENAI_API_KEY ignored; benchmarks run offline")
+
     seeds = load_seeds()
     if override is not None:
         seeds = {k: override for k in seeds}

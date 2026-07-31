@@ -297,8 +297,50 @@ def run() -> dict:
     }
 
 
+def write_csvs(payload: dict, results_dir) -> List:
+    """Small companion CSVs; the JSON stays the complete record."""
+    import csv
+
+    out = []
+    p = results_dir / "exp12_melo_summary.csv"
+    with p.open("w", newline="", encoding="utf-8") as fh:
+        w = csv.writer(fh)
+        w.writerow(["scorer", "metric", "mean", "ci95_low", "ci95_high"])
+        for m, s in payload["summary"].items():
+            for k, v in s.items():
+                w.writerow([m, k, f"{v['mean']:.4f}",
+                            f"{v['ci95_low']:.4f}", f"{v['ci95_high']:.4f}"])
+        cr = payload["candidate_recall@100"]
+        w.writerow(["bi_encoder", "candidate_recall@100", f"{cr['mean']:.4f}",
+                    f"{cr['ci95_low']:.4f}", f"{cr['ci95_high']:.4f}"])
+        for pair, mets in payload["paired_bootstrap"].items():
+            for k, v in mets.items():
+                w.writerow([f"paired:{pair}", k, f"{v['mean_delta']:+.4f}",
+                            f"{v['ci95_low']:+.4f}", f"{v['ci95_high']:+.4f}"])
+    out.append(p)
+
+    p = results_dir / "exp12_melo_overlap.csv"
+    with p.open("w", newline="", encoding="utf-8") as fh:
+        w = csv.writer(fh)
+        w.writerow(["band", "n", "jaccard_min", "jaccard_max", "mean_jaccard",
+                    "bm25_mrr", "bm25_recall@1", "bi_mrr", "bi_recall@1",
+                    "rerank_mrr", "rerank_recall@1"])
+        for band, s in payload["overlap_quartiles"].items():
+            w.writerow([band, s["n"], f"{s['jaccard_min']:.4f}",
+                        f"{s['jaccard_max']:.4f}", f"{s['mean_max_jaccard']:.4f}",
+                        f"{s['bm25']['mrr']:.4f}", f"{s['bm25']['recall@1']:.4f}",
+                        f"{s['bi_encoder']['mrr']:.4f}",
+                        f"{s['bi_encoder']['recall@1']:.4f}",
+                        f"{s['bi_plus_reranker']['mrr']:.4f}",
+                        f"{s['bi_plus_reranker']['recall@1']:.4f}"])
+    out.append(p)
+    return out
+
+
 if __name__ == "__main__":
     print_header("Experiment 12 - External occupation linking (MELO)")
     payload = run()
     path = save_report("exp12_melo_external", payload)
     print(f"\nSaved {path}")
+    for p in write_csvs(payload, path.parent):
+        print(f"Saved {p}")
