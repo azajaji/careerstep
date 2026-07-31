@@ -64,36 +64,61 @@ scores for all 633 queries, not only the aggregates in the table.
 
 ## Environment
 
-Python 3.11 with the pinned versions in `requirements.txt`. Encoders:
-`sentence-transformers/all-MiniLM-L6-v2` for embeddings and
-`cross-encoder/ms-marco-MiniLM-L-6-v2` for the CV/JD reranker. No LLM or
-paid service is used by any experiment; the only network access is the
-one-off MELO download in `exp12`. Seeds are in
-`reproducibility/seeds.txt`; every experiment calls
-`set_global_seeds()` first, and `data.download` seeds each corpus routine
-independently. Runtime for the full suite is a few minutes on CPU.
+Encoders: `sentence-transformers/all-MiniLM-L6-v2` for embeddings and
+`cross-encoder/ms-marco-MiniLM-L-6-v2` for the reranker. No LLM or paid
+service is used by any experiment; the only network access is the one-off
+MELO download in `exp12`. Seeds are in `reproducibility/seeds.txt`; every
+experiment calls `set_global_seeds()` first, and `data.download` seeds each
+corpus routine independently. Set `PYTHONHASHSEED=0` before the interpreter
+starts, since Python randomises string hashing per process.
+
+The reported numbers were produced on this configuration:
+
+| | |
+|---|---|
+| CPU | Intel Core Ultra 7 265F, 20 cores / 20 threads |
+| RAM | 64 GB |
+| OS | Windows 11 (build 26200) |
+| Python | 3.13.9 |
+| PyTorch | 2.11.0, running on CPU |
+| sentence-transformers | 5.4.1 |
+| NumPy / SciPy / scikit-learn | 2.3.5 / 1.16.3 / 1.7.2 |
+
+`exp12` (MELO) takes 53 s wall-clock on that machine with a peak resident
+set of 1.8 GB: 13 s to encode the 33,809-element corpus, 6 s for BM25
+search, 2 s for bi-encoder search, and 30 s for cross-encoder reranking.
+The full suite takes a few minutes. Run it with `CUDA_VISIBLE_DEVICES=""`
+to reproduce the CPU timings; the metrics are identical on GPU, only the
+timings differ.
 
 ## Data
 
-`onet_work_values.csv` is a curated cybersecurity subset of O*NET 28.0 Work
-Values, which is public. `saudi_cyber_roles.csv` (25 roles) and
-`csmq_items.json` (25 Likert items over Derr's five career orientations) were
-authored for this study; the CSMQ items are original wording and have not been
-psychometrically validated. Every other corpus built by `data.download` is
-generated or hand-authored for evaluation and is not a substitute for real
-labour-market data.
+Two categories, and the distinction matters for how the results should be
+read.
 
-Set `KAGGLE_USERNAME`/`KAGGLE_KEY` to pull a real English resume corpus
-instead of the synthetic fallback. The reported numbers use the fallback.
+**Generated or author-curated (Tables 6–13).** `saudi_cyber_roles.csv`
+(25 roles) and `csmq_items.json` (25 Likert items over Derr's five career
+orientations) were authored for this study; the CSMQ items are original
+wording and have not been psychometrically validated. The CV,
+job-description, learning-resource, interview-question, and feedback corpora
+built by `data.download` are procedurally generated or hand-authored for
+evaluation. None is a substitute for real labour-market data, and the study
+team produced both the inputs and the reference labels.
+`onet_work_values.csv` is a curated subset of the public O*NET 28.0 Work
+Values dataset.
 
-MELO (Retyk et al., 2024, MIT licence) is fetched from
+**External and externally annotated (Table 14).** MELO (Retyk et al., 2024,
+arXiv:2410.08319, MIT licence) is fetched from
 <https://github.com/Avature/melo-benchmark> rather than vendored here. It is
 the one evaluation set this study neither built nor annotated. `exp12` uses
 its `usa_q_en_c_en` configuration: 633 occupation-title queries against
-33,809 ESCO surface forms. Each query has exactly one correct ESCO
-occupation, so rankings are collapsed to one entry per occupation before
-scoring; `tests/test_melo.py` asserts that property against the downloaded
-annotations.
+33,809 ESCO surface forms, scored zero-shot. Each query has exactly one
+correct ESCO occupation, so rankings are collapsed to one entry per
+occupation before scoring; `tests/test_melo.py` asserts that property
+against the downloaded annotations.
+
+Set `KAGGLE_USERNAME`/`KAGGLE_KEY` to pull a real English resume corpus
+instead of the synthetic fallback. The reported numbers use the fallback.
 
 ## Quick start
 
