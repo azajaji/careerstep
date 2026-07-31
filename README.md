@@ -42,7 +42,7 @@ Manuscript table numbers refer to the submitted version.
 
 | Table | Script | Raw output |
 |---|---|---|
-| 6 — item-level questionnaire scoring | `experiments/exp7_questionnaire_scoring.py` | `results/exp7_questionnaire_scoring.json` |
+| 6 — item-level inventory scoring | `experiments/exp7_questionnaire_scoring.py` | `results/exp7_questionnaire_scoring.json` |
 | 7 — self-consistency and noise sweep | `experiments/exp8_career_positioning.py` | `results/exp8_career_positioning.json` |
 | 8 — ranking benchmark | `experiments/exp8_career_positioning.py` | `results/exp8_career_positioning.json` |
 | 9 — shortlist stability | `experiments/exp8d_shortlist_stability.py` | `results/exp8_shortlist_stability.json` |
@@ -51,10 +51,14 @@ Manuscript table numbers refer to the submitted version.
 | 11 — CV/JD alignment | `experiments/exp2_resume_job_alignment.py` | `results/exp2_resume_job_alignment.json` |
 | 12 — roadmap generation | `experiments/exp4_roadmap_quality.py` | `results/exp4_roadmap_quality.json` |
 | 13 — interview-question generation | `experiments/exp5_interview_generation.py` | `results/exp5_interview_generation.json` |
-| 14 — feedback grounding | `experiments/exp6_feedback_evaluation.py` | `results/exp6_feedback_evaluation.json` |
-| 15 — external occupation linking (MELO) | `experiments/exp12_melo_external.py` | `results/exp12_melo_external.json` |
+| 14 — external occupation linking (MELO) | `experiments/exp12_melo_external.py` | `results/exp12_melo_external.json` |
 
-Tables 1–5 and 16 are design or descriptive tables with no computed values.
+The feedback-grounding comparison is reported in the text of Section 6.3
+rather than as a table; it comes from
+`experiments/exp6_feedback_evaluation.py` →
+`results/exp6_feedback_evaluation.json`.
+
+Tables 1–5 and 15 are design or descriptive tables with no computed values.
 `results/exp12_melo_external.json` keeps the per-query ranked occupations and
 scores for all 633 queries, not only the aggregates in the table.
 
