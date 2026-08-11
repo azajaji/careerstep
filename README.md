@@ -1,7 +1,8 @@
 # CareerStep
 
-Reference implementation and evaluation code for *"When the Largest Weight Has
-the Least Influence: A Reproducible Audit of a Values-Based Role Recommender"*.
+Reference implementation and evaluation code for *"A Scale-Contract Audit for
+Composite Scoring Systems: Detecting Weight-Influence Misalignment and
+Evaluating Layer-Specific Repairs"*.
 
 This is the research implementation, not the client application. It involves
 no human participants: every benchmark runs on public data (O*NET Work
