@@ -1,0 +1,92 @@
+{
+  "scorer": "Human Development Index",
+  "source": "UNDP Human Development Report 2023-24 composite indices",
+  "url": "https://hdr.undp.org/sites/default/files/2023-24_HDR/HDR23-24_Composite_indices_complete_time_series.csv",
+  "year": 2022,
+  "weights": {
+    "health": 0.3333333333333333,
+    "education": 0.3333333333333333,
+    "income": 0.3333333333333333
+  },
+  "reproduction_check": {
+    "n_countries": 193,
+    "max_abs_error": 0.0004987236813203122,
+    "mean_abs_error": 0.0002394432574953297,
+    "pearson_r": 0.9999983595730392,
+    "share_within_0_001": 1.0
+  },
+  "global_decision_set": {
+    "health": {
+      "weighted_dispersion_share_mean": 0.21283593869198497,
+      "kendall_tau_mean": 0.9206606217616581,
+      "top1_change_rate": 1.0,
+      "top10_jaccard_mean": 0.6666666666666666,
+      "share_of_pairs_decided": 0.11366580310880829
+    },
+    "education": {
+      "weighted_dispersion_share_mean": 0.40900017259718446,
+      "kendall_tau_mean": 0.8694948186528498,
+      "top1_change_rate": 1.0,
+      "top10_jaccard_mean": 0.42857142857142855,
+      "share_of_pairs_decided": 0.29280008635578586
+    },
+    "income": {
+      "weighted_dispersion_share_mean": 0.3781638887108305,
+      "kendall_tau_mean": 0.8946459412780657,
+      "top1_change_rate": 1.0,
+      "top10_jaccard_mean": 0.42857142857142855,
+      "share_of_pairs_decided": 0.242389896373057
+    }
+  },
+  "regional_decision_sets": {
+    "n_regions": 6,
+    "regions": [
+      "AS",
+      "EAP",
+      "ECA",
+      "LAC",
+      "SA",
+      "SSA"
+    ],
+    "sizes": [
+      20,
+      25,
+      17,
+      33,
+      9,
+      46
+    ],
+    "measures": {
+      "health": {
+        "weighted_dispersion_share_mean": 0.19794197086975196,
+        "kendall_tau_mean": 0.9096572117278136,
+        "top1_change_rate": 0.16666666666666666,
+        "top10_jaccard_mean": 0.8787878787878789,
+        "share_of_pairs_decided": 0.13348314606741574
+      },
+      "education": {
+        "weighted_dispersion_share_mean": 0.4045863708230599,
+        "kendall_tau_mean": 0.7852018570412702,
+        "top1_change_rate": 0.6666666666666666,
+        "top10_jaccard_mean": 0.806915306915307,
+        "share_of_pairs_decided": 0.4157303370786517
+      },
+      "income": {
+        "weighted_dispersion_share_mean": 0.39747165830718806,
+        "kendall_tau_mean": 0.8189951665893919,
+        "top1_change_rate": 0.5,
+        "top10_jaccard_mean": 0.797979797979798,
+        "share_of_pairs_decided": 0.37617977528089885
+      }
+    }
+  },
+  "notes": {
+    "additive_scale": "HDI is a geometric mean, so the audit is taken on log dimension indices, where the scorer is additive with weights 1/3 and the ranking is unchanged",
+    "goalposts": "dimension indices are recomputed from UNDP's published goalposts and checked against the published HDI before the audit, so the object under audit is theirs",
+    "unit": "the global set is how HDI is used; the regional sets mirror the within-decision-set unit used elsewhere in this study"
+  },
+  "_meta": {
+    "name": "exp18_external_index_audit",
+    "timestamp": "2026-08-11T13:39:25.964583Z"
+  }
+}

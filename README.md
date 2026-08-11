@@ -38,8 +38,8 @@ committed `results/*.json` are the values reported in the paper.
 ## Which script produces which table and figure
 
 Manuscript numbers refer to the IEEE Access submission. The primary evidence
-(RQ1–RQ5) is Figures 1–2 and Tables 6–16; the secondary checks are Tables
-18–23 in Appendix A. Run everything with `python run_experiments.py`.
+(RQ1–RQ5) is Figures 1–2 and Tables 6–16, the external transfer case is
+Table 17, and the secondary checks are Tables 19–24 in Appendix A. Run everything with `python run_experiments.py`.
 
 | Manuscript | Script | Raw output |
 |---|---|---|
@@ -57,19 +57,20 @@ Manuscript numbers refer to the IEEE Access submission. The primary evidence
 | Table 14 — influence after scale calibration (RQ4) | `experiments/exp16_scale_calibration.py` | `results/exp16_scale_calibration.json` |
 | Table 15 — what calibration changes and costs (RQ4) | `experiments/exp16_scale_calibration.py` | `results/exp16_scale_calibration.json` |
 | Table 16 — fitted projection, held-out occupations (RQ5) | `experiments/exp17_fitted_projection.py` | `results/exp17_fitted_projection.json` |
-| Table 18 — item-level inventory scoring | `experiments/exp7_questionnaire_scoring.py` | `results/exp7_questionnaire_scoring.json` |
-| Table 19 — CV/JD alignment | `experiments/exp2_resume_job_alignment.py` | `results/exp2_resume_job_alignment.json` |
-| Table 20 — roadmap generation | `experiments/exp4_roadmap_quality.py` | `results/exp4_roadmap_quality.json` |
-| Table 21 — interview-question generation | `experiments/exp5_interview_generation.py` | `results/exp5_interview_generation.json` |
-| Table 22 — context-continuity ablation | `experiments/exp13_no_profile_ablation.py` | `results/exp13_no_profile_ablation.json` |
-| Table 23 — external occupation linking (MELO) | `experiments/exp12_melo_external.py` | `results/exp12_melo_external.json` |
+| Table 17 — the audit on the Human Development Index | `experiments/exp18_external_index_audit.py` | `results/exp18_external_index_audit.json` |
+| Table 19 — item-level inventory scoring | `experiments/exp7_questionnaire_scoring.py` | `results/exp7_questionnaire_scoring.json` |
+| Table 20 — CV/JD alignment | `experiments/exp2_resume_job_alignment.py` | `results/exp2_resume_job_alignment.json` |
+| Table 21 — roadmap generation | `experiments/exp4_roadmap_quality.py` | `results/exp4_roadmap_quality.json` |
+| Table 22 — interview-question generation | `experiments/exp5_interview_generation.py` | `results/exp5_interview_generation.json` |
+| Table 23 — context-continuity ablation | `experiments/exp13_no_profile_ablation.py` | `results/exp13_no_profile_ablation.json` |
+| Table 24 — external occupation linking (MELO) | `experiments/exp12_melo_external.py` | `results/exp12_melo_external.json` |
 
 The feedback-grounding comparison is reported in the text of the secondary
 checks rather than as a table; it comes from
 `experiments/exp6_feedback_evaluation.py` →
 `results/exp6_feedback_evaluation.json`.
 
-Tables 1–5 and 17 are design or descriptive tables with no computed values.
+Tables 1–5 and 18 are design or descriptive tables with no computed values.
 `results/exp12_melo_external.json` keeps the per-query ranked occupations and
 scores for all 633 queries, not only the aggregates in the table.
 
@@ -92,7 +93,7 @@ Seeds are in `reproducibility/seeds.txt`; `data.download` seeds each corpus
 routine independently. Set `PYTHONHASHSEED=0` before the interpreter starts,
 since Python randomises string hashing per process.
 
-Every reported number, Tables 6–23, was produced on one
+Every reported number, Tables 6–24, was produced on one
 configuration; there is no separate environment for the MELO benchmark:
 
 | | |
@@ -117,7 +118,7 @@ timings differ.
 Two categories, and the distinction matters for how the results should be
 read.
 
-**Generated or author-curated (Tables 6–16, 18–22).** `saudi_cyber_roles.csv`
+**Generated or author-curated (Tables 6–16, 19–23).** `saudi_cyber_roles.csv`
 (25 roles) and `csmq_items.json` (25 Likert items over Derr's five career
 orientations) were authored for this study; the CSMQ items are original
 wording and have not been psychometrically validated. The CV,
@@ -128,10 +129,14 @@ team produced both the inputs and the reference labels.
 `onet_work_values.csv` is a curated subset of the public O*NET 28.0 Work
 Values dataset.
 
-**External and externally annotated (Table 23).** MELO (Retyk et al., 2024,
+**External and externally annotated (Tables 17 and 24).** MELO (Retyk et al., 2024,
 arXiv:2410.08319, MIT licence) is fetched from
 <https://github.com/Avature/melo-benchmark> rather than vendored here. It is
-the one evaluation set this study neither built nor annotated. `exp12` uses
+one of two inputs this study neither built nor annotated. `exp18` uses the
+other: the UNDP Human Development Report 2023-24 composite-indices time
+series, fetched from <https://hdr.undp.org>, from which the three HDI
+dimension indices are recomputed using UNDP's published goalposts and checked
+against the published HDI before the audit runs. `exp12` uses
 its `usa_q_en_c_en` configuration: 633 occupation-title queries against
 33,809 ESCO surface forms, scored zero-shot. Each query has exactly one
 correct ESCO occupation, so rankings are collapsed to one entry per

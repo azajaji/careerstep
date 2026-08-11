@@ -22,6 +22,7 @@ MODULES = [
     "experiments.exp15_external_structure",  # downloads O*NET tables on first run
     "experiments.exp16_scale_calibration",
     "experiments.exp17_fitted_projection",
+    "experiments.exp18_external_index_audit",  # downloads UNDP HDR data on first run
 ]
 
 
