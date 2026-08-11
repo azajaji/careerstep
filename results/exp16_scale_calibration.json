@@ -1,0 +1,128 @@
+{
+  "n_profiles": 120,
+  "n_roles": 25,
+  "weights": {
+    "value_fit": 0.6,
+    "skill_readiness": 0.25,
+    "feasibility": 0.15
+  },
+  "influence_by_calibration": {
+    "none": {
+      "value_fit": {
+        "weighted_dispersion_share_mean": 0.044079816824609805,
+        "kendall_tau_mean": 0.7560555555555555,
+        "top1_change_rate": 0.125,
+        "top5_jaccard_mean": 0.6797619047619047,
+        "share_of_pairs_decided": 0.26663888888888887
+      },
+      "skill_readiness": {
+        "weighted_dispersion_share_mean": 0.3880681896312025,
+        "kendall_tau_mean": 0.8252777777777777,
+        "top1_change_rate": 0.8416666666666667,
+        "top5_jaccard_mean": 0.5093253968253968,
+        "share_of_pairs_decided": 0.19569444444444445
+      },
+      "feasibility": {
+        "weighted_dispersion_share_mean": 0.5678519935441878,
+        "kendall_tau_mean": 0.48527777777777764,
+        "top1_change_rate": 0.39166666666666666,
+        "top5_jaccard_mean": 0.500297619047619,
+        "share_of_pairs_decided": 0.5163888888888889
+      }
+    },
+    "z": {
+      "value_fit": {
+        "weighted_dispersion_share_mean": 0.5999999999999999,
+        "kendall_tau_mean": 0.3699444444444443,
+        "top1_change_rate": 0.4166666666666667,
+        "top5_jaccard_mean": 0.419510582010582,
+        "share_of_pairs_decided": 0.6688611111111111
+      },
+      "skill_readiness": {
+        "weighted_dispersion_share_mean": 0.25,
+        "kendall_tau_mean": 0.851111111111111,
+        "top1_change_rate": 0.7,
+        "top5_jaccard_mean": 0.5778769841269842,
+        "share_of_pairs_decided": 0.16061111111111112
+      },
+      "feasibility": {
+        "weighted_dispersion_share_mean": 0.15,
+        "kendall_tau_mean": 0.8597777777777776,
+        "top1_change_rate": 0.16666666666666666,
+        "top5_jaccard_mean": 0.6933531746031747,
+        "share_of_pairs_decided": 0.15547222222222223
+      }
+    },
+    "range": {
+      "value_fit": {
+        "weighted_dispersion_share_mean": 0.5731410638242297,
+        "kendall_tau_mean": 0.38683333333333325,
+        "top1_change_rate": 0.4166666666666667,
+        "top5_jaccard_mean": 0.46769179894179896,
+        "share_of_pairs_decided": 0.6442777777777777
+      },
+      "skill_readiness": {
+        "weighted_dispersion_share_mean": 0.2826806144775866,
+        "kendall_tau_mean": 0.8362222222222222,
+        "top1_change_rate": 0.725,
+        "top5_jaccard_mean": 0.5288359788359789,
+        "share_of_pairs_decided": 0.1802777777777778
+      },
+      "feasibility": {
+        "weighted_dispersion_share_mean": 0.14417832169818365,
+        "kendall_tau_mean": 0.8596111111111109,
+        "top1_change_rate": 0.15833333333333333,
+        "top5_jaccard_mean": 0.7370039682539683,
+        "share_of_pairs_decided": 0.1565
+      }
+    }
+  },
+  "recovery_by_calibration": {
+    "none": {
+      "hit_rate_at_1": 0.4666666666666667,
+      "hit_rate_at_3": 0.7416666666666667,
+      "hit_rate_at_5": 0.9,
+      "mrr": 0.6362825600325601,
+      "ndcg_at_5": 0.44615310369092265
+    },
+    "z": {
+      "hit_rate_at_1": 0.625,
+      "hit_rate_at_3": 0.9166666666666666,
+      "hit_rate_at_5": 0.95,
+      "mrr": 0.7682936507936505,
+      "ndcg_at_5": 0.5648980369718647
+    },
+    "range": {
+      "hit_rate_at_1": 0.6416666666666667,
+      "hit_rate_at_3": 0.925,
+      "hit_rate_at_5": 0.975,
+      "mrr": 0.7844480519480519,
+      "ndcg_at_5": 0.563806568002846
+    }
+  },
+  "ranking_shift_vs_uncalibrated": {
+    "z": {
+      "top1_change_vs_uncalibrated": 0.375,
+      "top5_jaccard_vs_uncalibrated": 0.535383597883598
+    },
+    "range": {
+      "top1_change_vs_uncalibrated": 0.375,
+      "top5_jaccard_vs_uncalibrated": 0.5267526455026456
+    }
+  },
+  "dropout_reversal_rate": {
+    "none": 0.0,
+    "z": 0.009556907037358819,
+    "range": 0.003036876355748373
+  },
+  "notes": {
+    "arithmetic": "under either calibration every criterion has the same within-profile spread, so the normalized weighted dispersion equals the weights by construction; it is reported as a check, not as a result",
+    "measured": "the leave-one-criterion-out and margin measures are not fixed by construction and are the test of weight fidelity",
+    "benchmark_bias": "acceptable-role labels are the latent role and its two nearest orientation-centroid neighbours, so the benchmark favours a value-heavy ranker; recovery numbers here bound nothing about role-fit validity",
+    "cost": "calibrating within the candidate set makes a role's score depend on the other candidates, so dropping one candidate can change the leader; the uncalibrated score cannot do this"
+  },
+  "_meta": {
+    "name": "exp16_scale_calibration",
+    "timestamp": "2026-08-11T12:56:39.748225Z"
+  }
+}

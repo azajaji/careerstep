@@ -1,17 +1,17 @@
-onet_soc,title,achievement,independence,recognition,relationships,support,working_conditions,source
-15-1212.00,Information Security Analysts,5.50,4.50,3.50,4.00,4.83,4.83,onet_28_0
-15-1299.04,Penetration Testers,5.83,5.50,3.83,3.50,4.17,4.17,onet_28_0
-15-1299.05,Information Security Engineers,5.67,5.00,3.67,3.83,4.33,4.50,onet_28_0
-15-1299.07,Blockchain Engineers,5.50,5.00,3.83,3.50,4.00,4.17,onet_28_0
-15-1299.08,Computer Systems Engineers/Architects,5.67,4.83,4.00,4.00,4.50,4.50,onet_28_0
-15-1299.00,"Computer Occupations, All Other",5.33,4.67,3.83,4.00,4.33,4.50,onet_28_0
-15-1244.00,Network and Computer Systems Administrators,5.00,4.33,3.50,4.17,4.67,4.67,onet_28_0
-15-2051.01,Business Intelligence Analysts,5.50,4.50,3.83,4.17,4.50,4.50,onet_28_0
-17-2199.00,"Engineers, All Other",5.50,4.83,3.83,3.83,4.50,4.67,onet_28_0
-11-3021.00,Computer and Information Systems Managers,5.83,4.83,5.00,4.50,4.67,4.67,onet_28_0
-13-1199.02,Security Management Specialists,5.33,4.67,4.17,4.50,4.67,4.67,onet_28_0
-13-2061.00,Financial Examiners,5.17,4.33,4.00,4.50,4.67,4.50,onet_28_0
-19-3094.00,Political Scientists,5.50,5.17,4.17,4.33,4.17,4.50,onet_28_0
-13-1151.00,Training and Development Specialists,5.00,4.50,4.00,5.00,4.83,4.50,onet_28_0
-25-1199.00,"Postsecondary Teachers, All Other",5.33,5.00,4.00,4.67,4.33,4.50,onet_28_0
-13-2011.00,Accountants and Auditors,5.17,4.33,4.17,4.50,4.67,4.50,onet_28_0
+onet_soc,title,achievement,independence,recognition,relationships,support,working_conditions,source,source_basis
+15-1212.00,Information Security Analysts,4.67,5.33,4.33,4.33,5.33,5.67,onet_28_0,15-1212.00
+15-1299.04,Penetration Testers,5.47,5.07,4.7,3.8,4.33,4.92,onet_28_0_family_mean,15-1299.01|15-1299.02|15-1299.03|15-1299.08|15-1299.09
+15-1299.05,Information Security Engineers,5.47,5.07,4.7,3.8,4.33,4.92,onet_28_0_family_mean,15-1299.01|15-1299.02|15-1299.03|15-1299.08|15-1299.09
+15-1299.07,Blockchain Engineers,5.47,5.07,4.7,3.8,4.33,4.92,onet_28_0_family_mean,15-1299.01|15-1299.02|15-1299.03|15-1299.08|15-1299.09
+15-1299.08,Computer Systems Engineers/Architects,5.67,5.67,5.67,4.33,4.67,4.83,onet_28_0,15-1299.08
+15-1299.00,"Computer Occupations, All Other",5.47,5.07,4.7,3.8,4.33,4.92,onet_28_0_family_mean,15-1299.01|15-1299.02|15-1299.03|15-1299.08|15-1299.09
+15-1244.00,Network and Computer Systems Administrators,4.67,4.33,4.67,4.0,5.33,5.5,onet_28_0,15-1244.00
+15-2051.01,Business Intelligence Analysts,5.67,3.67,4.0,3.0,3.67,5.33,onet_28_0,15-2051.01
+17-2199.00,"Engineers, All Other",5.83,5.5,5.29,3.33,3.96,5.54,onet_28_0_family_mean,17-2199.03|17-2199.05|17-2199.06|17-2199.07|17-2199.08|17-2199.09|17-2199.10|17-2199.11
+11-3021.00,Computer and Information Systems Managers,5.33,5.0,5.33,4.33,5.67,6.5,onet_28_0,11-3021.00
+13-1199.02,Security Management Specialists,5.33,5.33,4.11,4.11,3.56,4.78,onet_28_0_family_mean,13-1199.04|13-1199.05|13-1199.06
+13-2061.00,Financial Examiners,4.67,5.67,4.33,5.0,4.0,4.33,onet_28_0,13-2061.00
+19-3094.00,Political Scientists,5.67,5.0,5.33,3.33,2.33,5.67,onet_28_0,19-3094.00
+13-1151.00,Training and Development Specialists,5.33,5.33,4.67,6.33,4.67,4.83,onet_28_0,13-1151.00
+25-1199.00,"Postsecondary Teachers, All Other",5.46,5.42,4.77,5.42,3.41,5.05,onet_28_0_group_mean,25-* (n=57)
+13-2011.00,Accountants and Auditors,5.0,5.0,4.67,4.67,4.67,4.5,onet_28_0,13-2011.00

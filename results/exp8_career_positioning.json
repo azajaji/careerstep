@@ -27,58 +27,58 @@
   "projection_demo": {
     "sample_onet_soc": "15-1212.00",
     "sample_wv": {
-      "achievement": 5.5,
-      "independence": 4.5,
-      "recognition": 3.5,
-      "relationships": 4.0,
-      "support": 4.83,
-      "working_conditions": 4.83
+      "achievement": 4.67,
+      "independence": 5.33,
+      "recognition": 4.33,
+      "relationships": 4.33,
+      "support": 5.33,
+      "working_conditions": 5.67
     },
     "projected_csmq_centroid": {
-      "getting_ahead": 0.6714285714285715,
-      "getting_secure": 0.42342857142857143,
-      "getting_free": 0.6522857142857144,
-      "getting_high": 0.7237142857142858,
-      "getting_balanced": 0.6425714285714286
+      "getting_ahead": 0.6477142857142857,
+      "getting_secure": 0.4714285714285714,
+      "getting_free": 0.7711428571428572,
+      "getting_high": 0.724,
+      "getting_balanced": 0.7237142857142858
     }
   },
   "self_consistency": {
     "n_roles": 25,
     "mrr": {
       "n": 25,
-      "mean": 0.778,
-      "sd": 0.30982073669928695,
-      "min": 0.2,
+      "mean": 0.6600476190476191,
+      "sd": 0.3735785101557489,
+      "min": 0.125,
       "max": 1.0,
-      "ci95_low": 0.6459999999999999,
-      "ci95_high": 0.8833333333333333
+      "ci95_low": 0.511047619047619,
+      "ci95_high": 0.7946666666666666
     },
     "top1": {
       "n": 25,
-      "mean": 0.64,
-      "sd": 0.48989794855663565,
+      "mean": 0.52,
+      "sd": 0.5099019513592785,
       "min": 0.0,
       "max": 1.0,
-      "ci95_low": 0.44,
-      "ci95_high": 0.8
+      "ci95_low": 0.32,
+      "ci95_high": 0.72
     },
     "top3": {
       "n": 25,
-      "mean": 0.92,
-      "sd": 0.27688746209726917,
+      "mean": 0.72,
+      "sd": 0.45825756949558405,
       "min": 0.0,
       "max": 1.0,
-      "ci95_low": 0.76,
-      "ci95_high": 1.0
+      "ci95_low": 0.52,
+      "ci95_high": 0.88
     },
     "top5": {
       "n": 25,
-      "mean": 1.0,
-      "sd": 0.0,
-      "min": 1.0,
+      "mean": 0.88,
+      "sd": 0.33166247903553997,
+      "min": 0.0,
       "max": 1.0,
-      "ci95_low": 0.8628148284692875,
-      "ci95_high": 1.0
+      "ci95_low": 0.68,
+      "ci95_high": 0.96
     }
   },
   "noise_robustness": [
@@ -86,108 +86,168 @@
       "sigma": 0.0,
       "mrr": {
         "n": 500,
-        "mean": 0.778,
-        "sd": 0.30386510384709425,
-        "min": 0.2,
+        "n_clusters": 25,
+        "mean": 0.660047619047619,
+        "sd": 0.3663972721545098,
+        "min": 0.125,
         "max": 1.0,
-        "ci95_low": 0.7505527503124318,
-        "ci95_high": 0.8033908270189112
+        "ci95_low": 0.517472619047619,
+        "ci95_high": 0.801722619047619,
+        "ci_method": "cluster percentile bootstrap over base units"
       },
-      "trials": 500
+      "mrr_unclustered": {
+        "n": 500,
+        "mean": 0.660047619047619,
+        "sd": 0.3663972721545098,
+        "min": 0.125,
+        "max": 1.0,
+        "ci95_low": 0.6271799854306536,
+        "ci95_high": 0.6907548053230157
+      },
+      "trials": 500,
+      "resampling_unit": "role"
     },
     {
       "sigma": 0.05,
       "mrr": {
         "n": 500,
-        "mean": 0.32825344459163275,
-        "sd": 0.3145451869786565,
-        "min": 0.041666666666666664,
+        "n_clusters": 25,
+        "mean": 0.44977956514074163,
+        "sd": 0.36231479434844627,
+        "min": 0.04,
         "max": 1.0,
-        "ci95_low": 0.30111194363709076,
-        "ci95_high": 0.3568748302626328
+        "ci95_low": 0.3535700813647137,
+        "ci95_high": 0.5469038450438449,
+        "ci_method": "cluster percentile bootstrap over base units"
       },
-      "trials": 500
+      "mrr_unclustered": {
+        "n": 500,
+        "mean": 0.44977956514074163,
+        "sd": 0.36231479434844627,
+        "min": 0.04,
+        "max": 1.0,
+        "ci95_low": 0.41863817126492275,
+        "ci95_high": 0.4821385919899494
+      },
+      "trials": 500,
+      "resampling_unit": "role"
     },
     {
       "sigma": 0.1,
       "mrr": {
         "n": 500,
-        "mean": 0.23356020943131592,
-        "sd": 0.26697594462365387,
-        "min": 0.04,
+        "n_clusters": 25,
+        "mean": 0.29793329203999214,
+        "sd": 0.3053519417809896,
+        "min": 0.043478260869565216,
         "max": 1.0,
-        "ci95_low": 0.21147834927176945,
-        "ci95_high": 0.2582849418856813
+        "ci95_low": 0.23301659234799094,
+        "ci95_high": 0.3689413275328734,
+        "ci_method": "cluster percentile bootstrap over base units"
       },
-      "trials": 500
+      "mrr_unclustered": {
+        "n": 500,
+        "mean": 0.29793329203999214,
+        "sd": 0.3053519417809896,
+        "min": 0.043478260869565216,
+        "max": 1.0,
+        "ci95_low": 0.2723959652342038,
+        "ci95_high": 0.32575775651000854
+      },
+      "trials": 500,
+      "resampling_unit": "role"
     },
     {
       "sigma": 0.2,
       "mrr": {
         "n": 500,
-        "mean": 0.17885822708102087,
-        "sd": 0.2172197437321565,
+        "n_clusters": 25,
+        "mean": 0.2185879977420017,
+        "sd": 0.25773499547682205,
         "min": 0.04,
         "max": 1.0,
-        "ci95_low": 0.16191189704670744,
-        "ci95_high": 0.19992080725521122
+        "ci95_low": 0.17018913356016635,
+        "ci95_high": 0.27146127511008455,
+        "ci_method": "cluster percentile bootstrap over base units"
       },
-      "trials": 500
+      "mrr_unclustered": {
+        "n": 500,
+        "mean": 0.2185879977420017,
+        "sd": 0.25773499547682205,
+        "min": 0.04,
+        "max": 1.0,
+        "ci95_low": 0.19705966087761403,
+        "ci95_high": 0.24272717513744146
+      },
+      "trials": 500,
+      "resampling_unit": "role"
     },
     {
       "sigma": 0.3,
       "mrr": {
         "n": 500,
-        "mean": 0.18680276478572952,
-        "sd": 0.2326473104613199,
+        "n_clusters": 25,
+        "mean": 0.18703445887005113,
+        "sd": 0.22432829137320004,
         "min": 0.04,
         "max": 1.0,
-        "ci95_low": 0.1674065939742418,
-        "ci95_high": 0.20933524135962842
+        "ci95_low": 0.15342657968326526,
+        "ci95_high": 0.2227750942382519,
+        "ci_method": "cluster percentile bootstrap over base units"
       },
-      "trials": 500
+      "mrr_unclustered": {
+        "n": 500,
+        "mean": 0.18703445887005113,
+        "sd": 0.22432829137320004,
+        "min": 0.04,
+        "max": 1.0,
+        "ci95_low": 0.16867046829316673,
+        "ci95_high": 0.20857012009466017
+      },
+      "trials": 500,
+      "resampling_unit": "role"
     }
   ],
   "persona_walkthrough": {
     "getting_ahead": [
       {
         "rank": 1,
-        "role_id": "R18",
-        "title_en": "Chief Information Security Officer (CISO)",
-        "title_ar": "\u0627\u0644\u0631\u0626\u064a\u0633 \u0627\u0644\u062a\u0646\u0641\u064a\u0630\u064a \u0644\u0623\u0645\u0646 \u0627\u0644\u0645\u0639\u0644\u0648\u0645\u0627\u062a",
-        "specialty": "ciso",
-        "seniority": "executive",
+        "role_id": "R21",
+        "title_en": "Adversarial ML / AI Security Researcher",
+        "title_ar": "\u0628\u0627\u062d\u062b \u0623\u0645\u0646 \u0627\u0644\u0630\u0643\u0627\u0621 \u0627\u0644\u0627\u0635\u0637\u0646\u0627\u0639\u064a \u0648\u0627\u0644\u0647\u062c\u0645\u0627\u062a \u0627\u0644\u062a\u0646\u0627\u0641\u0633\u064a\u0629",
+        "specialty": "ai_security",
+        "seniority": "senior",
         "sector_tag": "both",
-        "vision_2030_anchor": "national_cybersecurity_strategy",
-        "score": 0.8872208659283867,
+        "vision_2030_anchor": "ai_strategy",
+        "score": 0.8902211097161072,
         "dominant_orientation": "getting_ahead",
         "rationale": "Your dominant orientation is getting ahead, which is also this role's strongest pull."
       },
       {
         "rank": 2,
-        "role_id": "R25",
-        "title_en": "Cyber Audit & Assurance Lead",
-        "title_ar": "\u0642\u0627\u0626\u062f \u0627\u0644\u062a\u062f\u0642\u064a\u0642 \u0648\u0627\u0644\u0636\u0645\u0627\u0646 \u0627\u0644\u0633\u064a\u0628\u0631\u0627\u0646\u064a",
-        "specialty": "audit_assurance",
+        "role_id": "R16",
+        "title_en": "Cybersecurity Policy & Regulation Specialist",
+        "title_ar": "\u0623\u062e\u0635\u0627\u0626\u064a \u0633\u064a\u0627\u0633\u0627\u062a \u0648\u062a\u0646\u0638\u064a\u0645 \u0627\u0644\u0623\u0645\u0646 \u0627\u0644\u0633\u064a\u0628\u0631\u0627\u0646\u064a",
+        "specialty": "policy",
         "seniority": "senior",
-        "sector_tag": "both",
-        "vision_2030_anchor": "regulatory_compliance",
-        "score": 0.8741685419913382,
-        "dominant_orientation": "getting_high",
-        "rationale": "Your dominant orientation is getting ahead; this role's strongest pull is getting high - the match is on the next strongest fit."
+        "sector_tag": "gov",
+        "vision_2030_anchor": "national_cybersecurity_strategy",
+        "score": 0.8795040647820064,
+        "dominant_orientation": "getting_ahead",
+        "rationale": "Your dominant orientation is getting ahead, which is also this role's strongest pull."
       },
       {
         "rank": 3,
-        "role_id": "R17",
-        "title_en": "Security Architect (Enterprise / Zero Trust)",
-        "title_ar": "\u0645\u0647\u0646\u062f\u0633 \u0645\u0639\u0645\u0627\u0631\u064a \u0623\u0645\u0646\u064a - \u0627\u0644\u062b\u0642\u0629 \u0627\u0644\u0635\u0641\u0631\u064a\u0629",
-        "specialty": "security_architect",
-        "seniority": "senior",
+        "role_id": "R10",
+        "title_en": "Identity & Access Management (IAM) Engineer",
+        "title_ar": "\u0645\u0647\u0646\u062f\u0633 \u0625\u062f\u0627\u0631\u0629 \u0627\u0644\u0647\u0648\u064a\u0627\u062a \u0648\u0627\u0644\u0648\u0635\u0648\u0644",
+        "specialty": "iam_pam",
+        "seniority": "mid",
         "sector_tag": "both",
-        "vision_2030_anchor": "digital_economy",
-        "score": 0.8735805459625527,
-        "dominant_orientation": "getting_high",
-        "rationale": "Your dominant orientation is getting ahead; this role's strongest pull is getting high - the match is on the next strongest fit."
+        "vision_2030_anchor": "digital_government",
+        "score": 0.8793508281634316,
+        "dominant_orientation": "getting_ahead",
+        "rationale": "Your dominant orientation is getting ahead, which is also this role's strongest pull."
       }
     ],
     "getting_secure": [
@@ -200,9 +260,50 @@
         "seniority": "mid",
         "sector_tag": "both",
         "vision_2030_anchor": "national_cybersecurity_strategy",
-        "score": 0.7652897413883855,
-        "dominant_orientation": "getting_high",
-        "rationale": "Your dominant orientation is getting secure; this role's strongest pull is getting high - the match is on the next strongest fit."
+        "score": 0.7920058351970845,
+        "dominant_orientation": "getting_balanced",
+        "rationale": "Your dominant orientation is getting secure; this role's strongest pull is getting balanced - the match is on the next strongest fit."
+      },
+      {
+        "rank": 2,
+        "role_id": "R18",
+        "title_en": "Chief Information Security Officer (CISO)",
+        "title_ar": "\u0627\u0644\u0631\u0626\u064a\u0633 \u0627\u0644\u062a\u0646\u0641\u064a\u0630\u064a \u0644\u0623\u0645\u0646 \u0627\u0644\u0645\u0639\u0644\u0648\u0645\u0627\u062a",
+        "specialty": "ciso",
+        "seniority": "executive",
+        "sector_tag": "both",
+        "vision_2030_anchor": "national_cybersecurity_strategy",
+        "score": 0.7838588661187537,
+        "dominant_orientation": "getting_balanced",
+        "rationale": "Your dominant orientation is getting secure; this role's strongest pull is getting balanced - the match is on the next strongest fit."
+      },
+      {
+        "rank": 3,
+        "role_id": "R01",
+        "title_en": "SOC Analyst (Tier 1)",
+        "title_ar": "\u0645\u062d\u0644\u0644 \u0639\u0645\u0644\u064a\u0627\u062a \u0623\u0645\u0646\u064a\u0629 - \u0627\u0644\u0645\u0633\u062a\u0648\u0649 \u0627\u0644\u0623\u0648\u0644",
+        "specialty": "defensive_soc",
+        "seniority": "entry",
+        "sector_tag": "industry",
+        "vision_2030_anchor": "national_cybersecurity_strategy",
+        "score": 0.7701070658412406,
+        "dominant_orientation": "getting_free",
+        "rationale": "Your dominant orientation is getting secure; this role's strongest pull is getting free - the match is on the next strongest fit."
+      }
+    ],
+    "getting_free": [
+      {
+        "rank": 1,
+        "role_id": "R15",
+        "title_en": "Cyber Risk Quantification Analyst",
+        "title_ar": "\u0645\u062d\u0644\u0644 \u062a\u0642\u062f\u064a\u0631 \u0627\u0644\u0645\u062e\u0627\u0637\u0631 \u0627\u0644\u0633\u064a\u0628\u0631\u0627\u0646\u064a\u0629 \u0627\u0644\u0643\u0645\u064a",
+        "specialty": "cyber_risk_quant",
+        "seniority": "mid",
+        "sector_tag": "industry",
+        "vision_2030_anchor": "financial_sector_dev",
+        "score": 0.8919737732351909,
+        "dominant_orientation": "getting_free",
+        "rationale": "Your dominant orientation is getting free, which is also this role's strongest pull."
       },
       {
         "rank": 2,
@@ -213,9 +314,9 @@
         "seniority": "entry",
         "sector_tag": "industry",
         "vision_2030_anchor": "national_cybersecurity_strategy",
-        "score": 0.7624854831541342,
-        "dominant_orientation": "getting_high",
-        "rationale": "Your dominant orientation is getting secure; this role's strongest pull is getting high - the match is on the next strongest fit."
+        "score": 0.8848222978165652,
+        "dominant_orientation": "getting_free",
+        "rationale": "Your dominant orientation is getting free, which is also this role's strongest pull."
       },
       {
         "rank": 3,
@@ -226,14 +327,40 @@
         "seniority": "mid",
         "sector_tag": "industry",
         "vision_2030_anchor": "national_cybersecurity_strategy",
-        "score": 0.7624854831541342,
-        "dominant_orientation": "getting_high",
-        "rationale": "Your dominant orientation is getting secure; this role's strongest pull is getting high - the match is on the next strongest fit."
+        "score": 0.8848222978165652,
+        "dominant_orientation": "getting_free",
+        "rationale": "Your dominant orientation is getting free, which is also this role's strongest pull."
       }
     ],
-    "getting_free": [
+    "getting_high": [
       {
         "rank": 1,
+        "role_id": "R21",
+        "title_en": "Adversarial ML / AI Security Researcher",
+        "title_ar": "\u0628\u0627\u062d\u062b \u0623\u0645\u0646 \u0627\u0644\u0630\u0643\u0627\u0621 \u0627\u0644\u0627\u0635\u0637\u0646\u0627\u0639\u064a \u0648\u0627\u0644\u0647\u062c\u0645\u0627\u062a \u0627\u0644\u062a\u0646\u0627\u0641\u0633\u064a\u0629",
+        "specialty": "ai_security",
+        "seniority": "senior",
+        "sector_tag": "both",
+        "vision_2030_anchor": "ai_strategy",
+        "score": 0.8902211097161072,
+        "dominant_orientation": "getting_ahead",
+        "rationale": "Your dominant orientation is getting high; this role's strongest pull is getting ahead - the match is on the next strongest fit."
+      },
+      {
+        "rank": 2,
+        "role_id": "R08",
+        "title_en": "OT/ICS Security Engineer (Oil & Gas / Utilities)",
+        "title_ar": "\u0645\u0647\u0646\u062f\u0633 \u0623\u0645\u0646 \u0623\u0646\u0638\u0645\u0629 \u0627\u0644\u062a\u062d\u0643\u0645 \u0627\u0644\u0635\u0646\u0627\u0639\u064a",
+        "specialty": "ot_ics",
+        "seniority": "senior",
+        "sector_tag": "industry",
+        "vision_2030_anchor": "energy_transition",
+        "score": 0.8791102161247207,
+        "dominant_orientation": "getting_high",
+        "rationale": "Your dominant orientation is getting high, which is also this role's strongest pull."
+      },
+      {
+        "rank": 3,
         "role_id": "R13",
         "title_en": "Malware Reverse Engineer",
         "title_ar": "\u0645\u062d\u0644\u0644 \u0648\u0639\u0643\u0633 \u0627\u0644\u0628\u0631\u0645\u062c\u064a\u0627\u062a \u0627\u0644\u062e\u0628\u064a\u062b\u0629",
@@ -241,74 +368,7 @@
         "seniority": "senior",
         "sector_tag": "both",
         "vision_2030_anchor": "national_cybersecurity_strategy",
-        "score": 0.8758427650098476,
-        "dominant_orientation": "getting_high",
-        "rationale": "Your dominant orientation is getting free; this role's strongest pull is getting high - the match is on the next strongest fit."
-      },
-      {
-        "rank": 2,
-        "role_id": "R04",
-        "title_en": "Penetration Tester (Web/Network)",
-        "title_ar": "\u0627\u062e\u062a\u0628\u0627\u0631 \u0627\u062e\u062a\u0631\u0627\u0642 - \u0634\u0628\u0643\u0627\u062a \u0648\u062a\u0637\u0628\u064a\u0642\u0627\u062a \u0648\u064a\u0628",
-        "specialty": "offensive_pentest",
-        "seniority": "mid",
-        "sector_tag": "industry",
-        "vision_2030_anchor": "national_cybersecurity_strategy",
-        "score": 0.8758427650098476,
-        "dominant_orientation": "getting_high",
-        "rationale": "Your dominant orientation is getting free; this role's strongest pull is getting high - the match is on the next strongest fit."
-      },
-      {
-        "rank": 3,
-        "role_id": "R05",
-        "title_en": "Red Team Operator",
-        "title_ar": "\u0639\u0645\u0644\u064a\u0627\u062a \u0627\u0644\u0641\u0631\u064a\u0642 \u0627\u0644\u0623\u062d\u0645\u0631",
-        "specialty": "offensive_redteam",
-        "seniority": "senior",
-        "sector_tag": "both",
-        "vision_2030_anchor": "national_cybersecurity_strategy",
-        "score": 0.8758427650098476,
-        "dominant_orientation": "getting_high",
-        "rationale": "Your dominant orientation is getting free; this role's strongest pull is getting high - the match is on the next strongest fit."
-      }
-    ],
-    "getting_high": [
-      {
-        "rank": 1,
-        "role_id": "R22",
-        "title_en": "Mobile App Security Analyst",
-        "title_ar": "\u0645\u062d\u0644\u0644 \u0623\u0645\u0646 \u062a\u0637\u0628\u064a\u0642\u0627\u062a \u0627\u0644\u0647\u0627\u062a\u0641 \u0627\u0644\u0645\u062d\u0645\u0648\u0644",
-        "specialty": "mobile_security",
-        "seniority": "mid",
-        "sector_tag": "industry",
-        "vision_2030_anchor": "digital_economy",
-        "score": 0.8867899562508971,
-        "dominant_orientation": "getting_high",
-        "rationale": "Your dominant orientation is getting high, which is also this role's strongest pull."
-      },
-      {
-        "rank": 2,
-        "role_id": "R06",
-        "title_en": "Application Security / DevSecOps Engineer",
-        "title_ar": "\u0645\u0647\u0646\u062f\u0633 \u0623\u0645\u0646 \u0627\u0644\u062a\u0637\u0628\u064a\u0642\u0627\u062a \u0648\u062a\u0637\u0648\u064a\u0631 \u0622\u0645\u0646",
-        "specialty": "appsec",
-        "seniority": "mid",
-        "sector_tag": "industry",
-        "vision_2030_anchor": "digital_economy",
-        "score": 0.8867899562508971,
-        "dominant_orientation": "getting_high",
-        "rationale": "Your dominant orientation is getting high, which is also this role's strongest pull."
-      },
-      {
-        "rank": 3,
-        "role_id": "R07",
-        "title_en": "Cloud Security Engineer (AWS/Azure/Oracle)",
-        "title_ar": "\u0645\u0647\u0646\u062f\u0633 \u0623\u0645\u0646 \u0627\u0644\u0633\u062d\u0627\u0628\u0629",
-        "specialty": "cloud_sec",
-        "seniority": "mid",
-        "sector_tag": "industry",
-        "vision_2030_anchor": "digital_economy",
-        "score": 0.8867899562508971,
+        "score": 0.8785614987298335,
         "dominant_orientation": "getting_high",
         "rationale": "Your dominant orientation is getting high, which is also this role's strongest pull."
       }
@@ -316,19 +376,6 @@
     "getting_balanced": [
       {
         "rank": 1,
-        "role_id": "R19",
-        "title_en": "Cybersecurity Awareness & Training Lead",
-        "title_ar": "\u0642\u0627\u0626\u062f \u0627\u0644\u062a\u0648\u0639\u064a\u0629 \u0648\u0627\u0644\u062a\u062f\u0631\u064a\u0628 \u0627\u0644\u0633\u064a\u0628\u0631\u0627\u0646\u064a",
-        "specialty": "awareness_training",
-        "seniority": "mid",
-        "sector_tag": "both",
-        "vision_2030_anchor": "human_capability_development",
-        "score": 0.8717863319977615,
-        "dominant_orientation": "getting_balanced",
-        "rationale": "Your dominant orientation is getting balanced, which is also this role's strongest pull."
-      },
-      {
-        "rank": 2,
         "role_id": "R23",
         "title_en": "Network Security Engineer (Firewall/IDS/IPS)",
         "title_ar": "\u0645\u0647\u0646\u062f\u0633 \u0623\u0645\u0646 \u0627\u0644\u0634\u0628\u0643\u0627\u062a",
@@ -336,28 +383,43 @@
         "seniority": "mid",
         "sector_tag": "both",
         "vision_2030_anchor": "national_cybersecurity_strategy",
-        "score": 0.8632251318303702,
-        "dominant_orientation": "getting_high",
-        "rationale": "Your dominant orientation is getting balanced; this role's strongest pull is getting high - the match is on the next strongest fit."
+        "score": 0.8737239268327051,
+        "dominant_orientation": "getting_balanced",
+        "rationale": "Your dominant orientation is getting balanced, which is also this role's strongest pull."
+      },
+      {
+        "rank": 2,
+        "role_id": "R19",
+        "title_en": "Cybersecurity Awareness & Training Lead",
+        "title_ar": "\u0642\u0627\u0626\u062f \u0627\u0644\u062a\u0648\u0639\u064a\u0629 \u0648\u0627\u0644\u062a\u062f\u0631\u064a\u0628 \u0627\u0644\u0633\u064a\u0628\u0631\u0627\u0646\u064a",
+        "specialty": "awareness_training",
+        "seniority": "mid",
+        "sector_tag": "both",
+        "vision_2030_anchor": "human_capability_development",
+        "score": 0.8726567450303988,
+        "dominant_orientation": "getting_balanced",
+        "rationale": "Your dominant orientation is getting balanced, which is also this role's strongest pull."
       },
       {
         "rank": 3,
-        "role_id": "R15",
-        "title_en": "Cyber Risk Quantification Analyst",
-        "title_ar": "\u0645\u062d\u0644\u0644 \u062a\u0642\u062f\u064a\u0631 \u0627\u0644\u0645\u062e\u0627\u0637\u0631 \u0627\u0644\u0633\u064a\u0628\u0631\u0627\u0646\u064a\u0629 \u0627\u0644\u0643\u0645\u064a",
-        "specialty": "cyber_risk_quant",
-        "seniority": "mid",
-        "sector_tag": "industry",
-        "vision_2030_anchor": "financial_sector_dev",
-        "score": 0.8611262848318185,
-        "dominant_orientation": "getting_high",
-        "rationale": "Your dominant orientation is getting balanced; this role's strongest pull is getting high - the match is on the next strongest fit."
+        "role_id": "R18",
+        "title_en": "Chief Information Security Officer (CISO)",
+        "title_ar": "\u0627\u0644\u0631\u0626\u064a\u0633 \u0627\u0644\u062a\u0646\u0641\u064a\u0630\u064a \u0644\u0623\u0645\u0646 \u0627\u0644\u0645\u0639\u0644\u0648\u0645\u0627\u062a",
+        "specialty": "ciso",
+        "seniority": "executive",
+        "sector_tag": "both",
+        "vision_2030_anchor": "national_cybersecurity_strategy",
+        "score": 0.868962118791848,
+        "dominant_orientation": "getting_balanced",
+        "rationale": "Your dominant orientation is getting balanced, which is also this role's strongest pull."
       }
     ]
   },
   "simulated_ranking_benchmark": {
     "n_profiles": 120,
     "n_roles": 25,
+    "n_distinct_centroids": 13,
+    "n_roles_with_tied_centroid": 15,
     "n_neighbours_acceptable": 2,
     "skill_scorer_semantic_threshold": 0.7,
     "weights": {
@@ -369,12 +431,12 @@
       "random": {
         "recall@3": {
           "n": 120,
-          "mean": 0.275,
-          "sd": 0.44838646296255114,
+          "mean": 0.3416666666666667,
+          "sd": 0.4762569981546901,
           "min": 0.0,
           "max": 1.0,
-          "ci95_low": 0.2,
-          "ci95_high": 0.35833333333333334
+          "ci95_low": 0.25833333333333336,
+          "ci95_high": 0.425
         },
         "recall@5": {
           "n": 120,
@@ -383,74 +445,74 @@
           "min": 0.0,
           "max": 1.0,
           "ci95_low": 0.4,
-          "ci95_high": 0.5833333333333334
+          "ci95_high": 0.575
         },
         "mrr": {
           "n": 120,
-          "mean": 0.25724171149770997,
-          "sd": 0.23814881465889992,
+          "mean": 0.3084921277481262,
+          "sd": 0.29934495489673374,
           "min": 0.05,
           "max": 1.0,
-          "ci95_low": 0.21851629899399516,
-          "ci95_high": 0.3032290022087341
+          "ci95_low": 0.26150322011406263,
+          "ci95_high": 0.36642636544422097
         },
         "ndcg@5": {
           "n": 120,
-          "mean": 0.14828063434703917,
-          "sd": 0.17869540447646168,
+          "mean": 0.166925742302602,
+          "sd": 0.20405009686753592,
           "min": 0.0,
-          "max": 0.7653606369886217,
-          "ci95_low": 0.11808860777867917,
-          "ci95_high": 0.18168515300167526
+          "max": 0.8529278650606567,
+          "ci95_low": 0.13341264146881943,
+          "ci95_high": 0.2055838014395056
         }
       },
       "level_only": {
         "recall@3": {
           "n": 120,
-          "mean": 0.30833333333333335,
-          "sd": 0.4637413313572164,
+          "mean": 0.325,
+          "sd": 0.47033869434159675,
           "min": 0.0,
           "max": 1.0,
-          "ci95_low": 0.23333333333333334,
-          "ci95_high": 0.39166666666666666
+          "ci95_low": 0.24166666666666667,
+          "ci95_high": 0.4166666666666667
         },
         "recall@5": {
           "n": 120,
-          "mean": 0.5916666666666667,
-          "sd": 0.4935863156332357,
+          "mean": 0.675,
+          "sd": 0.4703386943415967,
           "min": 0.0,
           "max": 1.0,
-          "ci95_low": 0.5,
-          "ci95_high": 0.675
+          "ci95_low": 0.5833333333333334,
+          "ci95_high": 0.75
         },
         "mrr": {
           "n": 120,
-          "mean": 0.3866390669515669,
-          "sd": 0.37735451857297464,
-          "min": 0.0625,
+          "mean": 0.4389583333333333,
+          "sd": 0.3932275092949286,
+          "min": 0.1111111111111111,
           "max": 1.0,
-          "ci95_low": 0.32341122051991267,
-          "ci95_high": 0.45937436676080806
+          "ci95_low": 0.37184493751930353,
+          "ci95_high": 0.5145409367039515
         },
         "ndcg@5": {
           "n": 120,
-          "mean": 0.28437986773598084,
-          "sd": 0.3418639744785258,
+          "mean": 0.3264964784526239,
+          "sd": 0.31179008310560097,
           "min": 0.0,
-          "max": 1.0,
-          "ci95_low": 0.22718708786222544,
-          "ci95_high": 0.35004495535121677
+          "max": 0.7653606369886217,
+          "ci95_low": 0.272059651227749,
+          "ci95_high": 0.38472793711571884
         }
       },
       "skills_only": {
         "recall@3": {
           "n": 120,
-          "mean": 0.9666666666666667,
-          "sd": 0.18025814045107516,
+          "mean": 0.9583333333333334,
+          "sd": 0.20066416332413978,
           "min": 0.0,
           "max": 1.0,
-          "ci95_low": 0.9166666666666666,
-          "ci95_high": 0.9916666666666667
+          "ci95_low": 0.9083333333333333,
+          "ci95_high": 0.9833333333333333
         },
         "recall@5": {
           "n": 120,
@@ -463,59 +525,59 @@
         },
         "mrr": {
           "n": 120,
-          "mean": 0.7079166666666665,
-          "sd": 0.29118678008515175,
+          "mean": 0.7165277777777777,
+          "sd": 0.2925666054815771,
           "min": 0.2,
           "max": 1.0,
-          "ci95_low": 0.6558333333333334,
-          "ci95_high": 0.7583333333333333
+          "ci95_low": 0.663809791677506,
+          "ci95_high": 0.7669444444444444
         },
         "ndcg@5": {
           "n": 120,
-          "mean": 0.47846120476103265,
-          "sd": 0.20806614799603465,
+          "mean": 0.468851604215518,
+          "sd": 0.18807430299717004,
           "min": 0.18154179253735267,
           "max": 0.9469024295259745,
-          "ci95_low": 0.4414813327023183,
-          "ci95_high": 0.5156913131769334
+          "ci95_low": 0.4352666270289971,
+          "ci95_high": 0.5025810733005607
         }
       },
       "csmq_only": {
         "recall@3": {
           "n": 120,
-          "mean": 0.4666666666666667,
-          "sd": 0.5009794328681196,
+          "mean": 0.6583333333333333,
+          "sd": 0.4762569981546901,
           "min": 0.0,
           "max": 1.0,
-          "ci95_low": 0.38333333333333336,
-          "ci95_high": 0.5583333333333333
+          "ci95_low": 0.5666666666666667,
+          "ci95_high": 0.7416666666666667
         },
         "recall@5": {
           "n": 120,
-          "mean": 0.5333333333333333,
-          "sd": 0.5009794328681196,
+          "mean": 0.7833333333333333,
+          "sd": 0.41370092988021373,
           "min": 0.0,
           "max": 1.0,
-          "ci95_low": 0.44166666666666665,
-          "ci95_high": 0.625
+          "ci95_low": 0.7,
+          "ci95_high": 0.85
         },
         "mrr": {
           "n": 120,
-          "mean": 0.42257495414229157,
-          "sd": 0.38082450757184677,
+          "mean": 0.5671547348849981,
+          "sd": 0.3852556153896921,
           "min": 0.045454545454545456,
           "max": 1.0,
-          "ci95_low": 0.3576710465385914,
-          "ci95_high": 0.4954983839155361
+          "ci95_low": 0.498154461319717,
+          "ci95_high": 0.6356885772295663
         },
         "ndcg@5": {
           "n": 120,
-          "mean": 0.3625074024156262,
-          "sd": 0.4035908273165635,
+          "mean": 0.5220079863205128,
+          "sd": 0.3751458130183099,
           "min": 0.0,
           "max": 1.0,
-          "ci95_low": 0.29302451579787303,
-          "ci95_high": 0.43662618129878844
+          "ci95_low": 0.4547654103587885,
+          "ci95_high": 0.5869413683602792
         }
       },
       "csmq_khutwa_lexical": {
@@ -530,30 +592,30 @@
         },
         "recall@5": {
           "n": 120,
-          "mean": 0.925,
-          "sd": 0.26449571488641793,
+          "mean": 0.9166666666666666,
+          "sd": 0.2775442529128102,
           "min": 0.0,
           "max": 1.0,
-          "ci95_low": 0.8666666666666667,
-          "ci95_high": 0.9666666666666667
+          "ci95_low": 0.8583333333333333,
+          "ci95_high": 0.9583333333333334
         },
         "mrr": {
           "n": 120,
-          "mean": 0.6067841533466534,
-          "sd": 0.35013186129532514,
-          "min": 0.0625,
+          "mean": 0.6193353174603174,
+          "sd": 0.34537670893110267,
+          "min": 0.08333333333333333,
           "max": 1.0,
-          "ci95_low": 0.5428022171832224,
-          "ci95_high": 0.6681050126045596
+          "ci95_low": 0.5576407025219859,
+          "ci95_high": 0.6818160829112947
         },
         "ndcg@5": {
           "n": 120,
-          "mean": 0.4415774162207534,
-          "sd": 0.257615223020745,
+          "mean": 0.45766039991910373,
+          "sd": 0.25003651122424353,
           "min": 0.0,
-          "max": 1.0,
-          "ci95_low": 0.39578171815900587,
-          "ci95_high": 0.48859743318755705
+          "max": 0.9469024295259745,
+          "ci95_low": 0.4118706065065629,
+          "ci95_high": 0.5019157210647123
         }
       },
       "csmq_khutwa": {
@@ -568,36 +630,504 @@
         },
         "recall@5": {
           "n": 120,
-          "mean": 0.925,
-          "sd": 0.26449571488641793,
+          "mean": 0.9166666666666666,
+          "sd": 0.2775442529128102,
           "min": 0.0,
           "max": 1.0,
-          "ci95_low": 0.8666666666666667,
-          "ci95_high": 0.9666666666666667
+          "ci95_low": 0.8583333333333333,
+          "ci95_high": 0.9583333333333334
         },
         "mrr": {
           "n": 120,
-          "mean": 0.6067841533466534,
-          "sd": 0.35013186129532514,
-          "min": 0.0625,
+          "mean": 0.6193353174603174,
+          "sd": 0.34537670893110267,
+          "min": 0.08333333333333333,
           "max": 1.0,
-          "ci95_low": 0.5428022171832224,
-          "ci95_high": 0.6681050126045596
+          "ci95_low": 0.5576407025219859,
+          "ci95_high": 0.6818160829112947
         },
         "ndcg@5": {
           "n": 120,
-          "mean": 0.4415774162207534,
-          "sd": 0.257615223020745,
+          "mean": 0.45766039991910373,
+          "sd": 0.25003651122424353,
           "min": 0.0,
-          "max": 1.0,
-          "ci95_low": 0.39578171815900587,
-          "ci95_high": 0.48859743318755705
+          "max": 0.9469024295259745,
+          "ci95_low": 0.4118706065065629,
+          "ci95_high": 0.5019157210647123
+        }
+      }
+    },
+    "stratified_by_anchor": {
+      "tied_anchor": {
+        "n_profiles": 71,
+        "per_ranker": {
+          "random": {
+            "recall@3": {
+              "n": 71,
+              "mean": 0.323943661971831,
+              "sd": 0.47130966124267404,
+              "min": 0.0,
+              "max": 1.0,
+              "ci95_low": 0.22535211267605634,
+              "ci95_high": 0.43661971830985913
+            },
+            "recall@5": {
+              "n": 71,
+              "mean": 0.4788732394366197,
+              "sd": 0.5031090461059528,
+              "min": 0.0,
+              "max": 1.0,
+              "ci95_low": 0.36619718309859156,
+              "ci95_high": 0.5915492957746479
+            },
+            "mrr": {
+              "n": 71,
+              "mean": 0.2949325503466915,
+              "sd": 0.2850040685981043,
+              "min": 0.05,
+              "max": 1.0,
+              "ci95_low": 0.23683278484768985,
+              "ci95_high": 0.37279822157883485
+            },
+            "ndcg@5": {
+              "n": 71,
+              "mean": 0.16659003237976677,
+              "sd": 0.21056300361220526,
+              "min": 0.0,
+              "max": 0.8529278650606567,
+              "ci95_low": 0.1213881911184215,
+              "ci95_high": 0.2194801823770884
+            }
+          },
+          "level_only": {
+            "recall@3": {
+              "n": 71,
+              "mean": 0.3380281690140845,
+              "sd": 0.4764050489066446,
+              "min": 0.0,
+              "max": 1.0,
+              "ci95_low": 0.23943661971830985,
+              "ci95_high": 0.4507042253521127
+            },
+            "recall@5": {
+              "n": 71,
+              "mean": 0.8450704225352113,
+              "sd": 0.3644129260661655,
+              "min": 0.0,
+              "max": 1.0,
+              "ci95_low": 0.7464788732394366,
+              "ci95_high": 0.9154929577464789
+            },
+            "mrr": {
+              "n": 71,
+              "mean": 0.46580594679186227,
+              "sd": 0.38661654469813433,
+              "min": 0.1111111111111111,
+              "max": 1.0,
+              "ci95_low": 0.3805491058155788,
+              "ci95_high": 0.5595461658841941
+            },
+            "ndcg@5": {
+              "n": 71,
+              "mean": 0.3877683848391371,
+              "sd": 0.2940900321881751,
+              "min": 0.0,
+              "max": 0.7653606369886217,
+              "ci95_low": 0.32251070977071283,
+              "ci95_high": 0.4564495620657055
+            }
+          },
+          "skills_only": {
+            "recall@3": {
+              "n": 71,
+              "mean": 0.9436619718309859,
+              "sd": 0.23221442945580476,
+              "min": 0.0,
+              "max": 1.0,
+              "ci95_low": 0.8732394366197183,
+              "ci95_high": 0.9859154929577465
+            },
+            "recall@5": {
+              "n": 71,
+              "mean": 1.0,
+              "sd": 0.0,
+              "min": 1.0,
+              "max": 1.0,
+              "ci95_low": 0.9493705920455963,
+              "ci95_high": 1.0
+            },
+            "mrr": {
+              "n": 71,
+              "mean": 0.723943661971831,
+              "sd": 0.2986707641402363,
+              "min": 0.2,
+              "max": 1.0,
+              "ci95_low": 0.6541868638538685,
+              "ci95_high": 0.7922535211267606
+            },
+            "ndcg@5": {
+              "n": 71,
+              "mean": 0.4891911813082657,
+              "sd": 0.199421876621255,
+              "min": 0.18154179253735267,
+              "max": 0.9469024295259745,
+              "ci95_low": 0.4453548024688693,
+              "ci95_high": 0.5361806803645098
+            }
+          },
+          "csmq_only": {
+            "recall@3": {
+              "n": 71,
+              "mean": 0.5492957746478874,
+              "sd": 0.5011054178903218,
+              "min": 0.0,
+              "max": 1.0,
+              "ci95_low": 0.43661971830985913,
+              "ci95_high": 0.6619718309859155
+            },
+            "recall@5": {
+              "n": 71,
+              "mean": 0.7605633802816901,
+              "sd": 0.42977697646219004,
+              "min": 0.0,
+              "max": 1.0,
+              "ci95_low": 0.647887323943662,
+              "ci95_high": 0.8450704225352113
+            },
+            "mrr": {
+              "n": 71,
+              "mean": 0.4507001338172576,
+              "sd": 0.34700552594435197,
+              "min": 0.045454545454545456,
+              "max": 1.0,
+              "ci95_low": 0.3755984108243139,
+              "ci95_high": 0.5350030778803248
+            },
+            "ndcg@5": {
+              "n": 71,
+              "mean": 0.4584130153970827,
+              "sd": 0.37101999246979894,
+              "min": 0.0,
+              "max": 1.0,
+              "ci95_low": 0.37544732047513274,
+              "ci95_high": 0.5462663050242125
+            }
+          },
+          "csmq_khutwa_lexical": {
+            "recall@3": {
+              "n": 71,
+              "mean": 0.7464788732394366,
+              "sd": 0.43812293966599075,
+              "min": 0.0,
+              "max": 1.0,
+              "ci95_low": 0.6338028169014085,
+              "ci95_high": 0.8309859154929577
+            },
+            "recall@5": {
+              "n": 71,
+              "mean": 0.9295774647887324,
+              "sd": 0.2576788511734177,
+              "min": 0.0,
+              "max": 1.0,
+              "ci95_low": 0.8450704225352113,
+              "ci95_high": 0.971830985915493
+            },
+            "mrr": {
+              "n": 71,
+              "mean": 0.6271462105969149,
+              "sd": 0.3462471542487078,
+              "min": 0.125,
+              "max": 1.0,
+              "ci95_low": 0.5490266804209266,
+              "ci95_high": 0.7076626425217974
+            },
+            "ndcg@5": {
+              "n": 71,
+              "mean": 0.4635778800022911,
+              "sd": 0.2522536981498494,
+              "min": 0.0,
+              "max": 0.9060254355346823,
+              "ci95_low": 0.4061423294592939,
+              "ci95_high": 0.521269960297494
+            }
+          },
+          "csmq_khutwa": {
+            "recall@3": {
+              "n": 71,
+              "mean": 0.7464788732394366,
+              "sd": 0.43812293966599075,
+              "min": 0.0,
+              "max": 1.0,
+              "ci95_low": 0.6338028169014085,
+              "ci95_high": 0.8309859154929577
+            },
+            "recall@5": {
+              "n": 71,
+              "mean": 0.9295774647887324,
+              "sd": 0.2576788511734177,
+              "min": 0.0,
+              "max": 1.0,
+              "ci95_low": 0.8450704225352113,
+              "ci95_high": 0.971830985915493
+            },
+            "mrr": {
+              "n": 71,
+              "mean": 0.6271462105969149,
+              "sd": 0.3462471542487078,
+              "min": 0.125,
+              "max": 1.0,
+              "ci95_low": 0.5490266804209266,
+              "ci95_high": 0.7076626425217974
+            },
+            "ndcg@5": {
+              "n": 71,
+              "mean": 0.4635778800022911,
+              "sd": 0.2522536981498494,
+              "min": 0.0,
+              "max": 0.9060254355346823,
+              "ci95_low": 0.4061423294592939,
+              "ci95_high": 0.521269960297494
+            }
+          }
+        }
+      },
+      "untied_anchor": {
+        "n_profiles": 49,
+        "per_ranker": {
+          "random": {
+            "recall@3": {
+              "n": 49,
+              "mean": 0.3673469387755102,
+              "sd": 0.4870779177494948,
+              "min": 0.0,
+              "max": 1.0,
+              "ci95_low": 0.24489795918367346,
+              "ci95_high": 0.5102040816326531
+            },
+            "recall@5": {
+              "n": 49,
+              "mean": 0.5102040816326531,
+              "sd": 0.5050762722761054,
+              "min": 0.0,
+              "max": 1.0,
+              "ci95_low": 0.3673469387755102,
+              "ci95_high": 0.6530612244897959
+            },
+            "mrr": {
+              "n": 49,
+              "mean": 0.32813967867673566,
+              "sd": 0.32098153516149563,
+              "min": 0.05263157894736842,
+              "max": 1.0,
+              "ci95_low": 0.2512693716526386,
+              "ci95_high": 0.43107483260863355
+            },
+            "ndcg@5": {
+              "n": 49,
+              "mean": 0.1674121791295673,
+              "sd": 0.19638092826042933,
+              "min": 0.0,
+              "max": 0.6713860725233041,
+              "ci95_low": 0.11768977258128906,
+              "ci95_high": 0.22631629496471034
+            }
+          },
+          "level_only": {
+            "recall@3": {
+              "n": 49,
+              "mean": 0.30612244897959184,
+              "sd": 0.46565731465733207,
+              "min": 0.0,
+              "max": 1.0,
+              "ci95_low": 0.1836734693877551,
+              "ci95_high": 0.4489795918367347
+            },
+            "recall@5": {
+              "n": 49,
+              "mean": 0.42857142857142855,
+              "sd": 0.49999999999999994,
+              "min": 0.0,
+              "max": 1.0,
+              "ci95_low": 0.2857142857142857,
+              "ci95_high": 0.5714285714285714
+            },
+            "mrr": {
+              "n": 49,
+              "mean": 0.4000566893424037,
+              "sd": 0.4034311789046192,
+              "min": 0.1111111111111111,
+              "max": 1.0,
+              "ci95_low": 0.295124716553288,
+              "ci95_high": 0.522562358276644
+            },
+            "ndcg@5": {
+              "n": 49,
+              "mean": 0.23771473654563544,
+              "sd": 0.318242182840986,
+              "min": 0.0,
+              "max": 0.7039180890341347,
+              "ci95_low": 0.15522561936874857,
+              "ci95_high": 0.3313186573472582
+            }
+          },
+          "skills_only": {
+            "recall@3": {
+              "n": 49,
+              "mean": 0.9795918367346939,
+              "sd": 0.14285714285714285,
+              "min": 0.0,
+              "max": 1.0,
+              "ci95_low": 0.8909017021956269,
+              "ci95_high": 1.0
+            },
+            "recall@5": {
+              "n": 49,
+              "mean": 1.0,
+              "sd": 0.0,
+              "min": 1.0,
+              "max": 1.0,
+              "ci95_low": 0.9274807363357226,
+              "ci95_high": 1.0
+            },
+            "mrr": {
+              "n": 49,
+              "mean": 0.7057823129251701,
+              "sd": 0.2862098876231264,
+              "min": 0.25,
+              "max": 1.0,
+              "ci95_low": 0.6275510204081632,
+              "ci95_high": 0.7857142857142857
+            },
+            "ndcg@5": {
+              "n": 49,
+              "mean": 0.43937997210153673,
+              "sd": 0.16792188567312724,
+              "min": 0.20210734650054757,
+              "max": 0.7653606369886217,
+              "ci95_low": 0.39295817318799103,
+              "ci95_high": 0.48696205108803414
+            }
+          },
+          "csmq_only": {
+            "recall@3": {
+              "n": 49,
+              "mean": 0.8163265306122449,
+              "sd": 0.39123039821797584,
+              "min": 0.0,
+              "max": 1.0,
+              "ci95_low": 0.6938775510204082,
+              "ci95_high": 0.8979591836734694
+            },
+            "recall@5": {
+              "n": 49,
+              "mean": 0.8163265306122449,
+              "sd": 0.39123039821797584,
+              "min": 0.0,
+              "max": 1.0,
+              "ci95_low": 0.6938775510204082,
+              "ci95_high": 0.8979591836734694
+            },
+            "mrr": {
+              "n": 49,
+              "mean": 0.7358950752076423,
+              "sd": 0.378462781059072,
+              "min": 0.05263157894736842,
+              "max": 1.0,
+              "ci95_low": 0.618438244043914,
+              "ci95_high": 0.8304043748254997
+            },
+            "ndcg@5": {
+              "n": 49,
+              "mean": 0.6141558013320135,
+              "sd": 0.3653841127035903,
+              "min": 0.0,
+              "max": 1.0,
+              "ci95_low": 0.5042689879668536,
+              "ci95_high": 0.7074365882191523
+            }
+          },
+          "csmq_khutwa_lexical": {
+            "recall@3": {
+              "n": 49,
+              "mean": 0.7551020408163265,
+              "sd": 0.4344830378784443,
+              "min": 0.0,
+              "max": 1.0,
+              "ci95_low": 0.6122448979591837,
+              "ci95_high": 0.8571428571428571
+            },
+            "recall@5": {
+              "n": 49,
+              "mean": 0.8979591836734694,
+              "sd": 0.3058388709205983,
+              "min": 0.0,
+              "max": 1.0,
+              "ci95_low": 0.7755102040816326,
+              "ci95_high": 0.9591836734693877
+            },
+            "mrr": {
+              "n": 49,
+              "mean": 0.6080174927113702,
+              "sd": 0.34737763887225326,
+              "min": 0.08333333333333333,
+              "max": 1.0,
+              "ci95_low": 0.510766354979127,
+              "ci95_high": 0.7046161321671526
+            },
+            "ndcg@5": {
+              "n": 49,
+              "mean": 0.44908609204346506,
+              "sd": 0.2491380559728524,
+              "min": 0.0,
+              "max": 0.9469024295259745,
+              "ci95_low": 0.37783803393615384,
+              "ci95_high": 0.5154872625411671
+            }
+          },
+          "csmq_khutwa": {
+            "recall@3": {
+              "n": 49,
+              "mean": 0.7551020408163265,
+              "sd": 0.4344830378784443,
+              "min": 0.0,
+              "max": 1.0,
+              "ci95_low": 0.6122448979591837,
+              "ci95_high": 0.8571428571428571
+            },
+            "recall@5": {
+              "n": 49,
+              "mean": 0.8979591836734694,
+              "sd": 0.3058388709205983,
+              "min": 0.0,
+              "max": 1.0,
+              "ci95_low": 0.7755102040816326,
+              "ci95_high": 0.9591836734693877
+            },
+            "mrr": {
+              "n": 49,
+              "mean": 0.6080174927113702,
+              "sd": 0.34737763887225326,
+              "min": 0.08333333333333333,
+              "max": 1.0,
+              "ci95_low": 0.510766354979127,
+              "ci95_high": 0.7046161321671526
+            },
+            "ndcg@5": {
+              "n": 49,
+              "mean": 0.44908609204346506,
+              "sd": 0.2491380559728524,
+              "min": 0.0,
+              "max": 0.9469024295259745,
+              "ci95_low": 0.37783803393615384,
+              "ci95_high": 0.5154872625411671
+            }
+          }
         }
       }
     }
   },
   "_meta": {
     "name": "exp8_career_positioning",
-    "timestamp": "2026-07-31T14:51:42.527407Z"
+    "timestamp": "2026-08-10T10:34:51.626920Z"
   }
 }

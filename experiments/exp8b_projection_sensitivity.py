@@ -133,14 +133,59 @@ def _advance_like_exp8_noise_curve(np_rng: np.random.Generator, n_roles: int) ->
                 np_rng.normal(0.0, sigma, size=(5,))
 
 
-def _evaluate_once(W: np.ndarray, roles_df, wv_df, seeds) -> Dict:
-    """One full pipeline evaluation under matrix W, with matched RNG draws."""
-    rec = _build_recommender(W, roles_df, wv_df)
-    sc = _self_consistency(rec)
+def _frozen_cases(W_base: np.ndarray, roles_df, wv_df, seeds, n_profiles: int = 120):
+    """Build the benchmark cases once, under the baseline projection.
+
+    The earlier version of this experiment regenerated profiles and
+    acceptable-role labels from whichever W was under test. Because
+    ``simulate_profiles`` sets each profile to its latent role's centroid and
+    defines acceptable roles as the nearest centroids, both the inputs and the
+    labels moved with the parameter being perturbed, so the result could not
+    distinguish robustness from self-consistency. The cases are now fixed here
+    and reused unchanged for every perturbation; only the scorer varies."""
+    rec = _build_recommender(W_base, roles_df, wv_df)
     py_rng = random.Random(seeds["python_random_seed"])
     np_rng = np.random.default_rng(seeds["numpy_seed"])
     _advance_like_exp8_noise_curve(np_rng, n_roles=len(rec.centroid_df))
-    rk = _ranking(rec, roles_df, n_profiles=120, py_rng=py_rng, np_rng=np_rng)
+    return simulate_profiles(
+        rec, roles_df, n_profiles=n_profiles, rng=py_rng, np_rng=np_rng,
+        skill_coverage=0.35, distractor_skills_per_profile=3,
+    )
+
+
+def _rank_fixed_cases(rec: RoleRecommender, roles_df, profiles) -> Dict[str, Dict[str, float]]:
+    """Score pre-built cases under ``rec``; labels come from the frozen cases."""
+    required = role_to_required_skills(roles_df)
+
+    def _lex(user, req):
+        return lexical_skill_readiness(user, req)
+
+    rankers = {
+        "skills_only": lambda p: rank_skills_only(p, rec, required, _lex),
+        "csmq_only": lambda p: rank_csmq_only(p, rec),
+        "csmq_khutwa": lambda p: rank_khutwa(p, rec, roles_df, required, _lex),
+    }
+    acc: Dict[str, Dict[str, List[float]]] = {
+        name: {"recall@3": [], "recall@5": [], "mrr": []} for name in rankers
+    }
+    for prof in profiles:
+        for name, fn in rankers.items():
+            ranked = fn(prof)
+            acc[name]["recall@3"].append(recall_at_k(ranked, prof.acceptable_role_ids, 3))
+            acc[name]["recall@5"].append(recall_at_k(ranked, prof.acceptable_role_ids, 5))
+            acc[name]["mrr"].append(ranking_mrr(ranked, prof.acceptable_role_ids))
+    return {name: {m: float(np.mean(v)) for m, v in metr.items()}
+            for name, metr in acc.items()}
+
+
+def _evaluate_once(W: np.ndarray, roles_df, wv_df, seeds, profiles) -> Dict:
+    """Evaluate perturbed W on the frozen cases in ``profiles``.
+
+    ``self_consistency`` still back-projects the perturbed centroids, which is
+    intrinsic to that measure; the ranking arm now uses fixed inputs/labels."""
+    rec = _build_recommender(W, roles_df, wv_df)
+    sc = _self_consistency(rec)
+    rk = _rank_fixed_cases(rec, roles_df, profiles)
     return {"self_consistency": sc, "ranking": rk}
 
 
@@ -162,8 +207,12 @@ def run(n_trials: int = 200, sigmas=(0.05, 0.10)) -> Dict:
     wv = load_onet_work_values()
     _ = load_csmq_questionnaire()  # parity with exp8 load order
 
+    # Build the benchmark cases once, under the baseline projection, and reuse
+    # them for every perturbation. Only the scorer changes across trials.
+    cases = _frozen_cases(W0, roles, wv, seeds, n_profiles=120)
+
     # Baseline (unperturbed W) -- must reproduce the published headline.
-    baseline = _evaluate_once(W0, roles, wv, seeds)
+    baseline = _evaluate_once(W0, roles, wv, seeds, cases)
 
     # Perturbation regimes. The perturbation RNG is seeded once and advanced
     # across trials, so the W' draws are reproducible.
@@ -184,7 +233,7 @@ def run(n_trials: int = 200, sigmas=(0.05, 0.10)) -> Dict:
             # Count how many weights changed sign vs the L1-normalised original.
             base_norm = _l1_normalise_rows(W0)
             n_sign_flips.append(int(np.sum(np.sign(Wp) != np.sign(base_norm))))
-            res = _evaluate_once(Wp, roles, wv, seeds)
+            res = _evaluate_once(Wp, roles, wv, seeds, cases)
             for k in sc_keys:
                 sc_acc[k].append(res["self_consistency"][k])
             for r, ms in rk_targets.items():
@@ -210,7 +259,7 @@ def run(n_trials: int = 200, sigmas=(0.05, 0.10)) -> Dict:
         rk_acc = {r: {m: [] for m in ms} for r, ms in rk_targets.items()}
         for _t in range(n_trials):
             Wp = _perturb_relative(W0, frac, pert_rng)
-            res = _evaluate_once(Wp, roles, wv, seeds)
+            res = _evaluate_once(Wp, roles, wv, seeds, cases)
             for k in sc_keys:
                 sc_acc[k].append(res["self_consistency"][k])
             for r, ms in rk_targets.items():

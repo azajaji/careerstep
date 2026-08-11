@@ -11,11 +11,17 @@ MODULES = [
     "experiments.exp8b_projection_sensitivity",
     "experiments.exp8c_suitability_weight_sweep",
     "experiments.exp8d_shortlist_stability",
+    "experiments.exp8e_component_scale",
+    "experiments.exp8f_criterion_influence",
     "experiments.exp2_resume_job_alignment",
     "experiments.exp4_roadmap_quality",
     "experiments.exp5_interview_generation",
     "experiments.exp6_feedback_evaluation",
     "experiments.exp12_melo_external",  # downloads MELO on first run
+    "experiments.exp13_no_profile_ablation",
+    "experiments.exp15_external_structure",  # downloads O*NET tables on first run
+    "experiments.exp16_scale_calibration",
+    "experiments.exp17_fitted_projection",
 ]
 
 

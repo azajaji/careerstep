@@ -1,0 +1,73 @@
+{
+  "onet_release": "28.0",
+  "compression": {
+    "n_occupations": 874,
+    "n_pairs": 381501,
+    "csmq_entry_min": 0.13585714285714282,
+    "csmq_entry_max": 0.9808571428571429,
+    "raw_cosine_mean": 0.979558854736958,
+    "raw_cosine_sd": 0.021129220125065986,
+    "raw_cosine_min": 0.7715040879032969,
+    "share_pairs_above_0_95": 0.902883609741521,
+    "centered_cosine_mean": 0.5879662920803421,
+    "centered_cosine_sd": 0.4046402416387334,
+    "centered_cosine_min": -0.9790263515686926,
+    "sd_ratio_centered_over_raw": 19.15074192249534
+  },
+  "separation": {
+    "n_related_pairs": 16197,
+    "n_random_pairs": 16180,
+    "raw_work_values": {
+      "dimensions": 6,
+      "auc_cosine": 0.7231575,
+      "auc_centered_cosine": 0.72442
+    },
+    "projected_csmq": {
+      "dimensions": 5,
+      "auc_cosine": 0.691865,
+      "auc_centered_cosine": 0.66471
+    },
+    "riasec_interests": {
+      "dimensions": 6,
+      "auc_cosine": 0.8524125,
+      "auc_centered_cosine": 0.8391125
+    },
+    "null_dense_normal": {
+      "n_draws": 10000,
+      "sampling": "entries ~ N(0,1), rows scaled to unit L1 norm, signs free",
+      "auc_mean": 0.6276652300000001,
+      "auc_sd": 0.05854556859645594,
+      "auc_p5": 0.5058487500000001,
+      "auc_p95": 0.70435,
+      "designed_auc": 0.66471,
+      "percentile_of_designed": 0.6797,
+      "empirical_p_designed_not_better": 0.3203679632036796
+    },
+    "null_matched_support_and_sign": {
+      "n_draws": 10000,
+      "sampling": "designed zero pattern and signs held fixed, magnitudes ~ |N(0,1)|, rows scaled to unit L1 norm",
+      "auc_mean": 0.67516824,
+      "auc_sd": 0.02169430928798952,
+      "auc_p5": 0.63629375,
+      "auc_p95": 0.7061,
+      "designed_auc": 0.66471,
+      "percentile_of_designed": 0.2996,
+      "empirical_p_designed_not_better": 0.7004299570042996
+    }
+  },
+  "convergent": {
+    "n_pairs_sampled": 200000,
+    "pearson_raw_csmq_vs_riasec": 0.16155082378697944,
+    "pearson_centered_csmq_vs_riasec": 0.03677337494192638
+  },
+  "notes": {
+    "scope": "all O*NET occupations rated on both Work Values and Interests; no participant data of any kind",
+    "auc": "probability that a curated related pair is closer than a randomly drawn pair; 0.5 is chance, but chance is not the informative baseline",
+    "baselines": "raw_work_values is the input the projection consumes, so it bounds what the projection could preserve; random_projection_null holds the representation type fixed and varies only the matrix",
+    "criterion": "O*NET relatedness is built largely from shared skills, knowledge, and activities rather than shared work values, which bears on the RIASEC comparison but not on raw-versus-projected, where both sides are the same construct"
+  },
+  "_meta": {
+    "name": "exp15_external_structure",
+    "timestamp": "2026-08-10T19:40:02.500338Z"
+  }
+}

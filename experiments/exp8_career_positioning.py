@@ -13,7 +13,7 @@ from data.loaders import (
     load_onet_work_values,
     load_saudi_cyber_roles,
 )
-from eval.stats import summarize
+from eval.stats import summarize, summarize_clustered
 from experiments._io import print_header, save_report
 from careerstep.career_positioning import (
     ORIENTATIONS,
@@ -84,6 +84,7 @@ def _noise_curve(
     curve = []
     for sigma in sigmas:
         rrs: List[float] = []
+        owners: List[str] = []
         for rid in role_ids:
             centroid = recommender.centroid_df.loc[rid].to_numpy(dtype=float)
             for _ in range(trials_per_role):
@@ -94,7 +95,15 @@ def _noise_curve(
                 )
                 ranked = recommender.recommend(profile, top_k=len(role_ids))
                 rrs.append(_reciprocal_rank(rid, [r.role_id for r in ranked]))
-        curve.append({"sigma": sigma, "mrr": summarize(rrs), "trials": len(rrs)})
+                owners.append(rid)
+        # Trials repeat the same role, so the base role is the resampling unit.
+        curve.append({
+            "sigma": sigma,
+            "mrr": summarize_clustered(rrs, owners),
+            "mrr_unclustered": summarize(rrs),
+            "trials": len(rrs),
+            "resampling_unit": "role",
+        })
     return curve
 
 
@@ -185,7 +194,20 @@ def _simulated_ranking_benchmark(
         for name in rankers
     }
 
+    # Roles whose Work-Value centroid is identical to another role's. Ordering
+    # inside such a group is arbitrary, so benchmark difficulty is not constant
+    # across profiles and the strata are reported separately below.
+    centroids = recommender.centroid_df
+    by_vector: Dict[tuple, List[str]] = {}
+    for role_id, row in centroids.iterrows():
+        by_vector.setdefault(tuple(np.round(row.to_numpy(dtype=float), 6)), []).append(role_id)
+    tied_roles = {r for group in by_vector.values() if len(group) > 1 for r in group}
+
+    strata: Dict[str, List[bool]] = {"tied": [], "untied": []}
+
     for prof in profiles:
+        is_tied = prof.latent_role_id in tied_roles
+        strata["tied" if is_tied else "untied"].append(True)
         for name, fn in rankers.items():
             ranked = fn(prof)
             per_ranker[name]["recall@3"].append(recall_at_k(ranked, prof.acceptable_role_ids, 3))
@@ -197,13 +219,33 @@ def _simulated_ranking_benchmark(
     for name, metrics in per_ranker.items():
         summary[name] = {m: summarize(vals) for m, vals in metrics.items()}
 
+    # Stratified view. Uses the values already collected above, so it draws no
+    # further random numbers and leaves every aggregate metric unchanged.
+    tied_mask = [prof.latent_role_id in tied_roles for prof in profiles]
+    stratified: Dict[str, Dict[str, Dict]] = {}
+    for stratum, want in (("tied_anchor", True), ("untied_anchor", False)):
+        idx = [i for i, t in enumerate(tied_mask) if t == want]
+        stratified[stratum] = {
+            "n_profiles": len(idx),
+            "per_ranker": {
+                name: {
+                    m: summarize([vals[i] for i in idx])
+                    for m, vals in metrics.items()
+                }
+                for name, metrics in per_ranker.items()
+            },
+        }
+
     return {
         "n_profiles": int(n_profiles),
         "n_roles": int(len(recommender.centroid_df)),
+        "n_distinct_centroids": len(by_vector),
+        "n_roles_with_tied_centroid": len(tied_roles),
         "n_neighbours_acceptable": 2,
         "skill_scorer_semantic_threshold": sem_threshold,
         "weights": {"value_fit": 0.60, "skill_readiness": 0.25, "feasibility": 0.15},
         "per_ranker": summary,
+        "stratified_by_anchor": stratified,
     }
 
 

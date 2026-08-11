@@ -1,0 +1,67 @@
+{
+  "n_profiles": 120,
+  "n_roles": 25,
+  "n_within_profile_pairs": 36000,
+  "weights": {
+    "value_fit": 0.6,
+    "skill_readiness": 0.25,
+    "feasibility": 0.15
+  },
+  "within_profile_dispersion": {
+    "value_fit": {
+      "within_profile_sd_mean": 0.004831158053279024,
+      "weighted_dispersion_share_mean": 0.044079816824609805,
+      "weighted_dispersion_share_sd": 0.01820351001678176
+    },
+    "skill_readiness": {
+      "within_profile_sd_mean": 0.10203317996169863,
+      "weighted_dispersion_share_mean": 0.3880681896312025,
+      "weighted_dispersion_share_sd": 0.034563421956275577
+    },
+    "feasibility": {
+      "within_profile_sd_mean": 0.24739719125502618,
+      "weighted_dispersion_share_mean": 0.5678519935441878,
+      "weighted_dispersion_share_sd": 0.03577826247225961
+    }
+  },
+  "leave_one_criterion_out": {
+    "value_fit": {
+      "kendall_tau_mean": 0.7560555555555555,
+      "top1_change_rate": 0.125,
+      "top5_jaccard_mean": 0.6797619047619047
+    },
+    "skill_readiness": {
+      "kendall_tau_mean": 0.8252777777777777,
+      "top1_change_rate": 0.8416666666666667,
+      "top5_jaccard_mean": 0.5093253968253968
+    },
+    "feasibility": {
+      "kendall_tau_mean": 0.48527777777777764,
+      "top1_change_rate": 0.39166666666666666,
+      "top5_jaccard_mean": 0.500297619047619
+    }
+  },
+  "pairwise_margins": {
+    "value_fit": {
+      "mean_abs_contribution": 0.003127079706044841,
+      "share_of_pairs_decided": 0.26663888888888887
+    },
+    "skill_readiness": {
+      "mean_abs_contribution": 0.019315277777777747,
+      "share_of_pairs_decided": 0.19569444444444445
+    },
+    "feasibility": {
+      "mean_abs_contribution": 0.03884041666666671,
+      "share_of_pairs_decided": 0.5163888888888889
+    }
+  },
+  "notes": {
+    "measure": "normalized weighted dispersion, not a share of variance; it ignores covariance and is reported alongside rank-based measures for that reason",
+    "unit": "all statistics are computed within a profile, because ranking happens among the roles offered to one student",
+    "loco": "a criterion is held at its within-profile mean so that it cannot discriminate; damage is measured against the full ranking"
+  },
+  "_meta": {
+    "name": "exp8f_criterion_influence",
+    "timestamp": "2026-08-10T19:37:59.178855Z"
+  }
+}

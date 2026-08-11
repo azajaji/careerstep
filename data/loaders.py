@@ -84,3 +84,18 @@ def load_saudi_cyber_roles() -> pd.DataFrame:
 def role_to_skills() -> dict[str, List[str]]:
     df = load_occupations()
     return {row["role"]: list(row["skills"]) for _, row in df.iterrows()}
+
+
+def load_onet_interests() -> pd.DataFrame:
+    """O*NET Interests (RIASEC) ratings for all rated occupations."""
+    return _load("onet_interests", dl.download_onet_interests)
+
+
+def load_onet_related_occupations() -> pd.DataFrame:
+    """O*NET curated related-occupation pairs."""
+    return _load("onet_related_occupations", dl.download_onet_related_occupations)
+
+
+def load_onet_work_values_full() -> pd.DataFrame:
+    """O*NET Work Values for all rated occupations."""
+    return _load("onet_work_values_full", dl.download_onet_work_values_full)

@@ -1,0 +1,58 @@
+{
+  "n_profiles": 120,
+  "n_roles": 25,
+  "n_pairs": 3000,
+  "components": {
+    "value_fit": {
+      "nominal_weight": 0.6,
+      "mean": 0.9896640415532199,
+      "sd": 0.007374343852982125,
+      "min": 0.9494265719389107,
+      "max": 0.9998235443213361,
+      "range": 0.050396972382425465,
+      "weighted_sd": 0.004424606311789275,
+      "share_of_weighted_spread": 0.0651197751896398
+    },
+    "skill_readiness": {
+      "nominal_weight": 0.25,
+      "mean": 0.04402777777777777,
+      "sd": 0.10128376067564868,
+      "min": 0.0,
+      "max": 0.5,
+      "range": 0.5,
+      "weighted_sd": 0.02532094016891217,
+      "share_of_weighted_spread": 0.37266455254932745
+    },
+    "feasibility": {
+      "nominal_weight": 0.15,
+      "mean": 0.5633333333333334,
+      "sd": 0.25466744470260166,
+      "min": 0.05,
+      "max": 1.0,
+      "range": 0.95,
+      "weighted_sd": 0.038200116705390245,
+      "share_of_weighted_spread": 0.5622156722610328
+    }
+  },
+  "value_fit_geometry": {
+    "centroid_entry_min": 0.2665714285714285,
+    "centroid_entry_max": 0.8104285714285714,
+    "within_centroid_min_over_max_mean": 0.5196099840852899,
+    "within_profile_min_over_max_mean": 0.5058331862961736,
+    "pairwise_centroid_cosine_min": 0.9775238766973078,
+    "pairwise_centroid_cosine_mean": 0.994039064646014,
+    "centred_cosine_mean": 0.8182126857765734,
+    "centred_cosine_sd": 0.16671861391525683,
+    "centred_cosine_min": 0.07294161035536016,
+    "centred_cosine_max": 0.9998184933981393,
+    "sd_ratio_centred_over_raw": 22.60792515768534
+  },
+  "notes": {
+    "reading": "nominal_weight is the Equation (1) coefficient; share_of_weighted_spread is w*sd normalised across the three terms, which approximates how much each term can reorder roles",
+    "cosine": "non-negativity alone does not compress the cosine, since non-negative vectors can be orthogonal. Every centroid and profile here has all five entries well away from zero, so the catalogue occupies a narrow cone and the cosines are close to one. Centring each vector before the cosine expands the spread by the recorded ratio."
+  },
+  "_meta": {
+    "name": "exp8e_component_scale",
+    "timestamp": "2026-08-10T10:35:58.961358Z"
+  }
+}

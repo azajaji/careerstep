@@ -473,3 +473,45 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+
+# O*NET tables used only by the external-structure check (Experiment 15).
+# Same release as the Work Values snapshot, so the projection and the
+# validation labels come from one version of the database.
+ONET_28_TEXT_BASE = "https://www.onetcenter.org/dl_files/database/db_28_0_text/"
+ONET_EXTRA_FILES = {
+    "onet_interests": "Interests.txt",
+    "onet_related_occupations": "Related%20Occupations.txt",
+    "onet_work_values_full": "Work%20Values.txt",
+}
+
+
+def _download_onet_table(name: str, force: bool = False) -> Path:
+    """Fetch one O*NET 28.0 text table and cache it as parquet.
+
+    Requires network on first use, like the MELO download. Later runs read
+    the cache, so reported results do not depend on O*NET being reachable."""
+    if _is_fresh(name) and not force:
+        return _cache_path(name)
+    import requests  # local import: only needed when fetching
+
+    url = ONET_28_TEXT_BASE + ONET_EXTRA_FILES[name]
+    resp = requests.get(url, timeout=120)
+    resp.raise_for_status()
+    df = pd.read_csv(io.StringIO(resp.text), sep="\t")
+    return _save(df, name)
+
+
+def download_onet_interests(force: bool = False) -> Path:
+    """O*NET Interests (RIASEC) ratings, all occupations."""
+    return _download_onet_table("onet_interests", force)
+
+
+def download_onet_related_occupations(force: bool = False) -> Path:
+    """O*NET Related Occupations, the curated relatedness lists."""
+    return _download_onet_table("onet_related_occupations", force)
+
+
+def download_onet_work_values_full(force: bool = False) -> Path:
+    """O*NET Work Values for every rated occupation, not only the catalogue."""
+    return _download_onet_table("onet_work_values_full", force)

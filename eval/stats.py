@@ -112,3 +112,59 @@ def summarize(values: Sequence[float]) -> dict:
         "ci95_low": lo,
         "ci95_high": hi,
     }
+
+
+def cluster_bootstrap_ci(
+    values: Sequence[float],
+    clusters: Sequence,
+    *,
+    n_resamples: int = 10_000,
+    confidence: float = 0.95,
+    seed: int = 20260101,
+) -> tuple[float, float, float]:
+    """``(point, ci_low, ci_high)`` resampling whole clusters, not observations.
+
+    Perturbation trials repeat the same base role or profile, so trials within a
+    base unit are not independent. Resampling trials would treat each repeat as
+    fresh evidence and understate the interval. This draws clusters with
+    replacement and recomputes the mean over the pooled draw, which is the
+    percentile cluster bootstrap."""
+    arr = np.asarray(values, dtype=float)
+    keys = list(clusters)
+    if arr.size == 0 or arr.size != len(keys):
+        return float("nan"), float("nan"), float("nan")
+    point = float(arr.mean())
+    by_cluster: dict = {}
+    for v, k in zip(arr, keys):
+        by_cluster.setdefault(k, []).append(v)
+    groups = [np.asarray(v, dtype=float) for v in by_cluster.values()]
+    if len(groups) < 2:
+        return point, point, point
+    rng = np.random.default_rng(seed)
+    idx = np.arange(len(groups))
+    means = np.empty(n_resamples, dtype=float)
+    for i in range(n_resamples):
+        pick = rng.choice(idx, size=len(groups), replace=True)
+        means[i] = float(np.concatenate([groups[j] for j in pick]).mean())
+    lo = float(np.percentile(means, 100.0 * (1.0 - confidence) / 2.0))
+    hi = float(np.percentile(means, 100.0 * (1.0 + confidence) / 2.0))
+    return point, lo, hi
+
+
+def summarize_clustered(values: Sequence[float], clusters: Sequence) -> dict:
+    """``summarize`` with a cluster bootstrap over ``clusters``."""
+    arr = np.asarray(values, dtype=float)
+    if arr.size == 0:
+        return {"n": 0, "mean": None, "sd": None, "min": None, "max": None}
+    point, lo, hi = cluster_bootstrap_ci(arr, clusters)
+    return {
+        "n": int(arr.size),
+        "n_clusters": len(set(clusters)),
+        "mean": float(arr.mean()),
+        "sd": float(arr.std(ddof=1)) if arr.size > 1 else 0.0,
+        "min": float(arr.min()),
+        "max": float(arr.max()),
+        "ci95_low": lo,
+        "ci95_high": hi,
+        "ci_method": "cluster percentile bootstrap over base units",
+    }

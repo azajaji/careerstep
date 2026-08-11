@@ -24,7 +24,7 @@ from scipy import stats
 from careerstep.career_positioning import ORIENTATIONS, OrientationProfile, RoleRecommender
 from careerstep.seeding import load_seeds, set_global_seeds
 from data.loaders import load_onet_work_values, load_saudi_cyber_roles
-from eval.stats import summarize
+from eval.stats import summarize, summarize_clustered
 from experiments._io import print_header, save_report
 
 SIGMAS = [0.05, 0.10, 0.20, 0.30]
@@ -91,6 +91,7 @@ def run() -> dict:
         in3, out3, in5, out5 = [], [], [], []
         spear, kend = [], []
         g_churn, g_j3 = [], []
+        owners: List[str] = []
 
         for rid in role_ids:
             centroid = recommender.centroid_df.loc[rid].to_numpy(dtype=float)
@@ -124,10 +125,14 @@ def run() -> dict:
                 rg = _rank_vector(got, universe)
                 spear.append(float(stats.spearmanr(rb, rg).statistic))
                 kend.append(float(stats.kendalltau(rb, rg).statistic))
+                owners.append(rid)
 
         curve.append({
             "sigma": sigma,
             "trials": len(j3),
+            "resampling_unit": "role",
+            "jaccard_top3_clustered": summarize_clustered(j3, owners),
+            "first_rank_changed_clustered": summarize_clustered(churn, owners),
             "jaccard_top3": summarize(j3),
             "jaccard_top5": summarize(j5),
             "first_rank_changed": summarize(churn),
@@ -190,6 +195,7 @@ def _composite_arm(recommender, roles_df, rng) -> List[Dict]:
     out = []
     for sigma in SIGMAS:
         churn, j3, vf_churn, vf_j3 = [], [], [], []
+        owners = []
         for p in profiles:
             vec = np.asarray(p.csmq_vector, dtype=float)
             comp_clean = rank_khutwa(p, recommender, roles_df, required, lexical)
@@ -203,9 +209,13 @@ def _composite_arm(recommender, roles_df, rng) -> List[Dict]:
                 j3.append(_jaccard(comp_clean[:3], comp_got[:3]))
                 vf_churn.append(0.0 if vf_got[0] == vf_clean[0] else 1.0)
                 vf_j3.append(_jaccard(vf_clean[:3], vf_got[:3]))
+                owners.append(p.profile_id)
         out.append({
             "sigma": sigma,
             "trials": len(churn),
+            "resampling_unit": "profile",
+            "composite_first_rank_changed_clustered": summarize_clustered(churn, owners),
+            "valuefit_first_rank_changed_clustered": summarize_clustered(vf_churn, owners),
             "composite_first_rank_changed": summarize(churn),
             "composite_jaccard_top3": summarize(j3),
             "valuefit_first_rank_changed": summarize(vf_churn),

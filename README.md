@@ -1,8 +1,7 @@
 # CareerStep
 
-Reference implementation and evaluation code for *"A Socio-Technical Design
-Pattern for Integrated University Career Readiness with Values-Based Role
-Positioning"*.
+Reference implementation and evaluation code for *"When the Largest Weight Has
+the Least Influence: A Reproducible Audit of a Values-Based Role Recommender"*.
 
 This is the research implementation, not the client application. It involves
 no human participants: every benchmark runs on public data (O*NET Work
@@ -36,29 +35,41 @@ committed `results/*.json` are the values reported in the paper.
 | `experiments/` | one script per reported measurement |
 | `results/` | frozen outputs |
 
-## Which script produces which table
+## Which script produces which table and figure
 
-Manuscript table numbers refer to the submitted version.
+Manuscript numbers refer to the IEEE Access submission. The primary evidence
+(RQ1–RQ5) is Figures 1–2 and Tables 6–16; the secondary checks are Tables
+18–23 in Appendix A. Run everything with `python run_experiments.py`.
 
-| Table | Script | Raw output |
+| Manuscript | Script | Raw output |
 |---|---|---|
-| 6 — item-level inventory scoring | `experiments/exp7_questionnaire_scoring.py` | `results/exp7_questionnaire_scoring.json` |
-| 7 — self-consistency and noise sweep | `experiments/exp8_career_positioning.py` | `results/exp8_career_positioning.json` |
-| 8 — ranking benchmark | `experiments/exp8_career_positioning.py` | `results/exp8_career_positioning.json` |
-| 9 — shortlist stability | `experiments/exp8d_shortlist_stability.py` | `results/exp8_shortlist_stability.json` |
-| 10 — weight sensitivity (a) | `experiments/exp8b_projection_sensitivity.py` | `results/exp8_projection_sensitivity.json` |
-| 10 — weight sensitivity (b) | `experiments/exp8c_suitability_weight_sweep.py` | `results/exp8_suitability_weight_sweep.json` |
-| 11 — CV/JD alignment | `experiments/exp2_resume_job_alignment.py` | `results/exp2_resume_job_alignment.json` |
-| 12 — roadmap generation | `experiments/exp4_roadmap_quality.py` | `results/exp4_roadmap_quality.json` |
-| 13 — interview-question generation | `experiments/exp5_interview_generation.py` | `results/exp5_interview_generation.json` |
-| 14 — external occupation linking (MELO) | `experiments/exp12_melo_external.py` | `results/exp12_melo_external.json` |
+| Fig. 1 — the scorer as layers | `figures/make_mechanism_figure.py` | `results/exp8e_component_scale.json` (criterion ranges only) |
+| Fig. 2 — nominal vs. realized influence | `figures/make_influence_figure.py` | `results/exp8f_criterion_influence.json` |
+| Table 6 — criterion influence (RQ1) | `experiments/exp8f_criterion_influence.py` | `results/exp8f_criterion_influence.json` |
+| Table 7 — ranking benchmark | `experiments/exp8_career_positioning.py` | `results/exp8_career_positioning.json` |
+| Table 8 — ranking, stratified by tied anchor | `experiments/exp8_career_positioning.py` | `results/exp8_career_positioning.json` |
+| Table 9 — criterion scale and centroid geometry (RQ2) | `experiments/exp8e_component_scale.py` | `results/exp8e_component_scale.json` |
+| Table 10 — self-consistency and noise sweep | `experiments/exp8_career_positioning.py` | `results/exp8_career_positioning.json` |
+| Table 11 — shortlist stability | `experiments/exp8d_shortlist_stability.py` | `results/exp8_shortlist_stability.json` |
+| Table 12 — weight sensitivity (a) | `experiments/exp8b_projection_sensitivity.py` | `results/exp8_projection_sensitivity.json` |
+| Table 12 — weight sensitivity (b) | `experiments/exp8c_suitability_weight_sweep.py` | `results/exp8_suitability_weight_sweep.json` |
+| Table 13 — projection vs. baselines and nulls (RQ3) | `experiments/exp15_external_structure.py` | `results/exp15_external_structure.json` |
+| Table 14 — influence after scale calibration (RQ4) | `experiments/exp16_scale_calibration.py` | `results/exp16_scale_calibration.json` |
+| Table 15 — what calibration changes and costs (RQ4) | `experiments/exp16_scale_calibration.py` | `results/exp16_scale_calibration.json` |
+| Table 16 — fitted projection, held-out occupations (RQ5) | `experiments/exp17_fitted_projection.py` | `results/exp17_fitted_projection.json` |
+| Table 18 — item-level inventory scoring | `experiments/exp7_questionnaire_scoring.py` | `results/exp7_questionnaire_scoring.json` |
+| Table 19 — CV/JD alignment | `experiments/exp2_resume_job_alignment.py` | `results/exp2_resume_job_alignment.json` |
+| Table 20 — roadmap generation | `experiments/exp4_roadmap_quality.py` | `results/exp4_roadmap_quality.json` |
+| Table 21 — interview-question generation | `experiments/exp5_interview_generation.py` | `results/exp5_interview_generation.json` |
+| Table 22 — context-continuity ablation | `experiments/exp13_no_profile_ablation.py` | `results/exp13_no_profile_ablation.json` |
+| Table 23 — external occupation linking (MELO) | `experiments/exp12_melo_external.py` | `results/exp12_melo_external.json` |
 
-The feedback-grounding comparison is reported in the text of Section 6.3
-rather than as a table; it comes from
+The feedback-grounding comparison is reported in the text of the secondary
+checks rather than as a table; it comes from
 `experiments/exp6_feedback_evaluation.py` →
 `results/exp6_feedback_evaluation.json`.
 
-Tables 1–5 and 15 are design or descriptive tables with no computed values.
+Tables 1–5 and 17 are design or descriptive tables with no computed values.
 `results/exp12_melo_external.json` keeps the per-query ranked occupations and
 scores for all 633 queries, not only the aggregates in the table.
 
@@ -81,7 +92,7 @@ Seeds are in `reproducibility/seeds.txt`; `data.download` seeds each corpus
 routine independently. Set `PYTHONHASHSEED=0` before the interpreter starts,
 since Python randomises string hashing per process.
 
-Every reported number, Table 6 through Table 14, was produced on one
+Every reported number, Tables 6–23, was produced on one
 configuration; there is no separate environment for the MELO benchmark:
 
 | | |
@@ -106,7 +117,7 @@ timings differ.
 Two categories, and the distinction matters for how the results should be
 read.
 
-**Generated or author-curated (Tables 6–13).** `saudi_cyber_roles.csv`
+**Generated or author-curated (Tables 6–16, 18–22).** `saudi_cyber_roles.csv`
 (25 roles) and `csmq_items.json` (25 Likert items over Derr's five career
 orientations) were authored for this study; the CSMQ items are original
 wording and have not been psychometrically validated. The CV,
@@ -117,7 +128,7 @@ team produced both the inputs and the reference labels.
 `onet_work_values.csv` is a curated subset of the public O*NET 28.0 Work
 Values dataset.
 
-**External and externally annotated (Table 14).** MELO (Retyk et al., 2024,
+**External and externally annotated (Table 23).** MELO (Retyk et al., 2024,
 arXiv:2410.08319, MIT licence) is fetched from
 <https://github.com/Avature/melo-benchmark> rather than vendored here. It is
 the one evaluation set this study neither built nor annotated. `exp12` uses
