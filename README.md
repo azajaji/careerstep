@@ -36,16 +36,22 @@ committed `results/*.json` are the values reported in the paper.
 | `experiments/` | one script per reported measurement |
 | `results/` | frozen outputs |
 
-## Which script produces which table and figure
+## Which script produces which table
 
 Manuscript numbers refer to the IEEE Access submission. The primary evidence
-(RQ1–RQ5) is Figures 1–2 and Tables 6–16, the external transfer case is
-Table 17, and the secondary checks are Tables 19–24 in Appendix A. Run everything with `python run_experiments.py`.
+(RQ1–RQ5) is Tables 6–16, the external transfer case is Table 17, and the
+secondary checks are Tables 19–24 in Appendix A.
+
+This repository exists to let you re-derive the reported numbers, not to
+rebuild the article. The manuscript's figures are not redistributed here; the
+values they plot are in `results/`, namely the criterion ranges in
+`exp8e_component_scale.json` (Figure 1) and the weight-versus-influence
+comparison in `exp8f_criterion_influence.json` (Figure 2).
+
+Run everything with `python run_experiments.py`.
 
 | Manuscript | Script | Raw output |
 |---|---|---|
-| Fig. 1 — the scorer as layers | `figures/make_mechanism_figure.py` | `results/exp8e_component_scale.json` (criterion ranges only) |
-| Fig. 2 — nominal vs. realized influence | `figures/make_influence_figure.py` | `results/exp8f_criterion_influence.json` |
 | Table 6 — criterion influence (RQ1) | `experiments/exp8f_criterion_influence.py` | `results/exp8f_criterion_influence.json` |
 | Table 7 — ranking benchmark | `experiments/exp8_career_positioning.py` | `results/exp8_career_positioning.json` |
 | Table 8 — ranking, stratified by tied anchor | `experiments/exp8_career_positioning.py` | `results/exp8_career_positioning.json` |
