@@ -127,7 +127,7 @@ def _nearest_neighbours(
     if target_norm == 0:
         return []
     cos_sim = (centroids @ target) / (norms * target_norm + 1e-12)
-    order = np.argsort(-cos_sim)
+    order = np.argsort(-cos_sim, kind="stable")
     out: List[str] = []
     for idx in order:
         if int(idx) == target_idx:
@@ -261,7 +261,7 @@ def rank_level_only(profile: SyntheticProfile, recommender: RoleRecommender,
         seniority = str(metas.loc[rid, "seniority"]).lower()
         feas = FEASIBILITY.get((profile.level, seniority), 0.5)
         scores.append(feas)
-    order = np.argsort(-np.asarray(scores))
+    order = np.argsort(-np.asarray(scores), kind="stable")
     return [role_ids[int(i)] for i in order]
 
 
@@ -271,7 +271,7 @@ def rank_skills_only(profile: SyntheticProfile, recommender: RoleRecommender,
                      ) -> List[str]:
     role_ids = list(recommender.centroid_df.index)
     scores = [skill_scorer(profile.known_skills, required[rid]) for rid in role_ids]
-    order = np.argsort(-np.asarray(scores))
+    order = np.argsort(-np.asarray(scores), kind="stable")
     return [role_ids[int(i)] for i in order]
 
 
@@ -279,7 +279,7 @@ def rank_csmq_only(profile: SyntheticProfile, recommender: RoleRecommender) -> L
     role_ids = list(recommender.centroid_df.index)
     scores = [_cosine(profile.csmq_vector, recommender.centroids[i])
               for i in range(len(role_ids))]
-    order = np.argsort(-np.asarray(scores))
+    order = np.argsort(-np.asarray(scores), kind="stable")
     return [role_ids[int(i)] for i in order]
 
 
@@ -296,7 +296,7 @@ def rank_khutwa(profile: SyntheticProfile, recommender: RoleRecommender,
         seniority = str(metas.loc[rid, "seniority"]).lower()
         feas = FEASIBILITY.get((profile.level, seniority), 0.5)
         scores.append(W_VALUE * value_fit + W_SKILL * skill + W_FEAS * feas)
-    order = np.argsort(-np.asarray(scores))
+    order = np.argsort(-np.asarray(scores), kind="stable")
     return [role_ids[int(i)] for i in order]
 
 

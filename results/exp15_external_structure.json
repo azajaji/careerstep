@@ -15,50 +15,64 @@
     "sd_ratio_centered_over_raw": 19.15074192249534
   },
   "separation": {
-    "n_related_pairs": 16197,
-    "n_random_pairs": 16180,
+    "n_related_pairs_canonical": 11614,
+    "n_negative_pairs": 11614,
+    "negatives_exclude_positives": true,
+    "auc_estimator": "exact Mann-Whitney",
     "raw_work_values": {
       "dimensions": 6,
-      "auc_cosine": 0.7231575,
-      "auc_centered_cosine": 0.72442
+      "auc_cosine": 0.7242537264856352,
+      "auc_cosine_ci95_clustered": [
+        0.711409999033848,
+        0.7372416251693971
+      ],
+      "auc_centered_cosine": 0.7304126472302376
     },
     "projected_csmq": {
       "dimensions": 5,
-      "auc_cosine": 0.691865,
-      "auc_centered_cosine": 0.66471
+      "auc_cosine": 0.6918647942132867,
+      "auc_cosine_ci95_clustered": [
+        0.6791685435647457,
+        0.7052646233401159
+      ],
+      "auc_centered_cosine": 0.6643113219204899
     },
     "riasec_interests": {
       "dimensions": 6,
-      "auc_cosine": 0.8524125,
-      "auc_centered_cosine": 0.8391125
+      "auc_cosine": 0.8595175960119389,
+      "auc_cosine_ci95_clustered": [
+        0.8512318259375601,
+        0.868224366828457
+      ],
+      "auc_centered_cosine": 0.8462208094664584
     },
     "null_dense_normal": {
       "n_draws": 10000,
       "sampling": "entries ~ N(0,1), rows scaled to unit L1 norm, signs free",
-      "auc_mean": 0.6276652300000001,
-      "auc_sd": 0.05854556859645594,
-      "auc_p5": 0.5058487500000001,
-      "auc_p95": 0.70435,
-      "designed_auc": 0.66471,
-      "percentile_of_designed": 0.6797,
-      "empirical_p_designed_not_better": 0.3203679632036796
+      "auc_mean": 0.6274110597037791,
+      "auc_sd": 0.059168018289123436,
+      "auc_p5": 0.5049746177847683,
+      "auc_p95": 0.7049075762288639,
+      "designed_auc": 0.6643113219204899,
+      "percentile_of_designed": 0.6771,
+      "empirical_p_designed_not_better": 0.32296770322967705
     },
     "null_matched_support_and_sign": {
       "n_draws": 10000,
       "sampling": "designed zero pattern and signs held fixed, magnitudes ~ |N(0,1)|, rows scaled to unit L1 norm",
-      "auc_mean": 0.67516824,
-      "auc_sd": 0.02169430928798952,
-      "auc_p5": 0.63629375,
-      "auc_p95": 0.7061,
-      "designed_auc": 0.66471,
-      "percentile_of_designed": 0.2996,
-      "empirical_p_designed_not_better": 0.7004299570042996
+      "auc_mean": 0.6749882646725215,
+      "auc_sd": 0.022428390691304128,
+      "auc_p5": 0.635708596899836,
+      "auc_p95": 0.7076078639613853,
+      "designed_auc": 0.6643113219204899,
+      "percentile_of_designed": 0.3113,
+      "empirical_p_designed_not_better": 0.6887311268873113
     }
   },
   "convergent": {
     "n_pairs_sampled": 200000,
-    "pearson_raw_csmq_vs_riasec": 0.16155082378697944,
-    "pearson_centered_csmq_vs_riasec": 0.03677337494192638
+    "pearson_raw_csmq_vs_riasec": 0.15959350089065863,
+    "pearson_centered_csmq_vs_riasec": 0.03431723717966288
   },
   "notes": {
     "scope": "all O*NET occupations rated on both Work Values and Interests; no participant data of any kind",
@@ -68,6 +82,6 @@
   },
   "_meta": {
     "name": "exp15_external_structure",
-    "timestamp": "2026-08-10T19:40:02.500338Z"
+    "timestamp": "2026-08-13T10:08:56.167438Z"
   }
 }

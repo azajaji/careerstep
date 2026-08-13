@@ -248,14 +248,14 @@
     }
   },
   "runtime_seconds": {
-    "bm25_index": 0.04074690002016723,
-    "corpus_encode": 9.206197699997574,
-    "bm25_search": 6.223011701833457,
-    "bi_encoder_search": 1.6871867001755163,
-    "cross_encoder_rerank": 27.517239098553546,
-    "total": 45.72628379997332
+    "bm25_index": 0.04965439999796217,
+    "corpus_encode": 9.344421300003887,
+    "bm25_search": 7.637431300034223,
+    "bi_encoder_search": 1.7939920000280836,
+    "cross_encoder_rerank": 26.656979200030037,
+    "total": 46.69946160000109
   },
-  "peak_memory_mb": 1906.085888,
+  "peak_memory_mb": 1906.384896,
   "per_query": [
     {
       "query_id": "Q000001",
@@ -56595,6 +56595,6 @@
   ],
   "_meta": {
     "name": "exp12_melo_external",
-    "timestamp": "2026-08-10T10:37:29.260471Z"
+    "timestamp": "2026-08-13T10:07:09.752473Z"
   }
 }

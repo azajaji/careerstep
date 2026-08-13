@@ -29,6 +29,7 @@ experiment exercises the shipped code path rather than a reimplementation.
 from __future__ import annotations
 
 import numpy as np
+from scipy import stats
 
 from careerstep.career_positioning import project_work_values_to_csmq
 from careerstep.seeding import set_global_seeds
@@ -105,34 +106,83 @@ def run() -> dict:
         "sd_ratio_centered_over_raw": float(cen.std(ddof=1) / raw.std(ddof=1)),
     }
 
-    pos = {s: i for i, s in enumerate(socs)}
-    pairs = rel[rel["O*NET-SOC Code"].isin(pos)
-                & rel["Related O*NET-SOC Code"].isin(pos)]
-    pi = pairs["O*NET-SOC Code"].map(pos).to_numpy()
-    pj = pairs["Related O*NET-SOC Code"].map(pos).to_numpy()
-    keep = pi != pj
-    pi, pj = pi[keep], pj[keep]
-    ri_ = rng.integers(0, len(socs), size=len(pi))
-    rj_ = rng.integers(0, len(socs), size=len(pi))
-    ok = ri_ != rj_
-    ri_, rj_ = ri_[ok], rj_[ok]
+    pos_of = {s: i for i, s in enumerate(socs)}
+    pairs = rel[rel["O*NET-SOC Code"].isin(pos_of)
+                & rel["Related O*NET-SOC Code"].isin(pos_of)]
+    a_ = pairs["O*NET-SOC Code"].map(pos_of).to_numpy()
+    b_ = pairs["Related O*NET-SOC Code"].map(pos_of).to_numpy()
+    keep = a_ != b_
+    a_, b_ = a_[keep], b_[keep]
 
-    def auc(M: np.ndarray, n: int = 200_000) -> float:
-        a, b = M[pi, pj], M[ri_, rj_]
-        x = rng.choice(a, size=n, replace=True)
-        y = rng.choice(b, size=n, replace=True)
-        return float((x > y).mean() + 0.5 * (x == y).mean())
+    # O*NET lists relatedness directionally and repeats it, so canonicalize
+    # each pair and keep it once.
+    canon = np.unique(np.stack([np.minimum(a_, b_), np.maximum(a_, b_)], 1), axis=0)
+    pi, pj = canon[:, 0], canon[:, 1]
+    positive = set(map(tuple, canon.tolist()))
+
+    # Negatives are unordered pairs that are not related pairs. Drawing without
+    # this exclusion puts positives in the negative set and understates every
+    # representation's separation.
+    need = len(pi)
+    neg = set()
+    while len(neg) < need:
+        x = rng.integers(0, len(socs), size=2 * need)
+        y = rng.integers(0, len(socs), size=2 * need)
+        for u, v in zip(x.tolist(), y.tolist()):
+            if u == v:
+                continue
+            key = (min(u, v), max(u, v))
+            if key in positive or key in neg:
+                continue
+            neg.add(key)
+            if len(neg) >= need:
+                break
+    negarr = np.array(sorted(neg))
+    ni_, nj_ = negarr[:, 0], negarr[:, 1]
+
+    def _auc_from(a: np.ndarray, b: np.ndarray) -> float:
+        """Exact Mann-Whitney AUC; ties count as half."""
+        r = stats.rankdata(np.concatenate([a, b]))
+        u = r[:len(a)].sum() - len(a) * (len(a) + 1) / 2.0
+        return float(u / (len(a) * len(b)))
+
+    def auc(M: np.ndarray) -> float:
+        return _auc_from(M[pi, pj], M[ni_, nj_])
+
+    def auc_clustered_ci(M: np.ndarray, draws: int = 400) -> list:
+        """Occupation-clustered bootstrap: resample occupations, keep the pairs
+        whose endpoints both survive. Pairs sharing an endpoint are not
+        independent, so resampling pairs directly would be too narrow."""
+        boot_rng = np.random.default_rng(SEED)
+        n = len(socs)
+        vals = []
+        for _ in range(draws):
+            take = boot_rng.integers(0, n, size=n)
+            mult = np.bincount(take, minlength=n)
+            keep_p = (mult[pi] > 0) & (mult[pj] > 0)
+            keep_n = (mult[ni_] > 0) & (mult[nj_] > 0)
+            if keep_p.sum() < 50 or keep_n.sum() < 50:
+                continue
+            vals.append(_auc_from(M[pi[keep_p], pj[keep_p]],
+                                  M[ni_[keep_n], nj_[keep_n]]))
+        v = np.asarray(vals, dtype=float)
+        return [float(np.percentile(v, 2.5)), float(np.percentile(v, 97.5))]
 
     representations = {
         "raw_work_values": raw_wv,
         "projected_csmq": C,
         "riasec_interests": Rv,
     }
-    separation = {"n_related_pairs": int(len(pi)), "n_random_pairs": int(len(ri_))}
+    separation = {"n_related_pairs_canonical": int(len(pi)),
+                  "n_negative_pairs": int(len(ni_)),
+                  "negatives_exclude_positives": True,
+                  "auc_estimator": "exact Mann-Whitney"}
     for name, X in representations.items():
+        Mc = _cosine_matrix(X)
         separation[name] = {
             "dimensions": int(X.shape[1]),
-            "auc_cosine": auc(_cosine_matrix(X)),
+            "auc_cosine": auc(Mc),
+            "auc_cosine_ci95_clustered": auc_clustered_ci(Mc),
             "auc_centered_cosine": auc(_cosine_matrix(_centered(X))),
         }
 
@@ -165,7 +215,7 @@ def run() -> dict:
         vals = np.empty(N_RANDOM_W, dtype=float)
         for i in range(N_RANDOM_W):
             Pm = np.clip(raw_wv @ draw().T, 0.0, 1.0)
-            vals[i] = auc(_cosine_matrix(_centered(Pm)), n=20_000)
+            vals[i] = auc(_cosine_matrix(_centered(Pm)))
         # One-sided empirical p-value with the standard +1 correction.
         p = float((np.sum(vals >= designed) + 1) / (N_RANDOM_W + 1))
         separation[f"null_{name}"] = {

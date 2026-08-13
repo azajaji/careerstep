@@ -24,6 +24,8 @@ from careerstep.career_positioning_benchmark import (
     simulate_profiles,
 )
 from careerstep.seeding import set_global_seeds
+from careerstep.benchmark_cohort import build_cohort, cohort_fingerprint
+from experiments._io import save_report
 
 
 def _cosine(u: np.ndarray, v: np.ndarray) -> float:
@@ -60,12 +62,7 @@ def run() -> Dict:
 
     rec = RoleRecommender(roles_df=roles, wv_df=wv)
     py_rng = random.Random(seeds["python_random_seed"])
-    np_rng = np.random.default_rng(seeds["numpy_seed"])
-    _advance_like_exp8_noise_curve(np_rng, n_roles=len(rec.centroid_df))
-    profiles = simulate_profiles(
-        rec, roles, n_profiles=120, rng=py_rng, np_rng=np_rng,
-        skill_coverage=0.35, distractor_skills_per_profile=3,
-    )
+    profiles = build_cohort(rec, roles)
     required = role_to_required_skills(roles)
 
     # Panel of weight triples (must each sum to 1).
@@ -96,11 +93,9 @@ def run() -> Dict:
 
 if __name__ == "__main__":
     payload = run()
-    p = Path("results/exp8_suitability_weight_sweep.json")
-    p.parent.mkdir(exist_ok=True)
-    p.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    save_report("exp8_suitability_weight_sweep", payload)
     print("=== RoleSuitability weight sweep (120 profiles, lexical scorer) ===")
     print(f"{'weights (value/skill/feas)':28s} {'Hit@3':>7s} {'Hit@5':>7s} {'MRR':>7s}")
     for label, m in payload["weight_panel"].items():
         print(f"{label:28s} {m['hit@3']:7.3f} {m['hit@5']:7.3f} {m['mrr']:7.3f}")
-    print(f"\nSaved {p}")
+    print("Saved results/exp8_suitability_weight_sweep.json")

@@ -36,6 +36,7 @@ from careerstep.career_positioning_benchmark import (
     simulate_profiles,
 )
 from careerstep.seeding import set_global_seeds
+from careerstep.benchmark_cohort import build_cohort, cohort_fingerprint
 
 
 def _reciprocal_rank(target_role_id: str, ranked_role_ids: List[str]) -> float:
@@ -154,12 +155,7 @@ def _simulated_ranking_benchmark(
 
     Compares random, level-only, skills-only, csmq-only, and the composite
     under both a semantic and a lexical skill scorer."""
-    profiles = simulate_profiles(
-        recommender, roles_df,
-        n_profiles=n_profiles, rng=rng, np_rng=np_rng,
-        skill_coverage=0.35,
-        distractor_skills_per_profile=3,
-    )
+    profiles = build_cohort(recommender, roles_df)
     required = role_to_required_skills(roles_df)
 
     # Lazy-load embedding backend only if needed.

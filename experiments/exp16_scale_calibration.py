@@ -50,6 +50,7 @@ from careerstep.career_positioning_benchmark import (
     role_to_required_skills, simulate_profiles,
 )
 from careerstep.seeding import load_seeds, set_global_seeds
+from careerstep.benchmark_cohort import build_cohort, cohort_fingerprint
 from data.loaders import load_onet_work_values, load_saudi_cyber_roles
 from experiments._io import print_header, save_report
 
@@ -179,12 +180,7 @@ def run() -> dict:
     metas = roles_df.set_index("role_id")
     role_ids = list(rec.centroid_df.index)
 
-    profiles = simulate_profiles(
-        rec, roles_df, n_profiles=120,
-        rng=random.Random(seeds["python_random_seed"]),
-        np_rng=np.random.default_rng(seeds["numpy_seed"]),
-        skill_coverage=0.35, distractor_skills_per_profile=3,
-    )
+    profiles = build_cohort(rec, roles_df)
 
     per_profile: List[np.ndarray] = []
     for p in profiles:

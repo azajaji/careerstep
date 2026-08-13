@@ -27,17 +27,47 @@
   "leave_one_criterion_out": {
     "value_fit": {
       "kendall_tau_mean": 0.7560555555555555,
+      "kendall_tau_b_mean": 0.8469881937940248,
       "top1_change_rate": 0.125,
+      "strict_top_set_loss": 0.016666666666666666,
+      "mean_tied_maxima_after_ablation": 1.3666666666666667,
+      "expected_top1_change": 0.1728333333333333,
+      "expected_top1_ci95": [
+        0.133125,
+        0.21687500000000007
+      ],
+      "catalog_order_top1_min": 0.10833333333333334,
+      "catalog_order_top1_max": 0.21666666666666667,
       "top5_jaccard_mean": 0.6797619047619047
     },
     "skill_readiness": {
       "kendall_tau_mean": 0.8252777777777777,
+      "kendall_tau_b_mean": 0.8253922788879695,
       "top1_change_rate": 0.8416666666666667,
+      "strict_top_set_loss": 0.8416666666666667,
+      "mean_tied_maxima_after_ablation": 1.0,
+      "expected_top1_change": 0.8416666666666666,
+      "expected_top1_ci95": [
+        0.8416666666666667,
+        0.8416666666666667
+      ],
+      "catalog_order_top1_min": 0.8416666666666667,
+      "catalog_order_top1_max": 0.8416666666666667,
       "top5_jaccard_mean": 0.5093253968253968
     },
     "feasibility": {
       "kendall_tau_mean": 0.48527777777777764,
+      "kendall_tau_b_mean": 0.46001010136496334,
       "top1_change_rate": 0.39166666666666666,
+      "strict_top_set_loss": 0.38333333333333336,
+      "mean_tied_maxima_after_ablation": 1.175,
+      "expected_top1_change": 0.4585,
+      "expected_top1_ci95": [
+        0.4166666666666667,
+        0.49166666666666664
+      ],
+      "catalog_order_top1_min": 0.38333333333333336,
+      "catalog_order_top1_max": 0.5166666666666667,
       "top5_jaccard_mean": 0.500297619047619
     }
   },
@@ -62,6 +92,6 @@
   },
   "_meta": {
     "name": "exp8f_criterion_influence",
-    "timestamp": "2026-08-10T19:37:59.178855Z"
+    "timestamp": "2026-08-13T10:05:36.701135Z"
   }
 }

@@ -31,6 +31,8 @@ from careerstep.career_positioning_benchmark import (
     simulate_profiles,
 )
 from careerstep.seeding import set_global_seeds
+from careerstep.benchmark_cohort import build_cohort, cohort_fingerprint
+from experiments._io import save_report
 
 # The original, manuscript matrix (independent of any later monkeypatch).
 W0 = np.array(cp._PROJECTION, dtype=float, copy=True)
@@ -88,10 +90,7 @@ def _ranking(rec: RoleRecommender, roles_df, *, n_profiles: int,
              py_rng: random.Random, np_rng: np.random.Generator) -> Dict[str, Dict[str, float]]:
     """Lexical-scorer ranking benchmark (lexical == full on this structured-token
     benchmark, per the manuscript), so this reproduces the headline composite."""
-    profiles = simulate_profiles(
-        rec, roles_df, n_profiles=n_profiles, rng=py_rng, np_rng=np_rng,
-        skill_coverage=0.35, distractor_skills_per_profile=3,
-    )
+    profiles = build_cohort(rec, roles_df)
     required = role_to_required_skills(roles_df)
 
     def _lex(user, req):
@@ -145,12 +144,7 @@ def _frozen_cases(W_base: np.ndarray, roles_df, wv_df, seeds, n_profiles: int = 
     and reused unchanged for every perturbation; only the scorer varies."""
     rec = _build_recommender(W_base, roles_df, wv_df)
     py_rng = random.Random(seeds["python_random_seed"])
-    np_rng = np.random.default_rng(seeds["numpy_seed"])
-    _advance_like_exp8_noise_curve(np_rng, n_roles=len(rec.centroid_df))
-    return simulate_profiles(
-        rec, roles_df, n_profiles=n_profiles, rng=py_rng, np_rng=np_rng,
-        skill_coverage=0.35, distractor_skills_per_profile=3,
-    )
+    return build_cohort(rec, roles_df)
 
 
 def _rank_fixed_cases(rec: RoleRecommender, roles_df, profiles) -> Dict[str, Dict[str, float]]:
@@ -284,9 +278,7 @@ def run(n_trials: int = 200, sigmas=(0.05, 0.10)) -> Dict:
 
 if __name__ == "__main__":
     payload = run()
-    out = Path("results/exp8_projection_sensitivity.json")
-    out.parent.mkdir(exist_ok=True)
-    out.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    save_report("exp8_projection_sensitivity", payload)
 
     def fmt(band):
         return "mean={:.3f} sd={:.3f} [{:.3f},{:.3f}] min={:.3f}".format(
@@ -310,4 +302,4 @@ if __name__ == "__main__":
         print("  csmq_khutwa Hit@5:     " + fmt(rk["csmq_khutwa"]["recall@5"]))
         print("  csmq_khutwa MRR:       " + fmt(rk["csmq_khutwa"]["mrr"]))
         print("  csmq_only   Hit@3:     " + fmt(rk["csmq_only"]["recall@3"]))
-    print(f"\nSaved {out}")
+    print("Saved results/exp8_projection_sensitivity.json")

@@ -1,127 +1,94 @@
 {
   "onet_release": "28.0",
   "n_occupations": 874,
+  "n_splits": 20,
   "split": {
-    "n_fit_occupations": 437,
-    "n_held_out_occupations": 437,
-    "n_fit_related_pairs": 3998,
-    "n_held_out_related_pairs": 4109,
-    "rule": "a pair enters a side only when both endpoints are on that side, so no occupation appears in both fit and evaluation"
+    "rule": "a pair enters a side only when both endpoints are on that side; splits are repeated so the interval reflects split variation rather than one draw",
+    "mean_fit_related_pairs": 2882.8,
+    "mean_held_out_related_pairs": 2912.35,
+    "negatives": "unordered non-related pairs drawn within each half"
   },
   "held_out_auc": {
-    "raw_work_values_6d": 0.7400595870614091,
-    "designed_W_5d": 0.7088174558161396,
-    "pca_5d": 0.7390216573960409,
-    "fitted_5d_from_designed": 0.7568720049743668,
-    "fitted_5d_from_random": 0.7568689469133372,
-    "null_matched_mean": 0.6988958553564447
+    "raw_work_values_6d": {
+      "mean": 0.7252746981012048,
+      "sd": 0.009877085077716724,
+      "ci95_low": 0.7107330190516464,
+      "ci95_high": 0.7451018315317606,
+      "n_splits": 20
+    },
+    "designed_W_5d": {
+      "mean": 0.6923341464688499,
+      "sd": 0.009849208976787913,
+      "ci95_low": 0.6759981988988852,
+      "ci95_high": 0.709951860669186,
+      "n_splits": 20
+    },
+    "pca_5d": {
+      "mean": 0.7243945133048391,
+      "sd": 0.010261132609465488,
+      "ci95_low": 0.7084575229306218,
+      "ci95_high": 0.7446002808453048,
+      "n_splits": 20
+    },
+    "fitted_5d_from_designed": {
+      "mean": 0.7549242267859649,
+      "sd": 0.00885978175670789,
+      "ci95_low": 0.7397020749117761,
+      "ci95_high": 0.7716381641464293,
+      "n_splits": 20
+    },
+    "fitted_5d_from_random": {
+      "mean": 0.7548869101201235,
+      "sd": 0.008802379859089637,
+      "ci95_low": 0.7397045591252227,
+      "ci95_high": 0.7716353772869496,
+      "n_splits": 20
+    },
+    "null_matched_mean": {
+      "mean": 0.6832342662569544,
+      "sd": 0.009204108067068303,
+      "ci95_low": 0.6673106827799512,
+      "ci95_high": 0.7011642101447123,
+      "n_splits": 20
+    }
   },
   "fit_half_auc": {
-    "designed_W_5d": 0.6905566396780648,
-    "fitted_5d_from_designed": 0.7646105818226743,
-    "fitted_5d_from_random": 0.7646111772839183
+    "designed_W_5d": {
+      "mean": 0.6907431650135762,
+      "sd": 0.008914548747792971,
+      "ci95_low": 0.6764870340181504,
+      "ci95_high": 0.7072021440448418,
+      "n_splits": 20
+    },
+    "fitted_5d_from_designed": {
+      "mean": 0.7631173818143459,
+      "sd": 0.008465428805007013,
+      "ci95_low": 0.7467701234431332,
+      "ci95_high": 0.7759711510361668,
+      "n_splits": 20
+    }
   },
-  "auc_minus_designed": {
-    "raw_work_values_6d": 0.031242131245269422,
-    "pca_5d": 0.030204201579901224,
-    "null_matched_mean": -0.009921600459694924,
-    "fitted_5d_from_designed": 0.048054549158227156,
-    "fitted_5d_from_random": 0.04805149109719753
+  "paired_gap_fitted_minus_designed": {
+    "mean": 0.06259008031711502,
+    "sd": 0.007290445965122747,
+    "ci95_low": 0.04777655042222292,
+    "ci95_high": 0.07504370814452249,
+    "n_splits": 20
   },
-  "fitted_matrices": {
-    "from_designed": [
-      [
-        1.2032762878678422,
-        -1.5638122214372996,
-        2.295923588195392,
-        -0.040410654852338586,
-        -0.687147160350128,
-        -0.6765152359874085
-      ],
-      [
-        -0.6309650574773953,
-        0.11360886753471801,
-        0.7039658020514261,
-        -1.9815463574545973,
-        2.470400028608293,
-        -0.6470925513313303
-      ],
-      [
-        0.8087147409093073,
-        -0.018367332365675264,
-        -0.5912558626221457,
-        0.608796133765833,
-        1.009230176703845,
-        -1.5307683656498725
-      ],
-      [
-        1.8890076645587301,
-        -1.2717445610208598,
-        -1.1794955796772542,
-        0.021983954622464108,
-        0.005450586089803935,
-        0.1129697694261342
-      ],
-      [
-        -0.3603409104469259,
-        -0.07730923404922865,
-        -0.47644599095087936,
-        1.185129518417361,
-        0.06285365604309753,
-        -0.9021505693968559
-      ]
-    ],
-    "from_random": [
-      [
-        -0.5100019338180188,
-        0.7051420789686993,
-        -0.5805430993350571,
-        0.34868515589744004,
-        -0.5043069507539607,
-        0.5422189202548422
-      ],
-      [
-        -0.388085150008495,
-        0.2646157114799845,
-        0.757798748931128,
-        -0.26678682057726366,
-        0.48325479210519395,
-        -0.4979412090672267
-      ],
-      [
-        0.28025371920020004,
-        -0.3952976673220518,
-        0.8591229679734227,
-        -0.34025340891819317,
-        -0.6812597752105453,
-        0.5267135615662148
-      ],
-      [
-        0.10584654390018845,
-        0.12522310941650514,
-        -0.3266760509583722,
-        -0.8391492845918458,
-        0.8489525135008065,
-        0.12565676733394002
-      ],
-      [
-        -0.9814947107705185,
-        0.4739611663504374,
-        0.26416396477309545,
-        -0.5779759337546299,
-        0.34824578160534414,
-        0.34570726989543055
-      ]
-    ]
+  "paired_gap_pca_minus_designed": {
+    "mean": 0.03206036683598902,
+    "sd": 0.004711308137706374,
+    "ci95_low": 0.023306679384317706,
+    "ci95_high": 0.0383241891090364,
+    "n_splits": 20
   },
   "notes": {
-    "estimator": "exact Mann-Whitney AUC over held-out pairs; Experiment 15 reports a resampled estimate over all pairs, so the two are comparable in ordering but not digit for digit",
-    "reference": "the raw 6-dimensional Work Values under the same cosine are the no-projection reference, not an upper bound: a linear map changes the similarity measure, so a fitted projection can separate better than its own input without adding information to it",
-    "generalization": "fit_half_auc is reported beside held_out_auc so the gap between them is visible",
-    "claim": "fitting shows what the representation could carry, not that a fitted projection is a valid measure of a student's work values or of role fit"
+    "status": "capacity diagnostic, not a repair: the fit is unconstrained, discards the designed sparsity, signs and row normalization, omits the production clipping step, and its axes carry no CSMQ interpretation",
+    "estimator": "exact Mann-Whitney AUC on held-out pairs",
+    "reference": "the raw 6-dimensional Work Values under the same cosine are the no-projection reference, not an upper bound"
   },
   "_meta": {
     "name": "exp17_fitted_projection",
-    "timestamp": "2026-08-11T13:00:01.118727Z"
+    "timestamp": "2026-08-13T10:10:03.026011Z"
   }
 }

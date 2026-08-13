@@ -38,6 +38,8 @@ from careerstep.career_positioning_benchmark import (
     lexical_skill_readiness, role_to_required_skills, simulate_profiles,
 )
 from careerstep.seeding import load_seeds, set_global_seeds
+from careerstep.tie_aware import max_set, rank_random_tiebreak
+from careerstep.benchmark_cohort import build_cohort, cohort_fingerprint
 from data.loaders import load_onet_work_values, load_saudi_cyber_roles
 from experiments._io import print_header, save_report
 
@@ -54,12 +56,7 @@ def run() -> dict:
     metas = roles_df.set_index("role_id")
     role_ids = list(rec.centroid_df.index)
 
-    profiles = simulate_profiles(
-        rec, roles_df, n_profiles=120,
-        rng=random.Random(seeds["python_random_seed"]),
-        np_rng=np.random.default_rng(seeds["numpy_seed"]),
-        skill_coverage=0.35, distractor_skills_per_profile=3,
-    )
+    profiles = build_cohort(rec, roles_df)
 
     # Criterion matrix per profile: rows are candidate roles, columns criteria.
     per_profile: List[np.ndarray] = []
@@ -98,8 +95,9 @@ def run() -> dict:
         return np.argsort(-(X @ w), kind="stable")
 
     loco: Dict[str, dict] = {}
+    tie_rng = np.random.default_rng(20260101)
     for j, c in enumerate(CRITERIA):
-        taus, top1, ov5 = [], [], []
+        taus, taubs, top1, ov5, strict, maxset = [], [], [], [], [], []
         for X in per_profile:
             full = rank(X)
             Y = X.copy()
@@ -110,12 +108,53 @@ def run() -> dict:
             pos_full[full] = np.arange(len(full))
             pos_got[got] = np.arange(len(got))
             taus.append(stats.kendalltau(pos_full, pos_got).statistic)
+            # tau-b on the scores themselves, which is defined under ties.
+            taubs.append(stats.kendalltau(X @ w, Y @ w, variant="b").statistic)
             top1.append(0.0 if full[0] == got[0] else 1.0)
             a, b = set(full[:5].tolist()), set(got[:5].tolist())
             ov5.append(len(a & b) / len(a | b))
+            # Tie-free statement: is the original leader still a maximum?
+            ms = max_set(Y @ w)
+            maxset.append(len(ms))
+            strict.append(0.0 if full[0] in set(ms.tolist()) else 1.0)
+
+        # Expected top-1 change under random tie-breaking.
+        exp_top1 = []
+        for _ in range(200):
+            hits = []
+            for X in per_profile:
+                Y = X.copy()
+                Y[:, j] = Y[:, j].mean()
+                lead_full = rank_random_tiebreak(X @ w, tie_rng)[0]
+                lead_abl = rank_random_tiebreak(Y @ w, tie_rng)[0]
+                hits.append(0.0 if lead_full == lead_abl else 1.0)
+            exp_top1.append(float(np.mean(hits)))
+        exp_top1 = np.asarray(exp_top1)
+
+        # Catalog-order sensitivity of the reported-style rate.
+        perm_rates = []
+        perm_rng = np.random.default_rng(7)
+        for _ in range(200):
+            order = perm_rng.permutation(per_profile[0].shape[0])
+            hits = []
+            for X in per_profile:
+                Xp = X[order]
+                Yp = Xp.copy()
+                Yp[:, j] = Yp[:, j].mean()
+                hits.append(0.0 if rank(Xp)[0] == rank(Yp)[0] else 1.0)
+            perm_rates.append(float(np.mean(hits)))
+
         loco[c] = {
             "kendall_tau_mean": float(np.mean(taus)),
+            "kendall_tau_b_mean": float(np.mean(taubs)),
             "top1_change_rate": float(np.mean(top1)),
+            "strict_top_set_loss": float(np.mean(strict)),
+            "mean_tied_maxima_after_ablation": float(np.mean(maxset)),
+            "expected_top1_change": float(exp_top1.mean()),
+            "expected_top1_ci95": [float(np.percentile(exp_top1, 2.5)),
+                                   float(np.percentile(exp_top1, 97.5))],
+            "catalog_order_top1_min": float(np.min(perm_rates)),
+            "catalog_order_top1_max": float(np.max(perm_rates)),
             "top5_jaccard_mean": float(np.mean(ov5)),
         }
 
@@ -168,12 +207,19 @@ def run() -> dict:
     print(f"  {'criterion':<18}{'w':>6}{'within-sd':>11}{'disp share':>12}"
           f"{'tau (LOCO)':>12}{'top1 chg':>10}{'decides':>9}")
     for c in CRITERIA:
+        l = loco[c]
         print(f"  {c:<18}{WEIGHTS[c]:>6.2f}"
               f"{within[c]['within_profile_sd_mean']:>11.4f}"
               f"{within[c]['weighted_dispersion_share_mean']:>12.3f}"
-              f"{loco[c]['kendall_tau_mean']:>12.3f}"
-              f"{loco[c]['top1_change_rate']:>10.3f}"
+              f"{l['kendall_tau_mean']:>12.3f}"
+              f"{l['top1_change_rate']:>10.3f}"
               f"{margins[c]['share_of_pairs_decided']:>9.3f}")
+        print(f"      tie-aware: tau-b {l['kendall_tau_b_mean']:.3f}  "
+              f"strict loss {l['strict_top_set_loss']:.4f}  "
+              f"E[top-1] {l['expected_top1_change']:.3f} "
+              f"[{l['expected_top1_ci95'][0]:.3f}, {l['expected_top1_ci95'][1]:.3f}]  "
+              f"catalog-order {l['catalog_order_top1_min']:.3f}-{l['catalog_order_top1_max']:.3f}  "
+              f"mean tied maxima {l['mean_tied_maxima_after_ablation']:.3f}")
     save_report("exp8f_criterion_influence", payload)
     return payload
 

@@ -23,6 +23,7 @@ from scipy import stats
 
 from careerstep.career_positioning import ORIENTATIONS, OrientationProfile, RoleRecommender
 from careerstep.seeding import load_seeds, set_global_seeds
+from careerstep.benchmark_cohort import build_cohort, cohort_fingerprint
 from data.loaders import load_onet_work_values, load_saudi_cyber_roles
 from eval.stats import summarize, summarize_clustered
 from experiments._io import print_header, save_report
@@ -185,12 +186,7 @@ def _composite_arm(recommender, roles_df, rng) -> List[Dict]:
         r = [s.lower() for s in req]
         return sum(1 for s in r if s in k) / max(1, len(r))
 
-    profiles = simulate_profiles(
-        recommender, roles_df, n_profiles=120,
-        rng=_py_random.Random(seeds["python_random_seed"]),
-        np_rng=np.random.default_rng(seeds["numpy_seed"]),
-        skill_coverage=0.35, noise_sigma=0.08, n_neighbours_acceptable=2,
-    )
+    profiles = build_cohort(recommender, roles_df)
 
     out = []
     for sigma in SIGMAS:
