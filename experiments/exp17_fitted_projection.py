@@ -114,7 +114,8 @@ def run() -> dict:
                        values="Data Value", aggfunc="first")[RIASEC].dropna()
 
     socs = list(Wt.index.intersection(R.index))
-    X = Wt.loc[socs].to_numpy(dtype=float) / 7.0
+    # O*NET Extent (EX) runs 1..7; min-max to [0, 1] is (x - 1) / 6.
+    X = (Wt.loc[socs].to_numpy(dtype=float) - 1.0) / 6.0
     pos_of = {s: i for i, s in enumerate(socs)}
 
     pairs = rel[rel["O*NET-SOC Code"].isin(pos_of)
@@ -128,9 +129,6 @@ def run() -> dict:
     positive = set(map(tuple, canon.tolist()))
 
     signs, support = np.sign(DESIGNED_W), np.sign(DESIGNED_W) != 0
-    Xc = X - X.mean(axis=0)
-    _, _, Vt = np.linalg.svd(Xc, full_matrices=False)
-    PCA5 = Vt[:5]
 
     acc = {k: [] for k in ("raw_work_values_6d", "designed_W_5d", "pca_5d",
                            "fitted_5d_from_designed", "fitted_5d_from_random",
@@ -177,9 +175,20 @@ def run() -> dict:
         held = lambda P: _auc(_cos(P, hpi, hpj), _cos(P, hni, hnj))
         fitl = lambda P: _auc(_cos(P, fpi, fpj), _cos(P, fni, fnj))
 
+        # PCA is a fitted representation, so its basis and its centering both
+        # come from the fit half. Two things matter here. Taking the SVD over
+        # all occupations would let the held-out half inform the basis it is
+        # scored on. And PCA scores are (X - mu) V^T, not X V^T: cosine is
+        # translation-sensitive, so omitting the mean does not give a PCA
+        # transform at all.
+        Xf = X[np.array(sorted(fit_set))]
+        mu = Xf.mean(axis=0)
+        _, _, Vtf = np.linalg.svd(Xf - mu, full_matrices=False)
+        PCA5 = Vtf[:5]
+
         acc["raw_work_values_6d"].append(held(X))
         acc["designed_W_5d"].append(held(X @ DESIGNED_W.T))
-        acc["pca_5d"].append(held(X @ PCA5.T))
+        acc["pca_5d"].append(held((X - mu) @ PCA5.T))
         fit_half["designed_W_5d"].append(fitl(X @ DESIGNED_W.T))
 
         for name, w0 in (("fitted_5d_from_designed", DESIGNED_W),

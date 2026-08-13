@@ -9,25 +9,25 @@
   },
   "within_profile_dispersion": {
     "value_fit": {
-      "within_profile_sd_mean": 0.004831158053279024,
-      "weighted_dispersion_share_mean": 0.044079816824609805,
-      "weighted_dispersion_share_sd": 0.01820351001678176
+      "within_profile_sd_mean": 0.007092035326161047,
+      "weighted_dispersion_share_mean": 0.06323097438396529,
+      "weighted_dispersion_share_sd": 0.02429126209947088
     },
     "skill_readiness": {
       "within_profile_sd_mean": 0.10203317996169863,
-      "weighted_dispersion_share_mean": 0.3880681896312025,
-      "weighted_dispersion_share_sd": 0.034563421956275577
+      "weighted_dispersion_share_mean": 0.38028002122543625,
+      "weighted_dispersion_share_sd": 0.03440040660466529
     },
     "feasibility": {
       "within_profile_sd_mean": 0.24739719125502618,
-      "weighted_dispersion_share_mean": 0.5678519935441878,
-      "weighted_dispersion_share_sd": 0.03577826247225961
+      "weighted_dispersion_share_mean": 0.5564890043905985,
+      "weighted_dispersion_share_sd": 0.03660005463499855
     }
   },
   "leave_one_criterion_out": {
     "value_fit": {
-      "kendall_tau_mean": 0.7560555555555555,
-      "kendall_tau_b_mean": 0.8469881937940248,
+      "kendall_tau_mean": 0.7498333333333332,
+      "kendall_tau_b_mean": 0.8379308768096758,
       "top1_change_rate": 0.125,
       "strict_top_set_loss": 0.016666666666666666,
       "mean_tied_maxima_after_ablation": 1.3666666666666667,
@@ -38,51 +38,51 @@
       ],
       "catalog_order_top1_min": 0.10833333333333334,
       "catalog_order_top1_max": 0.21666666666666667,
-      "top5_jaccard_mean": 0.6797619047619047
+      "top5_jaccard_mean": 0.6714285714285714
     },
     "skill_readiness": {
-      "kendall_tau_mean": 0.8252777777777777,
-      "kendall_tau_b_mean": 0.8253922788879695,
-      "top1_change_rate": 0.8416666666666667,
-      "strict_top_set_loss": 0.8416666666666667,
+      "kendall_tau_mean": 0.8219999999999998,
+      "kendall_tau_b_mean": 0.8219728227654451,
+      "top1_change_rate": 0.8333333333333334,
+      "strict_top_set_loss": 0.8333333333333334,
       "mean_tied_maxima_after_ablation": 1.0,
-      "expected_top1_change": 0.8416666666666666,
+      "expected_top1_change": 0.8333333333333335,
       "expected_top1_ci95": [
-        0.8416666666666667,
-        0.8416666666666667
+        0.8333333333333334,
+        0.8333333333333334
       ],
-      "catalog_order_top1_min": 0.8416666666666667,
-      "catalog_order_top1_max": 0.8416666666666667,
-      "top5_jaccard_mean": 0.5093253968253968
+      "catalog_order_top1_min": 0.8333333333333334,
+      "catalog_order_top1_max": 0.8333333333333334,
+      "top5_jaccard_mean": 0.5099867724867725
     },
     "feasibility": {
-      "kendall_tau_mean": 0.48527777777777764,
-      "kendall_tau_b_mean": 0.46001010136496334,
-      "top1_change_rate": 0.39166666666666666,
-      "strict_top_set_loss": 0.38333333333333336,
+      "kendall_tau_mean": 0.4914444444444444,
+      "kendall_tau_b_mean": 0.46659284772220744,
+      "top1_change_rate": 0.38333333333333336,
+      "strict_top_set_loss": 0.375,
       "mean_tied_maxima_after_ablation": 1.175,
-      "expected_top1_change": 0.4585,
+      "expected_top1_change": 0.45016666666666666,
       "expected_top1_ci95": [
-        0.4166666666666667,
-        0.49166666666666664
+        0.4083333333333333,
+        0.48333333333333334
       ],
-      "catalog_order_top1_min": 0.38333333333333336,
-      "catalog_order_top1_max": 0.5166666666666667,
-      "top5_jaccard_mean": 0.500297619047619
+      "catalog_order_top1_min": 0.375,
+      "catalog_order_top1_max": 0.5083333333333333,
+      "top5_jaccard_mean": 0.48958333333333337
     }
   },
   "pairwise_margins": {
     "value_fit": {
-      "mean_abs_contribution": 0.003127079706044841,
-      "share_of_pairs_decided": 0.26663888888888887
+      "mean_abs_contribution": 0.004579229860523885,
+      "share_of_pairs_decided": 0.27311111111111114
     },
     "skill_readiness": {
       "mean_abs_contribution": 0.019315277777777747,
-      "share_of_pairs_decided": 0.19569444444444445
+      "share_of_pairs_decided": 0.19777777777777777
     },
     "feasibility": {
       "mean_abs_contribution": 0.03884041666666671,
-      "share_of_pairs_decided": 0.5163888888888889
+      "share_of_pairs_decided": 0.5126944444444445
     }
   },
   "notes": {
@@ -92,6 +92,6 @@
   },
   "_meta": {
     "name": "exp8f_criterion_influence",
-    "timestamp": "2026-08-13T10:05:36.701135Z"
+    "timestamp": "2026-08-13T15:05:00.332896Z"
   }
 }

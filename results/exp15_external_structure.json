@@ -3,16 +3,16 @@
   "compression": {
     "n_occupations": 874,
     "n_pairs": 381501,
-    "csmq_entry_min": 0.13585714285714282,
-    "csmq_entry_max": 0.9808571428571429,
-    "raw_cosine_mean": 0.979558854736958,
-    "raw_cosine_sd": 0.021129220125065986,
-    "raw_cosine_min": 0.7715040879032969,
-    "share_pairs_above_0_95": 0.902883609741521,
-    "centered_cosine_mean": 0.5879662920803421,
-    "centered_cosine_sd": 0.4046402416387334,
-    "centered_cosine_min": -0.9790263515686926,
-    "sd_ratio_centered_over_raw": 19.15074192249534
+    "csmq_entry_min": 0.0,
+    "csmq_entry_max": 0.9776666666666667,
+    "raw_cosine_mean": 0.9588501306087941,
+    "raw_cosine_sd": 0.04539494138830197,
+    "raw_cosine_min": 0.5367289836341375,
+    "share_pairs_above_0_95": 0.715743864367328,
+    "centered_cosine_mean": 0.43855314363299397,
+    "centered_cosine_sd": 0.5091448085343471,
+    "centered_cosine_min": -0.9997051135473819,
+    "sd_ratio_centered_over_raw": 11.215893070093289
   },
   "separation": {
     "n_related_pairs_canonical": 11614,
@@ -21,21 +21,21 @@
     "auc_estimator": "exact Mann-Whitney",
     "raw_work_values": {
       "dimensions": 6,
-      "auc_cosine": 0.7242537264856352,
+      "auc_cosine": 0.7190157384146714,
       "auc_cosine_ci95_clustered": [
-        0.711409999033848,
-        0.7372416251693971
+        0.7056016903831944,
+        0.7325556872185128
       ],
-      "auc_centered_cosine": 0.7304126472302376
+      "auc_centered_cosine": 0.7304122987852556
     },
     "projected_csmq": {
       "dimensions": 5,
-      "auc_cosine": 0.6918647942132867,
+      "auc_cosine": 0.6831902044909428,
       "auc_cosine_ci95_clustered": [
-        0.6791685435647457,
-        0.7052646233401159
+        0.6700110690666654,
+        0.697293084421394
       ],
-      "auc_centered_cosine": 0.6643113219204899
+      "auc_centered_cosine": 0.678903330360035
     },
     "riasec_interests": {
       "dimensions": 6,
@@ -49,30 +49,30 @@
     "null_dense_normal": {
       "n_draws": 10000,
       "sampling": "entries ~ N(0,1), rows scaled to unit L1 norm, signs free",
-      "auc_mean": 0.6274110597037791,
-      "auc_sd": 0.059168018289123436,
-      "auc_p5": 0.5049746177847683,
-      "auc_p95": 0.7049075762288639,
-      "designed_auc": 0.6643113219204899,
-      "percentile_of_designed": 0.6771,
-      "empirical_p_designed_not_better": 0.32296770322967705
+      "auc_mean": 0.629057832347417,
+      "auc_sd": 0.056056159517591686,
+      "auc_p5": 0.5161606252707307,
+      "auc_p95": 0.7055918650877967,
+      "designed_auc": 0.678903330360035,
+      "percentile_of_designed": 0.7919,
+      "empirical_p_designed_not_better": 0.2081791820817918
     },
     "null_matched_support_and_sign": {
       "n_draws": 10000,
       "sampling": "designed zero pattern and signs held fixed, magnitudes ~ |N(0,1)|, rows scaled to unit L1 norm",
-      "auc_mean": 0.6749882646725215,
-      "auc_sd": 0.022428390691304128,
-      "auc_p5": 0.635708596899836,
-      "auc_p95": 0.7076078639613853,
-      "designed_auc": 0.6643113219204899,
-      "percentile_of_designed": 0.3113,
-      "empirical_p_designed_not_better": 0.6887311268873113
+      "auc_mean": 0.6784091496218008,
+      "auc_sd": 0.02292072588349092,
+      "auc_p5": 0.636823191587595,
+      "auc_p95": 0.7105206820038011,
+      "designed_auc": 0.678903330360035,
+      "percentile_of_designed": 0.4662,
+      "empirical_p_designed_not_better": 0.5338466153384661
     }
   },
   "convergent": {
     "n_pairs_sampled": 200000,
-    "pearson_raw_csmq_vs_riasec": 0.15959350089065863,
-    "pearson_centered_csmq_vs_riasec": 0.03431723717966288
+    "pearson_raw_csmq_vs_riasec": 0.11736824372320802,
+    "pearson_centered_csmq_vs_riasec": 0.06377538561741398
   },
   "notes": {
     "scope": "all O*NET occupations rated on both Work Values and Interests; no participant data of any kind",
@@ -82,6 +82,6 @@
   },
   "_meta": {
     "name": "exp15_external_structure",
-    "timestamp": "2026-08-13T10:08:56.167438Z"
+    "timestamp": "2026-08-13T15:12:46.126380Z"
   }
 }

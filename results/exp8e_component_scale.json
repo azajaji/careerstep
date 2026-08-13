@@ -5,13 +5,13 @@
   "components": {
     "value_fit": {
       "nominal_weight": 0.6,
-      "mean": 0.9896640415532199,
-      "sd": 0.007374343852982125,
-      "min": 0.9494265719389107,
-      "max": 0.9998235443213361,
-      "range": 0.050396972382425465,
-      "weighted_sd": 0.004424606311789275,
-      "share_of_weighted_spread": 0.0651197751896398
+      "mean": 0.9862534612521757,
+      "sd": 0.010103716086499789,
+      "min": 0.9304062515886695,
+      "max": 0.9998915773559235,
+      "range": 0.06948532576725397,
+      "weighted_sd": 0.006062229651899873,
+      "share_of_weighted_spread": 0.0871219218657785
     },
     "skill_readiness": {
       "nominal_weight": 0.25,
@@ -21,7 +21,7 @@
       "max": 0.5,
       "range": 0.5,
       "weighted_sd": 0.02532094016891217,
-      "share_of_weighted_spread": 0.37266455254932745
+      "share_of_weighted_spread": 0.3638939957137166
     },
     "feasibility": {
       "nominal_weight": 0.15,
@@ -31,21 +31,21 @@
       "max": 1.0,
       "range": 0.95,
       "weighted_sd": 0.038200116705390245,
-      "share_of_weighted_spread": 0.5622156722610328
+      "share_of_weighted_spread": 0.5489840824205049
     }
   },
   "value_fit_geometry": {
-    "centroid_entry_min": 0.2665714285714285,
-    "centroid_entry_max": 0.8104285714285714,
-    "within_centroid_min_over_max_mean": 0.5196099840852899,
-    "within_profile_min_over_max_mean": 0.5058331862961736,
-    "pairwise_centroid_cosine_min": 0.9775238766973078,
-    "pairwise_centroid_cosine_mean": 0.994039064646014,
-    "centred_cosine_mean": 0.8182126857765734,
-    "centred_cosine_sd": 0.16671861391525683,
-    "centred_cosine_min": 0.07294161035536016,
-    "centred_cosine_max": 0.9998184933981393,
-    "sd_ratio_centred_over_raw": 22.60792515768534
+    "centroid_entry_min": 0.211,
+    "centroid_entry_max": 0.7788333333333334,
+    "within_centroid_min_over_max_mean": 0.5012818243364933,
+    "within_profile_min_over_max_mean": 0.48881109812707896,
+    "pairwise_centroid_cosine_min": 0.9647270454452992,
+    "pairwise_centroid_cosine_mean": 0.9906585479800444,
+    "centred_cosine_mean": 0.7769701384351004,
+    "centred_cosine_sd": 0.20551811969431913,
+    "centred_cosine_min": -0.08803343728626091,
+    "centred_cosine_max": 0.9994105343623715,
+    "sd_ratio_centred_over_raw": 20.340844688710604
   },
   "notes": {
     "reading": "nominal_weight is the Equation (1) coefficient; share_of_weighted_spread is w*sd normalised across the three terms, which approximates how much each term can reorder roles",
@@ -53,6 +53,6 @@
   },
   "_meta": {
     "name": "exp8e_component_scale",
-    "timestamp": "2026-08-13T10:05:35.427593Z"
+    "timestamp": "2026-08-13T15:04:57.648990Z"
   }
 }

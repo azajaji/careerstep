@@ -171,6 +171,7 @@ def score_csmq(
 def project_work_values_to_csmq(
     work_values: Mapping[str, float] | Sequence[float] | np.ndarray,
     *,
+    onet_scale_min: float = 1.0,
     onet_scale_max: float = 7.0,
 ) -> OrientationProfile:
     """Project a six-dim O*NET WV vector onto the five-dim CSMQ space.
@@ -186,8 +187,10 @@ def project_work_values_to_csmq(
     if vec.shape != (6,):
         raise ValueError(f"expected 6-dim O*NET WV vector, got shape {vec.shape}")
 
-    # Map to 0..1 first (O*NET Extent ratings are on a 0..7 scale).
-    normalized = vec / float(onet_scale_max)
+    # Min-max map to [0, 1]. The O*NET Extent scale (EX) runs 1..7, not 0..7,
+    # so the correct normalization is (x - 1) / 6. Dividing by 7 would leave a
+    # floor of 1/7 and compress the cosine that the projection feeds.
+    normalized = (vec - float(onet_scale_min)) / float(onet_scale_max - onet_scale_min)
 
     # Apply projection. Some rows have negative weights (e.g. -0.2 on
     # Independence for getting_secure); we clip to [0,1] after.
@@ -235,7 +238,8 @@ class RoleRecommender:
             )
 
         wv_cols = [f"wv_{w}" for w in ONET_WORK_VALUES]
-        wv_matrix = joined[wv_cols].to_numpy(dtype=float) / 7.0
+        # O*NET Extent (EX) runs 1..7; min-max to [0, 1] is (x - 1) / 6.
+        wv_matrix = (joined[wv_cols].to_numpy(dtype=float) - 1.0) / 6.0
 
         # Centroids = (n_roles, 5)
         centroids = wv_matrix @ _PROJECTION.T

@@ -78,7 +78,8 @@ def run() -> dict:
                        values="Data Value", aggfunc="first")[RIASEC].dropna()
 
     socs = list(W.index.intersection(R.index))
-    raw_wv = W.loc[socs].to_numpy(dtype=float) / 7.0
+    # O*NET Extent (EX) runs 1..7; min-max to [0, 1] is (x - 1) / 6.
+    raw_wv = (W.loc[socs].to_numpy(dtype=float) - 1.0) / 6.0
     C = np.array([
         project_work_values_to_csmq(W.loc[s].to_numpy(dtype=float)).as_vector()
         for s in socs
