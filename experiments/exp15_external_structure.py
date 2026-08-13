@@ -150,6 +150,60 @@ def run() -> dict:
     def auc(M: np.ndarray) -> float:
         return _auc_from(M[pi, pj], M[ni_, nj_])
 
+    def _auc_weighted(a, wa, b, wb) -> float:
+        """Mann-Whitney AUC with pair weights; ties count as half.
+
+        Sorting the negatives once and taking prefix sums makes this O(n log n)
+        rather than the O(|a||b|) of an explicit pairwise comparison, which
+        matters because the vertex bootstrap runs it several hundred times.
+        """
+        order = np.argsort(b, kind="stable")
+        bs, wbs = b[order], wb[order]
+        cum = np.concatenate([[0.0], np.cumsum(wbs)])
+        lo = np.searchsorted(bs, a, side="left")
+        hi = np.searchsorted(bs, a, side="right")
+        less = cum[lo]
+        equal = cum[hi] - cum[lo]
+        num = float(np.sum(wa * (less + 0.5 * equal)))
+        den = float(wa.sum() * wb.sum())
+        return num / den if den > 0 else float("nan")
+
+    def vertex_bootstrap(mats: dict, draws: int = 400) -> dict:
+        """Vertex bootstrap that preserves draw multiplicity.
+
+        Occupations are drawn with replacement and a pair carries weight
+        m_i * m_j, so an occupation drawn several times counts several times.
+        Collapsing multiplicity to presence, as a simpler mask would, discards
+        that weight and narrows the spread. All representations are evaluated on
+        the same draw, so differences between them are paired within draw.
+        """
+        boot_rng = np.random.default_rng(SEED)
+        n = len(socs)
+        keys = list(mats)
+        per = {k: [] for k in keys}
+        paired = {k: [] for k in keys if k != "raw_work_values"}
+        for _ in range(draws):
+            m = np.bincount(boot_rng.integers(0, n, size=n), minlength=n).astype(float)
+            wp, wn = m[pi] * m[pj], m[ni_] * m[nj_]
+            if (wp > 0).sum() < 50 or (wn > 0).sum() < 50:
+                continue
+            vals = {k: _auc_weighted(M[pi, pj], wp, M[ni_, nj_], wn)
+                    for k, M in mats.items()}
+            for k, v in vals.items():
+                per[k].append(v)
+            for k in paired:
+                paired[k].append(vals["raw_work_values"] - vals[k])
+
+        def pct(v):
+            a = np.asarray(v, dtype=float)
+            return {"mean": float(a.mean()),
+                    "ci95_low": float(np.percentile(a, 2.5)),
+                    "ci95_high": float(np.percentile(a, 97.5)),
+                    "n_draws": int(a.size)}
+
+        return {"marginal": {k: pct(v) for k, v in per.items()},
+                "paired_raw_minus": {k: pct(v) for k, v in paired.items()}}
+
     def auc_clustered_ci(M: np.ndarray, draws: int = 400) -> list:
         """Occupation-clustered bootstrap: resample occupations, keep the pairs
         whose endpoints both survive. Pairs sharing an endpoint are not
@@ -183,9 +237,15 @@ def run() -> dict:
         separation[name] = {
             "dimensions": int(X.shape[1]),
             "auc_cosine": auc(Mc),
-            "auc_cosine_ci95_clustered": auc_clustered_ci(Mc),
+            "auc_cosine_presence_mask_range": auc_clustered_ci(Mc),
             "auc_centered_cosine": auc(_cosine_matrix(_centered(X))),
         }
+
+    # The projection is compared with the raw ratings on the same pairs, so the
+    # contrast is paired. Separate marginal ranges do not answer whether the
+    # projection loses structure; the within-draw difference does.
+    separation["vertex_bootstrap"] = vertex_bootstrap(
+        {k: _cosine_matrix(X) for k, X in representations.items()})
 
     # Null distributions. "Arbitrary" needs defining, so two are reported.
     # Dense: every entry drawn from the standard normal, each row scaled to

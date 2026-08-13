@@ -22,7 +22,7 @@
     "raw_work_values": {
       "dimensions": 6,
       "auc_cosine": 0.7190157384146714,
-      "auc_cosine_ci95_clustered": [
+      "auc_cosine_presence_mask_range": [
         0.7056016903831944,
         0.7325556872185128
       ],
@@ -31,7 +31,7 @@
     "projected_csmq": {
       "dimensions": 5,
       "auc_cosine": 0.6831902044909428,
-      "auc_cosine_ci95_clustered": [
+      "auc_cosine_presence_mask_range": [
         0.6700110690666654,
         0.697293084421394
       ],
@@ -40,11 +40,47 @@
     "riasec_interests": {
       "dimensions": 6,
       "auc_cosine": 0.8595175960119389,
-      "auc_cosine_ci95_clustered": [
+      "auc_cosine_presence_mask_range": [
         0.8512318259375601,
         0.868224366828457
       ],
       "auc_centered_cosine": 0.8462208094664584
+    },
+    "vertex_bootstrap": {
+      "marginal": {
+        "raw_work_values": {
+          "mean": 0.7189088130492646,
+          "ci95_low": 0.7006825644135256,
+          "ci95_high": 0.7371482225671099,
+          "n_draws": 400
+        },
+        "projected_csmq": {
+          "mean": 0.6834356555199477,
+          "ci95_low": 0.6658302130508821,
+          "ci95_high": 0.7024022410395513,
+          "n_draws": 400
+        },
+        "riasec_interests": {
+          "mean": 0.8595789644551991,
+          "ci95_low": 0.8475532166970395,
+          "ci95_high": 0.8705371410330438,
+          "n_draws": 400
+        }
+      },
+      "paired_raw_minus": {
+        "projected_csmq": {
+          "mean": 0.03547315752931675,
+          "ci95_low": 0.02724382248858784,
+          "ci95_high": 0.0434449385577223,
+          "n_draws": 400
+        },
+        "riasec_interests": {
+          "mean": -0.14067015140593442,
+          "ci95_low": -0.159685735008971,
+          "ci95_high": -0.12231256699675883,
+          "n_draws": 400
+        }
+      }
     },
     "null_dense_normal": {
       "n_draws": 10000,
@@ -82,6 +118,6 @@
   },
   "_meta": {
     "name": "exp15_external_structure",
-    "timestamp": "2026-08-13T15:12:46.126380Z"
+    "timestamp": "2026-08-13T18:03:18.592583Z"
   }
 }
