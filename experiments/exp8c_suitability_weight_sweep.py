@@ -50,7 +50,11 @@ def _rank_weighted(profile, rec, roles_df, required, w_value, w_skill, w_feas) -
         seniority = str(metas.loc[rid, "seniority"]).lower()
         feas = FEASIBILITY.get((profile.level, seniority), 0.5)
         scores.append(w_value * value_fit + w_skill * skill + w_feas * feas)
-    order = np.argsort(-np.asarray(scores))
+    # Stable sort, matching every ranker in career_positioning_benchmark. The
+    # catalog has many tied scores, so an unstable sort would break them in a
+    # different order and this panel's default row would not reproduce the
+    # headline benchmark.
+    order = np.argsort(-np.asarray(scores), kind="stable")
     return [role_ids[int(i)] for i in order]
 
 
