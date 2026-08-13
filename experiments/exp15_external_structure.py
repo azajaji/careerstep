@@ -125,21 +125,26 @@ def run() -> dict:
     # this exclusion puts positives in the negative set and understates every
     # representation's separation.
     need = len(pi)
-    neg = set()
-    while len(neg) < need:
-        x = rng.integers(0, len(socs), size=2 * need)
-        y = rng.integers(0, len(socs), size=2 * need)
-        for u, v in zip(x.tolist(), y.tolist()):
-            if u == v:
-                continue
-            key = (min(u, v), max(u, v))
-            if key in positive or key in neg:
-                continue
-            neg.add(key)
-            if len(neg) >= need:
-                break
-    negarr = np.array(sorted(neg))
-    ni_, nj_ = negarr[:, 0], negarr[:, 1]
+
+    def draw_negatives(gen):
+        """One balanced sample of unlisted pairs, excluding every listed pair."""
+        neg = set()
+        while len(neg) < need:
+            x = gen.integers(0, len(socs), size=2 * need)
+            y = gen.integers(0, len(socs), size=2 * need)
+            for u, v in zip(x.tolist(), y.tolist()):
+                if u == v:
+                    continue
+                key = (min(u, v), max(u, v))
+                if key in positive or key in neg:
+                    continue
+                neg.add(key)
+                if len(neg) >= need:
+                    break
+        arr = np.array(sorted(neg))
+        return arr[:, 0], arr[:, 1]
+
+    ni_, nj_ = draw_negatives(rng)
 
     def _auc_from(a: np.ndarray, b: np.ndarray) -> float:
         """Exact Mann-Whitney AUC; ties count as half."""
@@ -247,6 +252,33 @@ def run() -> dict:
     separation["vertex_bootstrap"] = vertex_bootstrap(
         {k: _cosine_matrix(X) for k, X in representations.items()})
 
+    # The unlisted comparison pairs are themselves a sample. Holding one draw
+    # fixed would hide how much of each AUC depends on which unlisted pairs
+    # happened to be selected, so the whole comparison is repeated over fresh
+    # draws and the spread is reported.
+    def negative_draw_sensitivity(mats: dict, draws: int = 20) -> dict:
+        gen = np.random.default_rng(SEED + 991)
+        per = {k: [] for k in mats}
+        gaps = []
+        for _ in range(draws):
+            qi, qj = draw_negatives(gen)
+            vals = {k: _auc_from(M[pi, pj], M[qi, qj]) for k, M in mats.items()}
+            for k, v in vals.items():
+                per[k].append(v)
+            gaps.append(vals["raw_work_values"] - vals["projected_csmq"])
+
+        def summ(v):
+            a = np.asarray(v, dtype=float)
+            return {"mean": float(a.mean()), "sd": float(a.std(ddof=1)),
+                    "min": float(a.min()), "max": float(a.max()),
+                    "n_draws": int(a.size)}
+
+        return {"per_representation": {k: summ(v) for k, v in per.items()},
+                "raw_minus_projected": summ(gaps)}
+
+    separation["negative_draw_sensitivity"] = negative_draw_sensitivity(
+        {k: _cosine_matrix(X) for k, X in representations.items()})
+
     # Null distributions. "Arbitrary" needs defining, so two are reported.
     # Dense: every entry drawn from the standard normal, each row scaled to
     # unit L1 norm, signs unconstrained. Matched: the designed matrix's zero
@@ -274,8 +306,13 @@ def run() -> dict:
          lambda: l1_rows(signs * np.abs(rng.normal(size=(5, 6))) * support)),
     ):
         vals = np.empty(N_RANDOM_W, dtype=float)
+        clipped = np.empty(N_RANDOM_W, dtype=float)
         for i in range(N_RANDOM_W):
-            Pm = np.clip(raw_wv @ draw().T, 0.0, 1.0)
+            Praw = raw_wv @ draw().T
+            Pm = np.clip(Praw, 0.0, 1.0)
+            # Clipping is part of the production projector, so the null gets it
+            # too; recording how often it binds says whether it is doing work.
+            clipped[i] = float(np.mean(Praw != Pm))
             vals[i] = auc(_cosine_matrix(_centered(Pm)))
         # One-sided empirical p-value with the standard +1 correction.
         p = float((np.sum(vals >= designed) + 1) / (N_RANDOM_W + 1))
@@ -292,7 +329,18 @@ def run() -> dict:
             "designed_auc": float(designed),
             "percentile_of_designed": float((vals < designed).mean()),
             "empirical_p_designed_not_better": p,
+            "p_value_rule": "(1 + #{null >= designed}) / (n_draws + 1), one-sided",
+            "clipped_entry_share_mean": float(clipped.mean()),
+            "clipped_entry_share_max": float(clipped.max()),
         }
+
+    # Same measurement for the designed matrix, so the two are comparable.
+    _P_designed_raw = raw_wv @ designed_W.T
+    separation["clipping"] = {
+        "designed_clipped_entry_share": float(
+            np.mean(_P_designed_raw != np.clip(_P_designed_raw, 0.0, 1.0))),
+        "note": "share of projected entries the [0,1] clip moves, over 874 occupations",
+    }
 
     Rcos = _cosine_matrix(_centered(Rv))[iu]
     idx = rng.choice(len(raw), size=min(200_000, len(raw)), replace=False)

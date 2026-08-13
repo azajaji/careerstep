@@ -82,6 +82,38 @@
         }
       }
     },
+    "negative_draw_sensitivity": {
+      "per_representation": {
+        "raw_work_values": {
+          "mean": 0.7194526365260077,
+          "sd": 0.002276395756521221,
+          "min": 0.7153992835496692,
+          "max": 0.7233513614813022,
+          "n_draws": 20
+        },
+        "projected_csmq": {
+          "mean": 0.6825882357590018,
+          "sd": 0.0020871683109006034,
+          "min": 0.6793636669567014,
+          "max": 0.6875688790471551,
+          "n_draws": 20
+        },
+        "riasec_interests": {
+          "mean": 0.8576016811017292,
+          "sd": 0.0016177290380260537,
+          "min": 0.8545245944181961,
+          "max": 0.8604458830988141,
+          "n_draws": 20
+        }
+      },
+      "raw_minus_projected": {
+        "mean": 0.03686440076700599,
+        "sd": 0.0013345315774197456,
+        "min": 0.03467371567405464,
+        "max": 0.03944132896738195,
+        "n_draws": 20
+      }
+    },
     "null_dense_normal": {
       "n_draws": 10000,
       "sampling": "entries ~ N(0,1), rows scaled to unit L1 norm, signs free",
@@ -91,7 +123,10 @@
       "auc_p95": 0.7055918650877967,
       "designed_auc": 0.678903330360035,
       "percentile_of_designed": 0.7919,
-      "empirical_p_designed_not_better": 0.2081791820817918
+      "empirical_p_designed_not_better": 0.2081791820817918,
+      "p_value_rule": "(1 + #{null >= designed}) / (n_draws + 1), one-sided",
+      "clipped_entry_share_mean": 0.49757691075514876,
+      "clipped_entry_share_max": 1.0
     },
     "null_matched_support_and_sign": {
       "n_draws": 10000,
@@ -102,7 +137,14 @@
       "auc_p95": 0.7105206820038011,
       "designed_auc": 0.678903330360035,
       "percentile_of_designed": 0.4662,
-      "empirical_p_designed_not_better": 0.5338466153384661
+      "empirical_p_designed_not_better": 0.5338466153384661,
+      "p_value_rule": "(1 + #{null >= designed}) / (n_draws + 1), one-sided",
+      "clipped_entry_share_mean": 0.04714807780320366,
+      "clipped_entry_share_max": 0.2
+    },
+    "clipping": {
+      "designed_clipped_entry_share": 0.0,
+      "note": "share of projected entries the [0,1] clip moves, over 874 occupations"
     }
   },
   "convergent": {
@@ -118,6 +160,6 @@
   },
   "_meta": {
     "name": "exp15_external_structure",
-    "timestamp": "2026-08-13T18:03:18.592583Z"
+    "timestamp": "2026-08-13T18:26:32.387248Z"
   }
 }
