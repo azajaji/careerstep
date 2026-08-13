@@ -5,3 +5,6 @@ __pycache__/
 .env
 .env.*
 data/cache/
+
+# Figure generation is manuscript work, not reproduction scope.
+figures/
