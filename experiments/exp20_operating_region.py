@@ -13,8 +13,9 @@ set:
 
   random       k roles drawn uniformly from the catalog;
   prefiltered  the k roles with the highest value-fit for that student, which
-               is the shortlist a values-first pre-filter would produce and the
-               setting most favourable to value-fit.
+               is the shortlist a values-first pre-filter would produce.
+               Selecting on a criterion removes the variation it had, so this
+               narrows value-fit rather than favouring it.
 
 For every configuration it reports the two statements the manuscript makes at
 the reported operating point:
@@ -187,8 +188,10 @@ def run() -> dict:
             "scope": ("the catalog, the criterion producers and the weights are "
                       "held fixed; what varies is the profile generator and the "
                       "candidate set the ranking is taken over"),
-            "prefiltered": ("the k highest value-fit roles for that student, "
-                            "which is the setting most favourable to value-fit"),
+            "prefiltered": ("the k highest value-fit roles for that student; "
+                            "selecting on a criterion removes the variation it "
+                            "had, so this narrows value-fit rather than "
+                            "favouring it"),
             "statement": ("dispersion_inversion is the claim that the "
                           "largest-weight criterion has the smaller dispersion "
                           "share; full_reversal is the stronger claim that the "

@@ -21385,11 +21385,11 @@
   ],
   "notes": {
     "scope": "the catalog, the criterion producers and the weights are held fixed; what varies is the profile generator and the candidate set the ranking is taken over",
-    "prefiltered": "the k highest value-fit roles for that student, which is the setting most favourable to value-fit",
+    "prefiltered": "the k highest value-fit roles for that student; selecting on a criterion removes the variation it had, so this narrows value-fit rather than favouring it",
     "statement": "dispersion_inversion is the claim that the largest-weight criterion has the smaller dispersion share; full_reversal is the stronger claim that the ordering is exactly reversed"
   },
   "_meta": {
     "name": "exp20_operating_region",
-    "timestamp": "2026-08-14T13:45:10.246631Z"
+    "timestamp": "2026-08-14T14:26:34.205128Z"
   }
 }
