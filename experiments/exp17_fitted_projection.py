@@ -80,15 +80,41 @@ def _auc(pos, neg):
     return float(u / (len(pos) * len(neg)))
 
 
+def _separation(X, W, pi, pj, ni, nj):
+    P = X @ W.T
+    a, b = _cos(P, pi, pj), _cos(P, ni, nj)
+    pooled = np.sqrt(0.5 * (a.var() + b.var()) + 1e-12)
+    return float(-(a.mean() - b.mean()) / pooled)
+
+
 def _fit(X, pi, pj, ni, nj, w0):
-    def loss(flat):
-        P = X @ flat.reshape(5, 6).T
-        a, b = _cos(P, pi, pj), _cos(P, ni, nj)
-        pooled = np.sqrt(0.5 * (a.var() + b.var()) + 1e-12)
-        return float(-(a.mean() - b.mean()) / pooled)
-    res = minimize(loss, w0.ravel(), method="L-BFGS-B",
+    res = minimize(lambda f: _separation(X, f.reshape(5, 6), pi, pj, ni, nj),
+                   w0.ravel(), method="L-BFGS-B",
                    options={"maxiter": 400, "ftol": 1e-12})
     return res.x.reshape(5, 6)
+
+
+def _fit_constrained(X, pi, pj, ni, nj):
+    """Refit only the magnitudes the designer chose, keeping their structure.
+
+    The unconstrained fit answers what five dimensions could carry; it is not a
+    replacement for the designed matrix because it abandons the sparsity, the
+    signs and the row normalization that give the orientations their meaning.
+    This fit keeps all three and moves only the free magnitudes, so it measures
+    what the representation layer could reach without leaving the design.
+    """
+    signs = np.sign(DESIGNED_W)
+    idx = np.nonzero(signs)
+    m0 = np.log(np.abs(DESIGNED_W[idx]))
+
+    def build(logm):
+        W = np.zeros((5, 6))
+        W[idx] = signs[idx] * np.exp(logm)
+        return W / np.maximum(np.abs(W).sum(axis=1, keepdims=True), 1e-12)
+
+    res = minimize(lambda m: _separation(X, build(m), pi, pj, ni, nj), m0,
+                   method="L-BFGS-B", options={"maxiter": 400, "ftol": 1e-12})
+    return build(res.x)
 
 
 def _summary(vals):
@@ -132,8 +158,9 @@ def run() -> dict:
 
     acc = {k: [] for k in ("raw_work_values_6d", "designed_W_5d", "pca_5d",
                            "fitted_5d_from_designed", "fitted_5d_from_random",
-                           "null_matched_mean")}
-    fit_half = {k: [] for k in ("designed_W_5d", "fitted_5d_from_designed")}
+                           "constrained_fit_5d", "null_matched_mean")}
+    fit_half = {k: [] for k in ("designed_W_5d", "fitted_5d_from_designed",
+                                "constrained_fit_5d")}
     n_fit_pairs, n_held_pairs = [], []
 
     for sp in range(N_SPLITS):
@@ -198,6 +225,10 @@ def run() -> dict:
             if name == "fitted_5d_from_designed":
                 fit_half[name].append(fitl(X @ Wf.T))
 
+        Wc = _fit_constrained(X, fpi, fpj, fni, fnj)
+        acc["constrained_fit_5d"].append(held(X @ Wc.T))
+        fit_half["constrained_fit_5d"].append(fitl(X @ Wc.T))
+
         nulls = []
         for _ in range(N_NULL_PER_SPLIT):
             M = signs * np.abs(rng.normal(size=(5, 6))) * support
@@ -209,6 +240,12 @@ def run() -> dict:
     gap = _summary(np.asarray(acc["fitted_5d_from_designed"])
                    - np.asarray(acc["designed_W_5d"]))
     pca_gap = _summary(np.asarray(acc["pca_5d"]) - np.asarray(acc["designed_W_5d"]))
+    con_gap = _summary(np.asarray(acc["constrained_fit_5d"])
+                       - np.asarray(acc["designed_W_5d"]))
+    # Whether the repair clears the no-projection reference is a separate
+    # question from whether it clears the designed matrix, so it is paired too.
+    con_raw = _summary(np.asarray(acc["constrained_fit_5d"])
+                       - np.asarray(acc["raw_work_values_6d"]))
 
     payload = {
         "onet_release": "28.0",
@@ -226,11 +263,18 @@ def run() -> dict:
         "fit_half_auc": {k: _summary(v) for k, v in fit_half.items()},
         "paired_gap_fitted_minus_designed": gap,
         "paired_gap_pca_minus_designed": pca_gap,
+        "paired_gap_constrained_minus_designed": con_gap,
+        "paired_gap_constrained_minus_raw": con_raw,
         "notes": {
-            "status": ("capacity diagnostic, not a repair: the fit is "
-                       "unconstrained, discards the designed sparsity, signs and "
-                       "row normalization, omits the production clipping step, "
-                       "and its axes carry no CSMQ interpretation"),
+            "status": ("the unconstrained fits are a capacity diagnostic, not a "
+                       "repair: they discard the designed sparsity, signs and "
+                       "row normalization, omit the production clipping step, "
+                       "and their axes carry no COEI interpretation"),
+            "constrained_fit": ("keeps the designed support, signs and unit row "
+                                "norm and refits only the magnitudes, so it is a "
+                                "repair the design admits and bounds what the "
+                                "representation layer can reach without leaving "
+                                "the intended structure"),
             "estimator": "exact Mann-Whitney AUC on held-out pairs",
             "reference": ("the raw 6-dimensional Work Values under the same "
                           "cosine are the no-projection reference, not an upper "
@@ -242,13 +286,18 @@ def run() -> dict:
     print(f"  {len(socs)} occupations, {N_SPLITS} repeated half-splits; "
           f"mean held-out related pairs {np.mean(n_held_pairs):.0f}")
     for k in ("raw_work_values_6d", "designed_W_5d", "null_matched_mean",
-              "pca_5d", "fitted_5d_from_designed", "fitted_5d_from_random"):
+              "constrained_fit_5d", "pca_5d", "fitted_5d_from_designed",
+              "fitted_5d_from_random"):
         s = summ[k]
         print(f"  {k:<28} {s['mean']:.3f}  [{s['ci95_low']:.3f}, {s['ci95_high']:.3f}]")
     print(f"  paired gap fitted-designed  {gap['mean']:+.3f} "
           f"[{gap['ci95_low']:+.3f}, {gap['ci95_high']:+.3f}]")
     print(f"  paired gap PCA-designed     {pca_gap['mean']:+.3f} "
           f"[{pca_gap['ci95_low']:+.3f}, {pca_gap['ci95_high']:+.3f}]")
+    print(f"  paired gap constr.-designed {con_gap['mean']:+.3f} "
+          f"[{con_gap['ci95_low']:+.3f}, {con_gap['ci95_high']:+.3f}]")
+    print(f"  paired gap constr.-raw 6d   {con_raw['mean']:+.3f} "
+          f"[{con_raw['ci95_low']:+.3f}, {con_raw['ci95_high']:+.3f}]")
     save_report("exp17_fitted_projection", payload)
     return payload
 

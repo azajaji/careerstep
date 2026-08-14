@@ -142,6 +142,20 @@
       "clipped_entry_share_mean": 0.04714807780320366,
       "clipped_entry_share_max": 0.2
     },
+    "null_permuted_support": {
+      "n_draws": 10000,
+      "sampling": "the designed coefficients of each row permuted across the six work-value dimensions; sparsity, signs, magnitudes and row norm are exactly the designed ones",
+      "auc_mean": 0.6824293908397343,
+      "auc_sd": 0.0330818429112256,
+      "auc_p5": 0.6203082027744583,
+      "auc_p95": 0.7270608177947383,
+      "designed_auc": 0.678903330360035,
+      "percentile_of_designed": 0.395,
+      "empirical_p_designed_not_better": 0.605039496050395,
+      "p_value_rule": "(1 + #{null >= designed}) / (n_draws + 1), one-sided",
+      "clipped_entry_share_mean": 0.0009007780320366132,
+      "clipped_entry_share_max": 0.011670480549199084
+    },
     "clipping": {
       "designed_clipped_entry_share": 0.0,
       "note": "share of projected entries the [0,1] clip moves, over 874 occupations"
@@ -149,8 +163,8 @@
   },
   "convergent": {
     "n_pairs_sampled": 200000,
-    "pearson_raw_csmq_vs_riasec": 0.11736824372320802,
-    "pearson_centered_csmq_vs_riasec": 0.06377538561741398
+    "pearson_raw_csmq_vs_riasec": 0.11952458558100579,
+    "pearson_centered_csmq_vs_riasec": 0.06485548894269846
   },
   "notes": {
     "scope": "all O*NET occupations rated on both Work Values and Interests; no participant data of any kind",
@@ -160,6 +174,6 @@
   },
   "_meta": {
     "name": "exp15_external_structure",
-    "timestamp": "2026-08-13T18:26:32.387248Z"
+    "timestamp": "2026-08-14T13:52:17.877605Z"
   }
 }

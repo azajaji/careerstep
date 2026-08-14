@@ -279,13 +279,22 @@ def run() -> dict:
     separation["negative_draw_sensitivity"] = negative_draw_sensitivity(
         {k: _cosine_matrix(X) for k, X in representations.items()})
 
-    # Null distributions. "Arbitrary" needs defining, so two are reported.
-    # Dense: every entry drawn from the standard normal, each row scaled to
-    # unit L1 norm, signs unconstrained. Matched: the designed matrix's zero
-    # pattern and signs are held fixed and only the magnitudes are redrawn,
-    # from the half-normal, then row-normalized the same way. The second asks
-    # whether the specific coefficients matter given the structure; the first
-    # asks whether the whole design matters.
+    # Null distributions. "Arbitrary" needs defining, so three are reported,
+    # and together they separate the two things a hand-built matrix asserts:
+    # which work-value dimensions feed an orientation, and how much each
+    # contributes.
+    #
+    #   dense_normal   every entry ~ N(0,1), rows scaled to unit L1 norm,
+    #                  signs free. Asks whether the design matters at all.
+    #   matched        the designed zero pattern and signs held fixed, only the
+    #                  magnitudes redrawn. Asks whether the coefficients matter
+    #                  given the structure.
+    #   permuted       the designed magnitudes and signs kept exactly, but the
+    #                  positions permuted within each row, so each orientation
+    #                  keeps its number of positive and negative loadings and
+    #                  their sizes while the work-value dimensions they land on
+    #                  are arbitrary. Asks whether the conceptual assignment of
+    #                  dimensions to orientations carries the structure.
     designed_W = np.array([
         [0.60, 0.00, 0.40, 0.00, 0.00, 0.00],
         [0.00, -0.20, 0.00, 0.00, 0.50, 0.30],
@@ -300,10 +309,18 @@ def run() -> dict:
     def l1_rows(M):
         return M / np.maximum(np.abs(M).sum(axis=1, keepdims=True), 1e-12)
 
+    def permute_rows(M):
+        """Keep each row's multiset of coefficients, move where they sit."""
+        out = np.empty_like(M)
+        for r in range(M.shape[0]):
+            out[r] = M[r][rng.permutation(M.shape[1])]
+        return out
+
     for name, draw in (
         ("dense_normal", lambda: l1_rows(rng.normal(size=(5, 6)))),
         ("matched_support_and_sign",
          lambda: l1_rows(signs * np.abs(rng.normal(size=(5, 6))) * support)),
+        ("permuted_support", lambda: permute_rows(designed_W)),
     ):
         vals = np.empty(N_RANDOM_W, dtype=float)
         clipped = np.empty(N_RANDOM_W, dtype=float)
@@ -318,10 +335,17 @@ def run() -> dict:
         p = float((np.sum(vals >= designed) + 1) / (N_RANDOM_W + 1))
         separation[f"null_{name}"] = {
             "n_draws": int(N_RANDOM_W),
-            "sampling": ("entries ~ N(0,1), rows scaled to unit L1 norm, signs free"
-                         if name == "dense_normal" else
-                         "designed zero pattern and signs held fixed, magnitudes "
-                         "~ |N(0,1)|, rows scaled to unit L1 norm"),
+            "sampling": {
+                "dense_normal":
+                    "entries ~ N(0,1), rows scaled to unit L1 norm, signs free",
+                "matched_support_and_sign":
+                    "designed zero pattern and signs held fixed, magnitudes "
+                    "~ |N(0,1)|, rows scaled to unit L1 norm",
+                "permuted_support":
+                    "the designed coefficients of each row permuted across the "
+                    "six work-value dimensions; sparsity, signs, magnitudes and "
+                    "row norm are exactly the designed ones",
+            }[name],
             "auc_mean": float(vals.mean()),
             "auc_sd": float(vals.std(ddof=1)),
             "auc_p5": float(np.percentile(vals, 5)),
@@ -383,7 +407,8 @@ def run() -> dict:
         s = separation[name]
         print(f"  {name:<20} dims={s['dimensions']} "
               f"AUC={s['auc_cosine']:.3f} centered={s['auc_centered_cosine']:.3f}")
-    for key in ("null_dense_normal", "null_matched_support_and_sign"):
+    for key in ("null_dense_normal", "null_matched_support_and_sign",
+                "null_permuted_support"):
         n = separation[key]
         print(f"  {key:<30} mean={n['auc_mean']:.3f} sd={n['auc_sd']:.3f} "
               f"p95={n['auc_p95']:.3f} pctile={n['percentile_of_designed']:.2f} "

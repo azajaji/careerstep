@@ -44,6 +44,13 @@
       "ci95_high": 0.7737699092678582,
       "n_splits": 20
     },
+    "constrained_fit_5d": {
+      "mean": 0.7283004816321054,
+      "sd": 0.010178340612502565,
+      "ci95_low": 0.7149085673593265,
+      "ci95_high": 0.7496539431142872,
+      "n_splits": 20
+    },
     "null_matched_mean": {
       "mean": 0.6763609036100743,
       "sd": 0.009347464541121453,
@@ -66,6 +73,13 @@
       "ci95_low": 0.7482054271690073,
       "ci95_high": 0.7776590902809754,
       "n_splits": 20
+    },
+    "constrained_fit_5d": {
+      "mean": 0.7297106212065838,
+      "sd": 0.009293360743533307,
+      "ci95_low": 0.7150772824791883,
+      "ci95_high": 0.7444982974970026,
+      "n_splits": 20
     }
   },
   "paired_gap_fitted_minus_designed": {
@@ -82,13 +96,28 @@
     "ci95_high": 0.09593240531644506,
     "n_splits": 20
   },
+  "paired_gap_constrained_minus_designed": {
+    "mean": 0.045554176487404,
+    "sd": 0.007585851901124436,
+    "ci95_low": 0.032588104533416755,
+    "ci95_high": 0.057451514502250264,
+    "n_splits": 20
+  },
+  "paired_gap_constrained_minus_raw": {
+    "mean": 0.009086634529706372,
+    "sd": 0.0034983310383964916,
+    "ci95_low": 0.0045513999275005965,
+    "ci95_high": 0.015536134776542879,
+    "n_splits": 20
+  },
   "notes": {
-    "status": "capacity diagnostic, not a repair: the fit is unconstrained, discards the designed sparsity, signs and row normalization, omits the production clipping step, and its axes carry no CSMQ interpretation",
+    "status": "the unconstrained fits are a capacity diagnostic, not a repair: they discard the designed sparsity, signs and row normalization, omit the production clipping step, and their axes carry no COEI interpretation",
+    "constrained_fit": "keeps the designed support, signs and unit row norm and refits only the magnitudes, so it is a repair the design admits and bounds what the representation layer can reach without leaving the intended structure",
     "estimator": "exact Mann-Whitney AUC on held-out pairs",
     "reference": "the raw 6-dimensional Work Values under the same cosine are the no-projection reference, not an upper bound"
   },
   "_meta": {
     "name": "exp17_fitted_projection",
-    "timestamp": "2026-08-13T15:01:31.443439Z"
+    "timestamp": "2026-08-14T13:49:05.481796Z"
   }
 }

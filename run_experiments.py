@@ -24,6 +24,7 @@ MODULES = [
     "experiments.exp17_fitted_projection",
     "experiments.exp18_external_index_audit",  # downloads UNDP HDR data on first run
     "experiments.exp19_seed_sensitivity",
+    "experiments.exp20_operating_region",
 ]
 
 

@@ -38,10 +38,10 @@ committed `results/*.json` are the values reported in the paper.
 
 ## Which script produces which table
 
-Manuscript numbers refer to the IEEE Access submission. Tables 1–3 describe the
-artifact. The primary evidence (RQ1–RQ5) is Tables 4–10, and the external
-transfer case is Table 11. The secondary checks live in the supplementary
-document and are numbered S1–S8 there.
+Manuscript numbers refer to the IEEE Access submission. Tables 1–4 describe the
+artifact and the evaluation inputs. The primary evidence (RQ1–RQ5) is
+Tables 5–12, and the external transfer case is Table 13. There is no
+supplementary document; every reported number comes from the table below.
 
 The O*NET Extent scale (`EX`) runs 1–7, so ratings are min-max mapped to
 `[0,1]` as `(x-1)/6` in `careerstep/career_positioning.py`,
@@ -60,47 +60,23 @@ Run everything with `python run_experiments.py`.
 
 | Manuscript | Script | Raw output |
 |---|---|---|
-| Table 4 — criterion influence (RQ1) | `experiments/exp8f_criterion_influence.py` | `results/exp8f_criterion_influence.json` |
-| Table 5 — the same measures over 20 seeded cohorts (RQ1) | `experiments/exp19_seed_sensitivity.py` | `results/exp19_seed_sensitivity.json` |
-| Table 6 — criterion scale and centroid geometry (RQ2) | `experiments/exp8e_component_scale.py` | `results/exp8e_component_scale.json` |
-| Table 7 — projection vs. baselines and nulls (RQ3) | `experiments/exp15_external_structure.py` | `results/exp15_external_structure.json` |
-| Table 8 — influence after scale calibration (RQ4) | `experiments/exp16_scale_calibration.py` | `results/exp16_scale_calibration.json` |
-| Table 9 — what calibration changes and costs (RQ4) | `experiments/exp16_scale_calibration.py` | `results/exp16_scale_calibration.json` |
-| Table 10 — fitted and unsupervised projections, held out (RQ5) | `experiments/exp17_fitted_projection.py` | `results/exp17_fitted_projection.json` |
-| Table 11 — the audit on the Human Development Index | `experiments/exp18_external_index_audit.py` | `results/exp18_external_index_audit.json` |
+| Table 5 — criterion influence (RQ1) | `experiments/exp8f_criterion_influence.py` | `results/exp8f_criterion_influence.json` |
+| Table 6 — the same measures over 20 seeded cohorts (RQ1) | `experiments/exp19_seed_sensitivity.py` | `results/exp19_seed_sensitivity.json` |
+| Table 7 — operating region of the inversion (RQ1) | `experiments/exp20_operating_region.py` | `results/exp20_operating_region.json` |
+| Table 8 — criterion scale and centroid geometry (RQ2) | `experiments/exp8e_component_scale.py` | `results/exp8e_component_scale.json` |
+| Table 9 — projection vs. baselines and nulls (RQ3) | `experiments/exp15_external_structure.py` | `results/exp15_external_structure.json` |
+| Table 10 — influence after scale calibration (RQ4) | `experiments/exp16_scale_calibration.py` | `results/exp16_scale_calibration.json` |
+| Table 11 — what calibration changes and costs (RQ4) | `experiments/exp16_scale_calibration.py` | `results/exp16_scale_calibration.json` |
+| Table 12 — fitted, refitted and unsupervised projections, held out (RQ5) | `experiments/exp17_fitted_projection.py` | `results/exp17_fitted_projection.json` |
+| Table 13 — the audit on the Human Development Index | `experiments/exp18_external_index_audit.py` | `results/exp18_external_index_audit.json` |
 
-Tables 1–3 (projection matrix, feasibility lookup, evaluation data) are
-descriptive and are not produced by a script.
+Tables 1–4 (evaluation coverage, projection matrix, feasibility lookup,
+evaluation data) are descriptive and are not produced by a script.
 
-### Supplementary document
+The remaining scripts under `experiments/` measure the workflow around the
+audited scorer. They are kept because the code they exercise ships with the
+release, and no number they produce appears in the article.
 
-| Supplement | Script | Raw output |
-|---|---|---|
-| Table S2 — ranking benchmark | `experiments/exp8_career_positioning.py` | `results/exp8_career_positioning.json` |
-| Table S3 — ranking, stratified by tied anchor | `experiments/exp8_career_positioning.py` | `results/exp8_career_positioning.json` |
-| Table S4 — self-consistency and noise sweep | `experiments/exp8_career_positioning.py` | `results/exp8_career_positioning.json` |
-| Table S5 — shortlist stability | `experiments/exp8d_shortlist_stability.py` | `results/exp8_shortlist_stability.json` |
-| Table S6 — weight sensitivity (a) | `experiments/exp8b_projection_sensitivity.py` | `results/exp8_projection_sensitivity.json` |
-| Table S6 — weight sensitivity (b) | `experiments/exp8c_suitability_weight_sweep.py` | `results/exp8_suitability_weight_sweep.json` |
-| Table S7 — CV/JD alignment | `experiments/exp2_resume_job_alignment.py` | `results/exp2_resume_job_alignment.json` |
-| Table S8 — roadmap generation | `experiments/exp4_roadmap_quality.py` | `results/exp4_roadmap_quality.json` |
-| Table S9 — interview-question generation | `experiments/exp5_interview_generation.py` | `results/exp5_interview_generation.json` |
-| Table S10 — context-continuity ablation | `experiments/exp13_no_profile_ablation.py` | `results/exp13_no_profile_ablation.json` |
-| Table S11 — external occupation linking (MELO) | `experiments/exp12_melo_external.py` | `results/exp12_melo_external.json` |
-
-Table S1 (evaluation coverage) is descriptive. The item-level inventory-scoring
-check is reported in the supplement's text rather than as a table; it comes from
-`experiments/exp7_questionnaire_scoring.py` →
-`results/exp7_questionnaire_scoring.json`. The feedback-grounding comparison
-likewise appears in text, from `experiments/exp6_feedback_evaluation.py` →
-`results/exp6_feedback_evaluation.json`.
-
-`tests/test_cross_table_consistency.py` asserts that baselines repeated across
-tables agree to the precision printed.
-
-Tables 1–5 and 18 are design or descriptive tables with no computed values.
-`results/exp12_melo_external.json` keeps the per-query ranked occupations and
-scores for all 633 queries, not only the aggregates in the table.
 
 ## Environment
 
